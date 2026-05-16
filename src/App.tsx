@@ -13,6 +13,7 @@ import { BlogDetailsPage } from './pages/blogs/details/BlogDetailsPage'
 import { TripsPage } from './pages/trips/TripsPage'
 import { CartPage } from './pages/cart/CartPage'
 import { SingleTripPage } from './pages/singleTrip/SingleTripPage'
+import { CheckoutPage } from './pages/checkout/CheckoutPage'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/blogs/details" element={<BlogDetailsPage />} />
         <Route path="/trips" element={<TripsPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/trips/:id" element={<SingleTripPage />} />
         <Route
           path="*"

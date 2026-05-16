@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Minus, Plus, ArrowRight } from 'lucide-react';
 import placeholder5 from '../../assets/single trip/placeholder5.png';
@@ -10,16 +11,22 @@ type CheckAvailabilityModalProps = {
 };
 
 export function CheckAvailabilityModal({ isOpen, onClose }: CheckAvailabilityModalProps) {
+  const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
 
   const adultPrice = 30;
-  const childPrice = 15; // Assuming 15 for child to match the $45 total in the image ($30 + $15)
+  const childPrice = 15;
   
   const total = (adultCount * adultPrice) + (childCount * childPrice);
 
   if (!isOpen) return null;
+
+  const handleCheckout = () => {
+    onClose();
+    navigate('/checkout');
+  };
 
   return (
     <AnimatePresence>
@@ -90,7 +97,7 @@ export function CheckAvailabilityModal({ isOpen, onClose }: CheckAvailabilityMod
                 </div>
               </div>
 
-              <button className="ca-checkout-btn">
+              <button className="ca-checkout-btn" onClick={handleCheckout}>
                 Proceed to check out <ArrowRight size={18} />
               </button>
             </div>
