@@ -247,17 +247,19 @@ export function TripsPage() {
               <div className="trips-grid">
                 {filteredTrips.map(trip => (
                   <div className="trips-card" key={trip.id}>
-                    <div className="trips-cardImageWrap">
+                    <Link to={`/trips/${trip.id}`} className="trips-cardImageWrap" style={{ textDecoration: 'none', display: 'block' }}>
                       <img src={trip.image} alt={trip.title} className="trips-cardImage" />
                       <div className="trips-cardRibbon">
                         <img src={iconRibbon} alt="Ribbon" />
                         <span>T.R</span>
                       </div>
-                    </div>
+                    </Link>
                     
                     <div className="trips-cardBody">
                       <span className="trips-cardSubtitle">{trip.type}</span>
-                      <h3 className="trips-cardTitle">{trip.title}</h3>
+                      <Link to={`/trips/${trip.id}`} style={{ textDecoration: 'none' }}>
+                        <h3 className="trips-cardTitle">{trip.title}</h3>
+                      </Link>
                       
                       <div className="trips-cardMetaRow">
                         <span className="trips-cardMeta">
@@ -282,7 +284,7 @@ export function TripsPage() {
                       </div>
 
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <button className="trips-bookBtn">Book Now</button>
+                        <Link to={`/trips/${trip.id}`} className="trips-bookBtn" style={{ textDecoration: 'none', textAlign: 'center' }}>Book Now</Link>
                         <button className="trips-addCartBtn">Add To cart</button>
                       </div>
                     </div>

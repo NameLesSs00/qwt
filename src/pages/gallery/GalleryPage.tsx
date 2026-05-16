@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ChevronDown, Plus } from 'lucide-react';
 import { motion } from "motion/react";
+import { ImageLightbox } from '../../components/imageLightbox/ImageLightbox'
 import imgBg from '../../assets/gallery/bg.png';
 import img1 from '../../assets/gallery/1.jpg';
 import img2 from '../../assets/gallery/2.jpg';
@@ -14,8 +16,15 @@ import img9 from '../../assets/gallery/9.jpg';
 
 import './galleryPage.scss';
 
+const allImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img1, img2, img3, img4, img5]
+
 export function GalleryPage() {
-  const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img1, img2, img3, img4, img5];
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  const openLightbox = (idx: number) => setLightboxIndex(idx)
+  const closeLightbox = () => setLightboxIndex(null)
+  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % allImages.length : null)
+  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + allImages.length) % allImages.length : null)
 
   return (
     <motion.div
@@ -73,7 +82,7 @@ export function GalleryPage() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="gallery-toolbar"
           >
-            <div className="gallery-resultCount">14 Result</div>
+            <div className="gallery-resultCount">{allImages.length} Result</div>
             <div className="gallery-sortControl">
               <span className="gallery-sortLabel">Sort by</span>
               <div className="gallery-sortDropdown">
@@ -91,13 +100,19 @@ export function GalleryPage() {
             transition={{ staggerChildren: 0.06 }}
             className="gallery-masonry"
           >
-            {images.map((imgSrc, idx) => (
+            {allImages.map((imgSrc, idx) => (
               <motion.div
                 key={idx}
                 variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
                 whileHover="hover"
                 className="gallery-masonryItem"
+                onClick={() => openLightbox(idx)}
+                role="button"
+                tabIndex={0}
+                aria-label={`View image ${idx + 1}`}
+                onKeyDown={e => e.key === 'Enter' && openLightbox(idx)}
+                style={{ cursor: 'pointer' }}
               >
                 <motion.img
                   variants={{ hover: { scale: 1.04 } }}
@@ -137,6 +152,15 @@ export function GalleryPage() {
 
         </div>
       </section>
+
+      {/* Lightbox */}
+      <ImageLightbox
+        images={allImages}
+        activeIndex={lightboxIndex}
+        onClose={closeLightbox}
+        onNext={nextImage}
+        onPrev={prevImage}
+      />
 
     </motion.div>
   );
