@@ -1,0 +1,362 @@
+.destinations-page {
+  width: 100%;
+}
+
+.destinations-hero {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  border-radius: 0;
+  overflow: hidden;
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.destinations-heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.destinations-heroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.destinations-heroKicker {
+  margin: 0;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.destinations-heroTitle {
+  margin: 0;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.destinations-content {
+  min-height: 1px;
+}
+
+.destinations-section {
+  padding: 34px 0 60px;
+  background: #fff;
+}
+
+.destinations-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+.destinations-breadcrumb {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(39, 39, 39, 0.6);
+}
+
+.destinations-breadcrumbSep {
+  color: rgba(39, 39, 39, 0.35);
+}
+
+.destinations-breadcrumbActive {
+  color: #1e659e;
+}
+
+.destinations-heading {
+  margin: 10px 0 0;
+  text-align: center;
+  font-family: 'Montez', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  color: #272727;
+}
+
+.destinations-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 1.1fr;
+  grid-template-rows: 170px 170px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.destinationCard {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(15, 47, 68, 0.12);
+  border: 1px solid rgba(15, 47, 68, 0.1);
+}
+
+.destinationCardAswan {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.destinationCardHurghada {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.destinationCardGiza {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.destinationCardLuxor {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.destinationCardSharm {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.destinationMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.destinationShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.22) 55%,
+    rgba(0, 0, 0, 0.58) 100%
+  );
+}
+
+.destinationText {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1;
+}
+
+.destinationKicker {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(245, 212, 122, 0.95);
+  letter-spacing: 0.02em;
+}
+
+.destinationName {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.destinationBookmark {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 58px;
+  height: 70px;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  box-shadow: 0 10px 20px rgba(15, 47, 68, 0.12);
+  z-index: 2;
+}
+
+.destinationBookmark span {
+  font-size: 11px;
+  font-weight: 800;
+  color: #1e659e;
+}
+
+.destinationBookmarkBlue {
+  background: #1e659e;
+}
+
+.destinationBookmarkBlue span {
+  color: #fff;
+}
+
+.destinations-cta {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  margin-top: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.destinations-ctaBgImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.destinations-ctaOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.38) 48%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.destinations-ctaInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.destinations-ctaTitle {
+  margin: 0;
+  max-width: 693px;
+  color: #fff;
+  font-family: 'IBM Plex Sans Thai Looped', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.destinations-ctaBtn {
+  margin-top: 14px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: none;
+  background: #fff;
+  color: #1e659e;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.destinations-ctaArrow {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(30, 101, 158, 0.55);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .destinations-hero {
+    height: 140px;
+  }
+
+  .destinations-heroKicker {
+    font-size: 14px;
+  }
+
+  .destinations-heroTitle {
+    font-size: 22px;
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .destinationCardAswan,
+  .destinationCardHurghada,
+  .destinationCardGiza,
+  .destinationCardLuxor,
+  .destinationCardSharm {
+    grid-column: auto;
+    grid-row: auto;
+    height: 190px;
+  }
+
+  .destinations-cta {
+    height: 170px;
+  }
+
+  .destinations-ctaTitle {
+    font-size: 22px;
+    line-height: 1.15;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 980px) {
+  .destinations-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 190px 190px 190px;
+  }
+
+  .destinationCardAswan {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .destinationCardGiza {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .destinationCardHurghada {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .destinationCardLuxor {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .destinationCardSharm {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}

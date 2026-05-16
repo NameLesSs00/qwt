@@ -1,0 +1,196 @@
+.home-ask {
+  padding: 80px 0 0 0; 
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+
+  &__inner {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 40px;
+    position: relative;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__titleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  &__icon {
+    width: 63px;
+    height: auto;
+  }
+
+  &__title {
+    // Using root variables for the main title components
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--clr-title);
+    line-height: var(--lh-title);
+    margin: 0;
+
+    &Accent {
+      font-family: var(--font-accent);
+      color: var(--clr-title);
+      font-size: var(--fs-title); // Applied root variable
+      font-weight: var(--fw-title); // Applied root variable
+      line-height: var(--lh-title); // Applied root variable
+      margin-left: 8px;
+    }
+  }
+
+  &__sub {
+    font-size: var(--fs-sub); // Applied root variable
+    line-height: var(--lh-sub); // Applied root variable
+    color: var(--clr-sub); // Applied root variable
+    margin: 0;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 80px; 
+  }
+
+  &__left {
+    flex: 0 0 925px;
+    width: 925px;
+    z-index: 2;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+      flex: 1;
+    }
+  }
+
+  &__faq {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__item {
+    background: #f8fbff;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex; 
+    flex-direction: column;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+
+    &.is-open {
+      background: #f8fbff;
+      box-shadow: 0 10px 30px rgba(30, 101, 158, 0.05);
+    }
+  }
+
+  &__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    color: #272727;
+    font-family: var(--font-primary);
+    transition: color 0.3s ease;
+
+    span:last-child {
+      font-size: 20px;
+      color: #272727;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      color: var(--clr-accent);
+    }
+  }
+
+  &__answer {
+    padding: 0 30px 24px 30px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(39, 39, 39, 0.4);
+    font-family: var(--font-primary);
+  }
+
+  &__illustrations {
+    position: absolute;
+    right: 0;
+    bottom: -1px; 
+    z-index: 1;
+    pointer-events: none;
+
+    img {
+      height: 473px;
+      width: auto;
+      object-fit: contain;
+      display: block; 
+    }
+
+    @media (max-width: 1200px) {
+      display: none; 
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 992px) {
+  .home-ask {
+    &__content {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__left {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .home-ask {
+    padding: 50px 0;
+
+    &__title {
+      font-size: 28px;
+
+      &Accent {
+        // Scaling down the root-based size for mobile
+        font-size: calc(var(--fs-title) * 0.75); 
+      }
+    }
+    
+    &__sub {
+      font-size: calc(var(--fs-sub) * 0.9);
+    }
+
+    &__question {
+      padding: 18px 20px;
+      font-size: 16px;
+    }
+
+    &__answer {
+      padding: 0 20px 18px 20px;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,214 @@
+.reviews {
+  width: 100%;
+  padding: 72px 20px 80px;
+  background: #fff;
+}
+
+.reviews__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+.reviews__header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.reviews__title {
+  margin: 0;
+  font-family: var(--font-accent); // Montez
+  font-size: 36px;
+  font-weight: 400;
+  color: #020202;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reviews__accent {
+  color: #1e659e;
+}
+
+.reviews__icon {
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+}
+
+.reviews__subtitle {
+  margin: 16px 0 0;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  line-height: 1.5;
+  color: #555;
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────────────
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+.reviews__card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
+  // default text colours for non-featured cards
+  .reviews__name      { color: #020202; }
+  .reviews__country   { color: #1e659e; }
+  .reviews__time      { color: #999; }
+  .reviews__quote     { color: #444; }
+  .reviews__tourName  { color: #333; }
+  .reviews__star      { color: #ffc107; }
+  .reviews__tour      { background: #f5f5f5; }
+
+  // hover becomes blue (same as featured)
+  &:hover {
+    background: #1e659e;
+    border-color: #1e659e;
+    box-shadow: 0 12px 32px rgba(30, 101, 158, 0.25);
+    transform: translateY(-4px);
+
+    .reviews__name,
+    .reviews__time,
+    .reviews__quote     { color: #fff; }
+    .reviews__country   { color: rgba(255,255,255,0.75); }
+    .reviews__tour      { background: rgba(255, 255, 255, 0.15); }
+    .reviews__tourName  { color: #fff; }
+    .reviews__star      { color: #ffc107; }
+  }
+}
+
+// Featured card (first one) — same blue style as hover
+.reviews__card--featured {
+  background: #1e659e;
+  border-color: #1e659e;
+  box-shadow: 0 8px 28px rgba(30, 101, 158, 0.22);
+
+  .reviews__name,
+  .reviews__time,
+  .reviews__quote     { color: #fff; }
+  .reviews__country   { color: rgba(255,255,255,0.75); }
+  .reviews__tour      { background: rgba(255, 255, 255, 0.15); }
+  .reviews__tourName  { color: #fff; }
+  .reviews__star      { color: #ffc107; }
+}
+
+// ── Card Header ───────────────────────────────────────────────────────────────
+.reviews__cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.reviews__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.reviews__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.reviews__nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.reviews__name {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 700;
+  transition: color 0.25s ease;
+}
+
+.reviews__country {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.25s ease;
+}
+
+.reviews__time {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  transition: color 0.25s ease;
+}
+
+// ── Stars ─────────────────────────────────────────────────────────────────────
+.reviews__stars {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.reviews__star {
+  font-size: 18px;
+  transition: color 0.25s ease;
+}
+
+// ── Quote ─────────────────────────────────────────────────────────────────────
+.reviews__quote {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.65;
+  transition: color 0.25s ease;
+  flex: 1;
+}
+
+// ── Tour pill ─────────────────────────────────────────────────────────────────
+.reviews__tour {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-top: auto;
+  transition: background 0.25s ease;
+}
+
+.reviews__tourImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.reviews__tourName {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s ease;
+}

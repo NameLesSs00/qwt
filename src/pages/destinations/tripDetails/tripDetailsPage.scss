@@ -1,0 +1,872 @@
+/* ─────────────────────── Trip Details Page ─────────────────────── */
+
+.tripd-page {
+  width: 100%;
+}
+
+/* ── Hero (identical structure to Luxor) ── */
+.tripd-hero {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.tripd-heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+.tripd-heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.28) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.tripd-heroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.tripd-heroTagline {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 200px;
+  flex-shrink: 0;
+}
+
+.tripd-heroWatermark {
+  margin: 0 0 0 auto;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: right;
+  letter-spacing: 0.04em;
+}
+
+.tripd-heroWatermarkBold {
+  font-weight: 700;
+}
+
+.tripd-heroCity {
+  margin: 0 0 0 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ── Content ── */
+.tripd-content {
+  padding: 28px 0 0;
+  background: #fff;
+}
+
+.tripd-contentWrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+/* ── Breadcrumb ── */
+.tripd-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(39, 39, 39, 0.55);
+  margin-bottom: 24px;
+}
+
+.tripd-breadcrumbLink {
+  color: rgba(39, 39, 39, 0.55);
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover {
+    color: #1e659e;
+  }
+}
+
+.tripd-breadcrumbSep {
+  font-size: 11px;
+  color: rgba(39, 39, 39, 0.35);
+}
+
+.tripd-breadcrumbActive {
+  color: #1e659e;
+  font-weight: 600;
+}
+
+/* ── Gallery ── */
+.tripd-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Main large image – full height of both rows */
+.tripd-galleryMain {
+  border-radius: 14px;
+  overflow: hidden;
+  height: 100%;
+  min-height: 280px;
+}
+
+/* 2×2 grid on the right */
+.tripd-galleryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+}
+
+.tripd-galleryThumb {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+/* Shared img style for all gallery items */
+.tripd-galleryImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.35s ease;
+
+  .tripd-galleryMain:hover &,
+  .tripd-galleryThumb:hover & {
+    transform: scale(1.04);
+  }
+}
+
+/* ── Content Layout ── */
+.tripd-mainSplit {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  align-items: flex-start;
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+  }
+}
+
+.tripd-mainCol {
+  flex: 1;
+  min-width: 0;
+}
+
+.tripd-sideCol {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+}
+
+/* Left Column Styles */
+.tripd-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px;
+}
+
+.tripd-desc {
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.tripd-metaBlock {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.tripd-metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.tripd-metaStrong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.tripd-iconLine {
+  color: #1d4ed8;
+}
+
+.tripd-iconStar {
+  color: #f59e0b;
+}
+
+/* Quick info bar */
+.tripd-quickInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  border: 1px solid #e2e8f0;
+}
+
+.tripd-qiItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tripd-qiIcon {
+  color: #1e659e;
+}
+
+.tripd-qiLabel {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.tripd-qiValue {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Sections */
+.tripd-section {
+  margin-top: 32px;
+}
+
+.tripd-sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 16px;
+}
+
+/* Inc/Exc */
+.tripd-incExc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tripd-incHeader {
+  display: inline-block;
+  padding: 6px 40px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.tripd-incHeader--green {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.tripd-incHeader--red {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.tripd-checkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tripd-checkList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.tripd-clIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Trip Info Grid */
+.tripd-tabBtn {
+  display: inline-block;
+  background: #1e659e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 6px;
+  margin-bottom: -15px;
+  position: relative;
+  z-index: 2;
+  margin-left: 20px;
+}
+
+.tripd-infoGridBox {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.tripd-infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tripd-igItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tripd-igIcon {
+  color: #1e659e;
+}
+
+.tripd-igLabel {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.tripd-igValue {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Right Sidebar Cards */
+.tripBookingCard {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.tripBookingCard-duration {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tripBookingCard-iconBlue {
+  color: #1e659e;
+}
+
+.tripBookingCard-label {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.tripBookingCard-value {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.tripBookingCard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.tripBookingCard-personType {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.tripBookingCard-priceBox {
+  text-align: right;
+}
+
+.tripBookingCard-price {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+.tripBookingCard-btn {
+  width: 100%;
+  padding: 10px;
+  background: #1e659e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.tripBookingCard-btn:hover {
+  background: #175486;
+}
+
+.tripOfferCard {
+  background: linear-gradient(135deg, #1e659e 0%, #1d4ed8 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  padding: 20px;
+  align-items: flex-end;
+  min-height: 160px;
+}
+
+.tripOfferCard-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.tripOfferCard-text {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.tripOfferCard-btn {
+  background: #fff;
+  color: #1d4ed8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.tripOfferCard-btn:hover {
+  opacity: 0.9;
+}
+
+.tripOfferCard-img {
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+  height: 120%;
+  width: auto;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Bottom Info Row ── */
+.tripd-bottomRow {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  align-items: flex-start;
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+  }
+}
+
+.tripd-highlightsCard,
+.tripd-faqCard {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 36px;
+  border: 1px solid #e2e8f0;
+}
+
+.tripd-bottomTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0 0 28px;
+}
+
+/* FAQ Styles */
+.tripd-faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tripd-faqItem {
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.tripd-faqHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  background: #fff;
+}
+
+.tripd-faqIcon {
+  color: #1e293b;
+  flex-shrink: 0;
+}
+
+.tripd-faqBody {
+  padding: 0 20px 20px;
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.5;
+  background: #fff;
+  display: none;
+}
+
+.tripd-faqItem--active .tripd-faqBody {
+  display: block;
+}
+
+.tripd-faqItem--active .tripd-faqHeader {
+  color: #0f172a;
+}
+
+/* ── Reviews Section ── */
+.tripd-reviewsSection {
+  margin-top: 50px;
+  padding-top: 40px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.tripd-reviewsSplit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 50px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Review Left (Summary) */
+.tripd-reviewsLeft {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 400px;
+  max-width: 100%;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.tripd-rsScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.tripd-rsBig {
+  font-size: 56px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+  position: relative;
+
+  & + svg {
+    position: absolute;
+    right: -24px;
+    top: 8px;
+  }
+}
+
+.tripd-rsCountBadge {
+  background: #1f2937;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 10px;
+  white-space: nowrap;
+}
+
+.tripd-rsBars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.tripd-rsBarRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tripd-rsBarLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #4b5563;
+  width: 32px;
+}
+
+.tripd-rsBarTrack {
+  flex: 1;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tripd-rsBarFill {
+  height: 100%;
+  background: #fbbf24;
+  border-radius: 4px;
+}
+
+/* Review Right (Slider) */
+.tripd-reviewsRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+}
+
+.tripd-sliderBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1e659e;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.tripd-reviewCard {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+}
+
+.tripd-rcAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.tripd-rcRating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.tripd-rcName {
+  font-size: 16px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.tripd-rcContent {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Add Review Form */
+.tripd-addReview {
+  max-width: 600px;
+}
+
+.tripd-arTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px;
+}
+
+.tripd-arDesc {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 0 0 24px;
+}
+
+.tripd-arRatingInput {
+  margin-bottom: 24px;
+}
+
+.tripd-arLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.tripd-arStars {
+  display: flex;
+  gap: 4px;
+}
+
+.tripd-arStarEmpty {
+  cursor: pointer;
+  transition: fill 0.2s;
+
+  &:hover {
+    fill: #cbd5e1;
+  }
+}
+
+.tripd-arFormGroup {
+  margin-bottom: 24px;
+}
+
+.tripd-arTextarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 90px;
+  outline: none;
+
+  &:focus {
+    border-color: #94a3b8;
+  }
+}
+
+.tripd-arSubmitBtn {
+  background: #fff;
+  color: #1e659e;
+  border: 1px solid #1e659e;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+
+  &:hover {
+    background: #1e659e;
+    color: #fff;
+  }
+}

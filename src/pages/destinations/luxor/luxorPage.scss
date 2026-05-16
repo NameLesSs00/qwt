@@ -1,0 +1,321 @@
+/* ─────────────────────── Luxor Page ─────────────────────── */
+
+.luxor-page {
+  width: 100%;
+}
+
+/* Hero */
+.luxor-hero {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.luxor-heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+.luxor-heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.28) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.luxor-heroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.luxor-heroTagline {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 200px;
+  flex-shrink: 0;
+}
+
+.luxor-heroWatermark {
+  margin: 0 0 0 auto;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: right;
+  letter-spacing: 0.04em;
+}
+
+.luxor-heroWatermarkBold {
+  font-weight: 700;
+}
+
+.luxor-heroCity {
+  margin: 0 0 0 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Content section */
+.luxor-content {
+  padding: 28px 0 0;
+  background: #fff;
+}
+
+.luxor-contentWrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+}
+
+/* Top bar */
+.luxor-topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.luxor-tripsCount {
+  font-size: 13px;
+  font-weight: 600;
+  color: #272727;
+}
+
+.luxor-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(39, 39, 39, 0.55);
+}
+
+.luxor-breadcrumbLink {
+  color: rgba(39, 39, 39, 0.55);
+  text-decoration: none;
+
+  &:hover {
+    color: #1e659e;
+  }
+}
+
+.luxor-breadcrumbSep {
+  font-size: 11px;
+  color: rgba(39, 39, 39, 0.35);
+}
+
+.luxor-breadcrumbActive {
+  color: #1e659e;
+  font-weight: 600;
+}
+
+.luxor-sortWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.luxor-sortLabel {
+  font-size: 13px;
+  color: rgba(39, 39, 39, 0.65);
+  white-space: nowrap;
+}
+
+.luxor-selectWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.luxor-select {
+  appearance: none;
+  border: 1px solid rgba(30, 101, 158, 0.35);
+  border-radius: 6px;
+  padding: 6px 28px 6px 10px;
+  font-size: 12px;
+  color: #272727;
+  background: #fff;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    border-color: #1e659e;
+  }
+}
+
+.luxor-selectChevron {
+  position: absolute;
+  right: 8px;
+  pointer-events: none;
+  width: 12px;
+  height: 12px;
+  opacity: 0.5;
+}
+
+/* Trip Cards Grid */
+.luxor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 860px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card */
+.luxor-card {
+  background: #fff;
+  border: 1px solid rgba(15, 47, 68, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 47, 68, 0.06);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 8px 28px rgba(15, 47, 68, 0.13);
+  }
+}
+
+.luxor-cardImgWrap {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+
+.luxor-cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+
+  .luxor-card:hover & {
+    transform: scale(1.04);
+  }
+}
+
+.luxor-cardBody {
+  padding: 12px 14px 16px;
+}
+
+.luxor-cardTag {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(15, 47, 68, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.luxor-cardTitle {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f2f44;
+  line-height: 1.25;
+}
+
+.luxor-cardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 10px;
+  color: rgba(15, 47, 68, 0.6);
+  margin-bottom: 10px;
+}
+
+.luxor-cardMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.luxor-cardMetaIcon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.luxor-cardMetaDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(15, 47, 68, 0.3);
+  display: inline-block;
+}
+
+.luxor-cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 47, 68, 0.07);
+}
+
+.luxor-cardRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(15, 47, 68, 0.75);
+}
+
+.luxor-cardRatingIcon {
+  width: 13px;
+  height: 13px;
+}
+
+.luxor-cardPrice {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(15, 47, 68, 0.7);
+}
+
+.luxor-cardPriceIcon {
+  width: 13px;
+  height: 13px;
+}
+
+.luxor-cardPriceValue {
+  color: #1e659e;
+  font-weight: 800;
+}

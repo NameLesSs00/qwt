@@ -1,0 +1,263 @@
+.home-hero {
+  position: relative;
+  background-color: #ffffff;
+  padding: 40px 0 0;
+  overflow: hidden;
+  background-image: none;
+  box-shadow: none;
+
+  @media (max-width: 900px) {
+    padding: 32px 0 0;
+  }
+}
+
+.home-hero__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  min-height: 540px;
+  // Ensure content doesn't overflow during animation
+  position: relative; 
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 32px;
+    text-align: center;
+    min-height: auto;
+  }
+}
+
+.home-hero__content {
+  flex: 1;
+  max-width: 580px;
+  // Ensure absolute positioned animated children don't break flow
+  position: relative; 
+  min-height: 300px; // Prevent layout shift during animation
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    order: 1;
+    min-height: auto;
+  }
+}
+
+// Wrapper for Framer Motion to ensure absolute positioning doesn't collapse parent
+.home-hero__contentWrapper {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.home-hero__title {
+  margin: 0 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #0c2f44;
+  // Reserve space so layout doesn't jump while typing/erasing
+  min-height: 4.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  @media (max-width: 1024px) {
+    font-size: 48px;
+    min-height: 4em;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 34px;
+    min-height: 3.6em;
+  }
+}
+
+.home-hero__titleLast {
+  color: #1e659e;
+}
+
+.home-hero__desc {
+  margin: 24px 0 32px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(39, 39, 39, 0.8);
+  max-width: 440px;
+
+  @media (max-width: 900px) {
+    margin: 16px auto 26px;
+    font-size: 15px;
+  }
+}
+
+// ── Blinking cursor ──────────────────────────────────────────────
+@keyframes hero-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.home-hero__cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: #1e659e;
+  font-weight: 300;
+  animation: hero-blink 0.8s step-start infinite;
+  // Sits right after the last character, same baseline
+  vertical-align: baseline;
+
+  &--hidden {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+// ── Single CTA button ─────────────────────────────────────────────
+.home-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 36px;
+  background: #1e659e;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  // Box shadow gives a subtle lift; Framer Motion handles scale/translate
+  box-shadow: 0 4px 18px rgba(30, 101, 158, 0.35);
+  // No CSS transform transitions — let Framer Motion own that
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 28px rgba(30, 101, 158, 0.5);
+  }
+
+  @media (max-width: 640px) {
+    height: 46px;
+    padding: 0 28px;
+    font-size: 14px;
+  }
+}
+
+.home-hero__ctaIcon {
+  font-size: 17px;
+  // Slight nudge so arrow feels optically balanced
+  margin-top: 1px;
+}
+
+.home-hero__visual {
+  flex: 1.1;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -60px;
+
+  @media (max-width: 900px) {
+    margin-bottom: 0px;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    order: 0;
+  }
+}
+
+.hero-visual-frame {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  z-index: 5;
+
+  @media (max-width: 900px) {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+// Wrapper for the animated image content
+.hero-visual-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-hero__frameImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: var(--hero-image-position, center);
+  transform: scale(var(--hero-image-scale, 1));
+  display: block;
+}
+
+.home-hero__footer {
+  position: relative;
+  margin-top: -60px;
+  z-index: 5;
+
+  @media (max-width: 900px) {
+    margin-top: 24px;
+  }
+}
+
+.home-hero__dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  z-index: 5;
+  // Ensure dots stay on top during animations
+  position: relative; 
+}
+
+.home-hero__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  // Background color is now handled by Framer Motion animate prop
+  background: #cbd5e1; 
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  // Removed CSS transition to prevent conflict with Framer whileHover/Tap
+  // transition: all 0.2s ease; 
+  
+  // CSS fallback for active state if JS fails, but Framer overrides this
+  &.is-active {
+    background: #1e659e;
+  }
+  
+  // Hover state handled by Framer whileHover, but keeping CSS for non-active hover color
+  &:hover:not(.is-active) {
+    background: #94a3b8;
+  }
+}
+
+.home-hero__bgStrip {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.home-hero__bgStripImg {
+  width: 100%;
+  max-width: 1920px;
+  min-width: 1280px;
+  height: auto;
+  opacity: 0.6;
+  object-fit: cover; // Ensures it fills the space nicely if the ratio shifts
+}

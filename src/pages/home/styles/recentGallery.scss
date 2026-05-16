@@ -1,0 +1,257 @@
+.recent-gallery {
+  position: relative;
+  padding-top: 36px;
+  background-color: #fff;
+  overflow: hidden; /* prevents person from causing horizontal scroll natively */
+}
+
+.recent-gallery::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--recent-gallery-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.recent-gallery__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.recent-gallery__header {
+  text-align: center;
+}
+
+.recent-gallery__kicker {
+  margin: 0;
+  font-family: 'Montez', ui-serif, Georgia, 'Times New Roman', Times, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 100%;
+  color: #272727;
+}
+
+.recent-gallery__title {
+  margin: 8px 0 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e659e;
+}
+
+.recent-gallery__content {
+  margin-top: 36px;
+  position: relative;
+  /* Removed the 360px grid to allow absolute positioning of the person over the grid */
+}
+
+/* The Person Image overlaps the grid */
+.recent-gallery__left {
+  position: absolute;
+  left: -20px;
+  bottom: -40px; 
+  width: 380px;
+  pointer-events: none; /* Let clicks pass through to gallery items */
+  z-index: 10;
+  
+  @media (max-width: 1024px) {
+    display: block;
+    width: 280px;
+    left: -10px;
+    bottom: -20px;
+  }
+
+  @media (max-width: 560px) {
+    width: 180px;
+    left: -10px;
+    bottom: -10px;
+  }
+}
+
+.recent-gallery__person {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── Mosaic grid ─────────────────────────────────────────── */
+.recent-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(15, 40px); /* Added an extra row for the button */
+  gap: 20px;
+  position: relative;
+  margin-top: 40px;
+}
+
+.recent-gallery__item {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 10px 26px rgba(15, 47, 68, 0.12);
+  z-index: 2;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.recent-gallery__person-wrapper {
+  grid-column: 1 / span 5;
+  grid-row: 6 / -1;           /* Starts lower and spans to the very bottom row */
+  z-index: 10; 
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;     /* Anchors the guy to the bottom of the section */
+
+  .recent-gallery__person {
+    width: 140%;              /* Larger size to overlap and move left */
+    margin-left: -25%;        /* Pushes him further to the left edge */
+    height: auto;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+/* Specific Placements based on 12-column logic */
+
+/* Top Left Image (partially behind person) */
+.recent-gallery__item.is-aswan { grid-column: 1 / span 4; grid-row: 2 / span 4; }
+.recent-gallery__item.is-see   { grid-column: 5 / span 3; grid-row: 1 / span 7; }
+.recent-gallery__item.is-luxor { grid-column: 8 / span 5; grid-row: 1 / span 4; }
+.recent-gallery__item.is-safari { grid-column: 5 / span 3; grid-row: 8 / span 4; }
+.recent-gallery__item.is-dive { grid-column: 8 / span 3; grid-row: 5 / span 7; }
+.recent-gallery__item.is-temple { grid-column: 11 / span 2; grid-row: 5 / span 4; }
+
+/* ─── Tablet override (≤ 1024px) ─────────────────────────── */
+@media (max-width: 1024px) {
+  .recent-gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 200px 120px 150px 120px 150px;
+    gap: 16px;
+  }
+
+  .recent-gallery__item.is-aswan { grid-column: 1; grid-row: 1; }
+  .recent-gallery__item.is-see { grid-column: 2; grid-row: 1 / span 2; }
+  
+  .recent-gallery__item.is-dive { grid-column: 1; grid-row: 2 / span 2; }
+  .recent-gallery__item.is-luxor { grid-column: 2; grid-row: 3 / span 2; }
+  
+  .recent-gallery__item.is-safari { grid-column: 1; grid-row: 4 / span 2; }
+  .recent-gallery__item.is-temple { grid-column: 2; grid-row: 5; }
+  
+  .recent-gallery__more {
+    grid-column: 1 / span 2;
+    grid-row: 6;
+    margin-top: 20px;
+  }
+}
+
+/* ─── Mobile override (≤ 560px) ──────────────────────────── */
+@media (max-width: 560px) {
+  .recent-gallery__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: relative;
+    padding-bottom: 20px;
+  }
+  
+  .recent-gallery__item {
+    width: calc(50% - 5px);
+    height: 180px;
+  }
+
+  .recent-gallery__item.is-aswan,
+  .recent-gallery__item.is-see,
+  .recent-gallery__item.is-dive,
+  .recent-gallery__item.is-luxor,
+  .recent-gallery__item.is-safari,
+  .recent-gallery__item.is-temple {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .recent-gallery__item.is-see,
+  .recent-gallery__item.is-dive {
+    height: 220px;
+  }
+
+  .recent-gallery__person-wrapper {
+    position: absolute;
+    bottom: 106px; /* places him directly above the button */
+    left: 10%; /* moves him slightly central-left to match image */
+    transform: translateX(-50%);
+    width: 220px; /* appropriately large as shown in reference */
+    z-index: 100 !important;
+    display: block;
+    grid-column: auto;
+    grid-row: auto;
+
+    .recent-gallery__person {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  .recent-gallery__more {
+    width: 100%;
+    margin-top: 20px;
+    grid-column: auto;
+    grid-row: auto;
+    z-index: 10;
+  }
+}
+
+/* ─── "See More" button ─────────────────────────────────── */
+.recent-gallery__more {
+  grid-column: 5 / span 6;    /* Aligns exactly with safari and dive columns */
+  grid-row: 13;               /* Places button just below the images */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;                /* Keeps button clickable over the person wrapper */
+  margin-top: 20px; 
+  padding-bottom: 38px;
+}
+
+.recent-gallery__moreBtn {
+  width: 100%;
+  height: 48px; /* Slightly taller for modern look and better tap target */
+  border-radius: 999px;
+  border: 1px solid rgba(31, 108, 139, 0.55);
+  background: transparent;
+  color: #1f6c8b;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+
+
+  &:hover {
+    background: #1f6c8b;
+    border-color: #1f6c8b;
+    color: #fff; /* Inverted color on hover for better interaction feedback */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(31, 108, 139, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    background: #15556e;
+    border-color: #15556e;
+    box-shadow: none;
+  }
+}
