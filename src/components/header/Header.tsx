@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import logo from '../../assets/brand/logo.svg'
 import dropChevron from '../../assets/desinations/4.svg'
+import cartIcon from '../../assets/cart/cartIcon.png'
 
 import './header.scss'
 
@@ -133,11 +134,8 @@ export function Header() {
         </nav>
 
         <div className="site-header__actions">
-          <Link to="/sign-up" className="site-header__btnPrimary">
-            Sign Up
-          </Link>
-          <Link to="/login" className="site-header__btnOutline">
-            Login
+          <Link to="/cart" className="site-header__cartLink">
+            <img src={cartIcon} alt="Cart" />
           </Link>
           
           <button 
