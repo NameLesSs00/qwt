@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import footerLogo from '../../assets/footer/Logo.svg'
 
 import applePay from '../../assets/footer/logos_apple-pay.svg'
@@ -23,14 +24,14 @@ type LinkItem = {
 }
 
 const quickAction: LinkItem[] = [
-  { label: 'Home', href: '#' },
-  { label: 'Destinations', href: '#', hasMenu: true },
-  { label: 'Trips', href: '#' },
-  { label: 'Gallery', href: '#' },
-  { label: 'About Us', href: '#' },
-  { label: 'Blogs', href: '#' },
-  { label: 'Contact Us', href: '#' },
-  { label: 'FAQ', href: '#' },
+  { label: 'Home', href: '/' },
+  { label: 'Destinations', href: '/destinations' },
+  { label: 'Trips', href: '/trips' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'About Us', href: '/about-us' },
+  { label: 'Blogs', href: '/blogs' },
+  { label: 'Contact Us', href: '/contact-us' },
+  { label: 'FAQ', href: '/#faq' },
 ]
 
 export function Footer() {
@@ -52,10 +53,10 @@ export function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-white/80">
             {quickAction.map((item) => (
               <li key={item.label}>
-                <a href={item.href} className="inline-flex items-center gap-2 hover:text-white">
+                <Link to={item.href} className="inline-flex items-center gap-2 hover:text-white transition-colors">
                   <span>{item.label}</span>
                   {item.hasMenu ? <img src={arrowDownIcon} alt="" className="h-4 w-4 opacity-70" /> : null}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

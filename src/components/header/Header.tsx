@@ -25,7 +25,8 @@ const navItems: NavItem[] = [
     path: '/destinations',
     dropdownItems: [
       { label: 'Luxor', path: '/destinations/luxor' },
-      { label: 'Trip Details', path: '/destinations/trip-details' },
+      { label: 'Red Sea', path: '/destinations/red-sea' },
+      { label: 'Cairo', path: '/destinations/cairo' },
     ],
   },
   { label: 'Trips', path: '/trips' },
@@ -40,6 +41,12 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  /* Lock body scroll when mobile menu is open */
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [isMobileMenuOpen])
 
   /* Close on outside click */
   useEffect(() => {
@@ -80,30 +87,28 @@ export function Header() {
                   to={item.path}
                   aria-current={isActive ? 'page' : undefined}
                   className={`site-header__navLink ${isActive ? 'site-header__navLink--active' : ''}`}
-                  onClick={() => setOpenDropdown(null)}
+                  onClick={(e) => {
+                    if (hasDropdown) {
+                      if (!isOpen) {
+                        e.preventDefault()
+                        toggleDropdown(item.label)
+                      } else {
+                        setOpenDropdown(null)
+                      }
+                    } else {
+                      setOpenDropdown(null)
+                    }
+                  }}
                 >
                   <span>{item.label}</span>
-                </Link>
-
-                {/* Dropdown arrow – only shown if item has dropdown */}
-                {hasDropdown && (
-                  <button
-                    type="button"
-                    className={`site-header__dropIndicator ${isOpen ? 'site-header__dropIndicator--open' : ''}`}
-                    aria-label={`${isOpen ? 'Close' : 'Open'} ${item.label} menu`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      toggleDropdown(item.label)
-                    }}
-                  >
+                  {hasDropdown && (
                     <img
                       src={dropChevron}
                       alt=""
-                      className="site-header__dropChevron"
+                      className={`site-header__dropChevron ${isOpen ? 'is-open' : ''}`}
                     />
-                  </button>
-                )}
+                  )}
+                </Link>
 
                 {/* Dropdown panel */}
                 {hasDropdown && isOpen && (
@@ -156,14 +161,21 @@ export function Header() {
             <div key={item.label} className="site-header__mobileNavItem">
               {item.dropdownItems ? (
                 <>
-                  <button 
-                    type="button"
+                  <Link 
+                    to={item.path}
                     className="site-header__mobileNavLink"
-                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                    onClick={(e) => {
+                      if (openDropdown !== item.label) {
+                        e.preventDefault()
+                        setOpenDropdown(item.label)
+                      } else {
+                        setIsMobileMenuOpen(false)
+                      }
+                    }}
                   >
                     <span>{item.label}</span>
                     <ChevronDown size={14} style={{ transform: openDropdown === item.label ? 'rotate(180deg)' : 'none' }} />
-                  </button>
+                  </Link>
                   {openDropdown === item.label && (
                     <div className="site-header__mobileDropdown">
                       {item.dropdownItems.map((sub) => (

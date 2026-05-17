@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import bg      from '../../../assets/recentgallery/bg.png'
 import person  from '../../../assets/recentgallery/photo.png'
 import aswan   from '../../../assets/recentgallery/aswan.jpg'
@@ -8,6 +10,7 @@ import safari  from '../../../assets/recentgallery/safari.jpg'
 import see     from '../../../assets/recentgallery/see.jpg'
 import temple  from '../../../assets/recentgallery/temple.jpg'
 import { fadeUp, viewport } from '../../../lib/animations'
+import { ImageLightbox } from '../../../components/imageLightbox/ImageLightbox'
 import type { Variants } from 'framer-motion'
 import type React from 'react'
 import '../styles/recentGallery.scss'
@@ -35,6 +38,16 @@ const containerVariants: Variants = {
 }
 
 export function RecentGallery() {
+  const navigate = useNavigate()
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  const openLightbox = (idx: number) => setLightboxIndex(idx)
+  const closeLightbox = () => setLightboxIndex(null)
+  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % items.length : null)
+  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + items.length) % items.length : null)
+
+  const allImages = items.map(item => item.image)
+
   return (
     <section
       className="recent-gallery"
@@ -79,13 +92,18 @@ export function RecentGallery() {
           </motion.div>
 
           {/* Photo tiles */}
-          {items.map((item) => (
+          {items.map((item, idx) => (
             <motion.div
               key={item.id}
               className={`recent-gallery__item ${item.className}`}
               variants={tileVariants}
-              style={{ overflow: 'hidden' }}
+              style={{ overflow: 'hidden', cursor: 'pointer' }}
               whileHover={{ zIndex: 2, boxShadow: '0 16px 40px rgba(0,0,0,0.22)' }}
+              onClick={() => openLightbox(idx)}
+              role="button"
+              tabIndex={0}
+              aria-label={`View image ${item.alt}`}
+              onKeyDown={e => e.key === 'Enter' && openLightbox(idx)}
             >
               <motion.img
                 src={item.image}
@@ -108,6 +126,7 @@ export function RecentGallery() {
               whileHover={{ scale: 1.07, y: -2 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 380, damping: 18 }}
+              onClick={() => navigate('/gallery')}
             >
               See More
             </motion.button>
@@ -115,6 +134,15 @@ export function RecentGallery() {
         </motion.div>
 
       </div>
+
+      {/* Lightbox */}
+      <ImageLightbox
+        images={allImages}
+        activeIndex={lightboxIndex}
+        onClose={closeLightbox}
+        onNext={nextImage}
+        onPrev={prevImage}
+      />
     </section>
   )
 }

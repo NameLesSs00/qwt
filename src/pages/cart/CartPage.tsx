@@ -142,10 +142,10 @@ export function CartPage() {
           </div>
 
           {items.length > 0 && (
-            <button className="cart-page__checkoutBtn">
-              Proceed to check out
+            <Link to="/checkout" className="cart-page__checkoutBtn">
+              Proceed to checkout
               <img src={arrowRightIcon} alt="" />
-            </button>
+            </Link>
           )}
         </div>
 

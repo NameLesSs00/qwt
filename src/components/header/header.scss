@@ -99,26 +99,15 @@
   }
 }
 
-/* Dropdown indicator */
-.site-header__dropIndicator {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-  margin-left: -4px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
+/* Dropdown chevron */
 .site-header__dropChevron {
   width: 12px;
   height: 12px;
+  margin-left: 6px;
   opacity: 0.7;
   transition: transform 0.2s ease;
 
-  .site-header__dropIndicator--open & {
+  &.is-open {
     transform: rotate(180deg);
   }
 }

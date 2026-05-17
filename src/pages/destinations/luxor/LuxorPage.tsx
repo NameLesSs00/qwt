@@ -198,12 +198,12 @@ export function LuxorPage() {
                       <img src={iconClock} alt="" aria-hidden="true" className="luxor-cardMetaIcon" />
                       {trip.duration}
                     </span>
-                    <span className="luxor-cardMetaDot" aria-hidden="true" />
+                    <span className="luxor-cardMetaSeparator" aria-hidden="true">|</span>
                     <span className="luxor-cardMetaItem">
                       <img src={iconPin} alt="" aria-hidden="true" className="luxor-cardMetaIcon" />
                       {trip.location}
                     </span>
-                    <span className="luxor-cardMetaDot" aria-hidden="true" />
+                    <span className="luxor-cardMetaSeparator" aria-hidden="true">|</span>
                     <span className="luxor-cardMetaItem">
                       <img src={iconGroup} alt="" aria-hidden="true" className="luxor-cardMetaIcon" />
                       {trip.groupType}

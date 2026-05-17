@@ -72,16 +72,16 @@
   cursor: pointer;
   // Remove default transition to avoid conflict with Framer
   // transition: background 160ms ease, color 160ms ease;
-  
+
   &:hover {
     background: rgba(31, 108, 139, 0.08);
   }
-  
+
   &.is-active {
     background: #1f6c8b;
     color: #fff;
   }
-  
+
   // Prevent text selection during rapid clicks
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -95,19 +95,19 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
-  
+
   &.is-marquee {
     animation: marquee 40s linear infinite;
-    
+
     &:hover {
       animation-play-state: paused;
     }
-    
+
     @media (max-width: 1024px) {
       animation-duration: 30s;
     }
   }
-  
+
   &.is-centered {
     width: 100%;
     justify-content: center;
@@ -115,7 +115,7 @@
     animation: none;
     padding: 0 48px;
   }
-  
+
   @media (max-width: 768px) {
     animation: none !important;
     width: 100%;
@@ -130,6 +130,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -161,12 +162,12 @@
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: transform 300ms ease, box-shadow 300ms ease;
-  
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   }
-  
+
   @media (max-width: 640px) {
     width: 100%;
     flex: 1 1 100%;
@@ -193,7 +194,7 @@
 .tour-card__ribbon {
   position: absolute;
   top: 12px;
-  right: 12px;
+  right: 24px;
   width: 28px;
   height: 58px;
   background: linear-gradient(180deg, #FFFEFE 5%, #FF9545 80%);
@@ -204,7 +205,7 @@
   justify-content: center;
   padding-top: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  
+
   span {
     font-size: 10px;
     font-weight: 600;
@@ -247,7 +248,7 @@
   align-items: center;
   gap: 6px;
   position: relative;
-  
+
   &:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -265,7 +266,7 @@
   height: 16px;
   display: inline-flex;
   color: rgba(15, 47, 68, 0.55);
-  
+
   svg {
     width: 16px;
     height: 16px;
@@ -288,7 +289,7 @@
   font-size: 14px;
   font-weight: 700;
   color: rgba(15, 47, 68, 0.8);
-  
+
   img {
     width: 18px;
     height: 18px;
@@ -339,7 +340,7 @@
   border: 0;
   background: #1e659e;
   color: #fff;
-  
+
   &:hover {
     background: #1a5c75;
     box-shadow: 0 4px 12px rgba(30, 101, 158, 0.3);
@@ -351,7 +352,7 @@
   background: transparent;
   color: #1e659e;
   text-transform: none;
-  
+
   &:hover {
     background: rgba(30, 101, 158, 0.06);
   }
@@ -375,7 +376,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: all 160ms ease;
-  
+
   &:hover {
     background: rgba(31, 108, 139, 0.06);
     border-color: #1a5c75;

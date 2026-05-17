@@ -65,13 +65,13 @@
   }
 
   &__left {
-    flex: 0 0 925px;
-    width: 925px;
+    flex: 1;
+    width: 100%;
+    max-width: 60%;
     z-index: 2;
 
     @media (max-width: 1200px) {
-      width: 100%;
-      flex: 1;
+      max-width: 100%;
     }
   }
 
@@ -137,9 +137,11 @@
     bottom: -1px; 
     z-index: 1;
     pointer-events: none;
+    max-width: 38%;
 
     img {
       height: 473px;
+      max-width: 100%;
       width: auto;
       object-fit: contain;
       display: block; 

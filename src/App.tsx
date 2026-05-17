@@ -4,7 +4,6 @@ import { HomePage } from './pages/home/HomePage'
 import { DestinationsPage } from './pages/destinations/DestinationsPage'
 import { LuxorPage } from './pages/destinations/luxor/LuxorPage'
 import { TripDetailsPage } from './pages/destinations/tripDetails/TripDetailsPage'
-import { LoginPage } from './pages/auth/LoginPage'
 import { ContactUsPage } from './pages/contactUs/ContactUsPage'
 import { AboutUsPage } from './pages/aboutUs/AboutUsPage'
 import { GalleryPage } from './pages/gallery/GalleryPage'
@@ -23,7 +22,6 @@ function App() {
         <Route path="/destinations" element={<DestinationsPage />} />
         <Route path="/destinations/luxor" element={<LuxorPage />} />
         <Route path="/destinations/trip-details" element={<TripDetailsPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/gallery" element={<GalleryPage />} />

@@ -80,7 +80,6 @@ export function PlanBanner() {
               transition={{ type: 'spring', stiffness: 380, damping: 18 }}
             >
               Book Now
-              <span className="plan-banner__arrow" aria-hidden="true">→</span>
             </motion.button>
           </motion.div>
 

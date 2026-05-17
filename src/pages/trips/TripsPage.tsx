@@ -8,6 +8,7 @@ import {
 import imgHero from '../../assets/trips/Frame 140.png';
 import imgTrip from '../../assets/trips/Frame 23.png';
 import iconRibbon from '../../assets/trips/Frame 24.svg';
+import iconFilter from '../../assets/trips/mage_filter.png';
 
 import './tripsPage.scss';
 
@@ -29,6 +30,7 @@ export function TripsPage() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['Safari Trips']);
 
   const [duration, setDuration] = useState(1);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -108,7 +110,10 @@ export function TripsPage() {
           <div className="trips-splitLayout">
             
             {/* ── Left Sidebar (Filter) ── */}
-            <aside className="trips-sidebar">
+            {isMobileFilterOpen && (
+              <div className="trips-sidebarOverlay" onClick={() => setIsMobileFilterOpen(false)}></div>
+            )}
+            <aside className={`trips-sidebar ${isMobileFilterOpen ? 'trips-sidebar--open' : ''}`}>
               <div className="trips-sbHeader">
                 <h3 className="trips-sbTitle">Filter</h3>
                 <button className="trips-sbClear" onClick={clearFilters}>Clear all filter</button>
@@ -199,15 +204,20 @@ export function TripsPage() {
               <div className="trips-sbGroup">
                 <h4 className="trips-sbGroupHeading">Duration</h4>
                 <div className="trips-sbDurationRow">
-                  <div className="trips-sbStepper">
+                  <div className="trips-sbStepperGroup">
                     <button type="button" onClick={decreaseDuration}><Minus size={14} /></button>
-                    <input type="text" readOnly value={duration} />
+                    <div className="trips-sbStepperDivider"></div>
                     <button type="button" onClick={increaseDuration}><Plus size={14} /></button>
                   </div>
+                  <input type="text" className="trips-sbDurationInput" readOnly value={duration} />
                   <span className="trips-sbDurationUnit">Day</span>
                 </div>
               </div>
 
+              {/* Mobile Apply Button */}
+              <div className="trips-sbMobileApply">
+                <button type="button" onClick={() => setIsMobileFilterOpen(false)}>Apply</button>
+              </div>
             </aside>
 
             {/* ── Main Content (Grid) ── */}
@@ -217,16 +227,17 @@ export function TripsPage() {
               <div className="trips-toolbar">
                 <span className="trips-resultCount">{filteredTrips.length} Trips Found</span>
                 
-                <div className="trips-toolbarRight">
-                  <div className="trips-searchBox">
-                    <Search size={16} color="#94a3b8" />
-                    <input 
-                      type="text" 
-                      placeholder="Search" 
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
+                <div className="trips-searchBox">
+                  <Search size={16} color="#94a3b8" />
+                  <input 
+                    type="text" 
+                    placeholder="Search" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+
+                <div className="trips-sortControlWrap">
                   <div className="trips-sortControl">
                     <span className="trips-sortLabel">Sort by</span>
                     <div className="trips-sortDropdown" style={{ position: 'relative' }} onClick={() => setSortDropdownOpen(!sortDropdownOpen)}>
@@ -240,6 +251,9 @@ export function TripsPage() {
                       )}
                     </div>
                   </div>
+                  <button className="trips-mobileFilterBtn" onClick={() => setIsMobileFilterOpen(true)}>
+                    <img src={iconFilter} alt="Filter" />
+                  </button>
                 </div>
               </div>
 
@@ -250,7 +264,6 @@ export function TripsPage() {
                     <Link to={`/trips/${trip.id}`} className="trips-cardImageWrap" style={{ textDecoration: 'none', display: 'block' }}>
                       <img src={trip.image} alt={trip.title} className="trips-cardImage" />
                       <div className="trips-cardRibbon">
-                        <img src={iconRibbon} alt="Ribbon" />
                         <span>T.R</span>
                       </div>
                     </Link>
@@ -263,27 +276,29 @@ export function TripsPage() {
                       
                       <div className="trips-cardMetaRow">
                         <span className="trips-cardMeta">
-                          <Clock size={12} /> {trip.time}
+                          <Clock size={16} /> {trip.time}
                         </span>
-                        <span className="trips-cardMeta trips-cardMeta--sep">
-                          <MapPin size={12} /> {trip.location}
+                        <span className="trips-cardMetaSeparator">|</span>
+                        <span className="trips-cardMeta">
+                          <MapPin size={16} /> {trip.location}
                         </span>
-                        <span className="trips-cardMeta trips-cardMeta--sep">
-                          <User size={12} /> {trip.tourType}
+                        <span className="trips-cardMetaSeparator">|</span>
+                        <span className="trips-cardMeta">
+                          <User size={16} /> {trip.tourType}
                         </span>
                       </div>
 
                       <div className="trips-cardFooterRow">
                         <div className="trips-cardRating">
-                          <Star size={14} fill="#f59e0b" color="#f59e0b" />
+                          <Star size={18} fill="#f59e0b" color="#f59e0b" />
                           <span>{trip.rating} <span className="trips-cardReviews">({trip.reviews} Review)</span></span>
                         </div>
                         <div className="trips-cardPrice">
-                          $ {trip.price} USA
+                          <span className="trips-cardPriceSymbol">$</span> <span className="trips-cardPriceValue">{trip.price} USA</span>
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div className="trips-cardActionBtns">
                         <Link to={`/trips/${trip.id}`} className="trips-bookBtn" style={{ textDecoration: 'none', textAlign: 'center' }}>Book Now</Link>
                         <button className="trips-addCartBtn">Add To cart</button>
                       </div>

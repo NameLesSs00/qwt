@@ -38,7 +38,7 @@ const descVariants: Variants = {
 }
 
 // ── Hook: typewriter ──────────────────────────────────────────────
-function useTypewriter(fullText: string, onDone: () => void) {
+function useTypewriter(fullText: string, onDone: () => void, isPaused: boolean) {
   const [displayed, setDisplayed]   = useState('')
   const [phase, setPhase]           = useState<'typing' | 'pausing' | 'erasing'>('typing')
   const fullTextRef                  = useRef(fullText)
@@ -69,8 +69,10 @@ function useTypewriter(fullText: string, onDone: () => void) {
         timer = setTimeout(() => setPhase('pausing'), PAUSE_AFTER_MS)
       }
     } else if (phase === 'pausing') {
-      // After pause, start erasing
-      timer = setTimeout(() => setPhase('erasing'), 0)
+      // After pause, start erasing ONLY if not hovered
+      if (!isPaused) {
+        timer = setTimeout(() => setPhase('erasing'), 0)
+      }
     } else {
       // Erasing
       if (displayed.length > 0) {
@@ -80,12 +82,14 @@ function useTypewriter(fullText: string, onDone: () => void) {
         )
       } else {
         // Fully erased → signal parent to advance slide
-        timer = setTimeout(() => onDoneRef.current(), PAUSE_SLIDE_MS)
+        if (!isPaused) {
+          timer = setTimeout(() => onDoneRef.current(), PAUSE_SLIDE_MS)
+        }
       }
     }
 
     return () => clearTimeout(timer)
-  }, [displayed, phase])
+  }, [displayed, phase, isPaused])
 
   return { displayed, phase }
 }
@@ -136,7 +140,7 @@ export function HeroSlider() {
 
   const currentSlide = slides[activeIndex]
 
-  const { displayed, phase } = useTypewriter(currentSlide.title, advanceSlide)
+  const { displayed, phase } = useTypewriter(currentSlide.title, advanceSlide, isPaused)
 
   // Colorize the last word of the displayed portion
   const words        = displayed.split(' ')
@@ -161,7 +165,7 @@ export function HeroSlider() {
                 <span className="home-hero__titleLast">{lastWord}</span>
               </>
             ) : (
-              <span>{displayed}</span>
+              <span>{displayed || '\u200B'}</span>
             )}
             {/* Blinking cursor */}
             <span
