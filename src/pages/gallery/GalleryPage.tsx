@@ -1,30 +1,41 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown, Plus, Loader2 } from 'lucide-react';
 import { motion } from "motion/react";
 import { ImageLightbox } from '../../components/imageLightbox/ImageLightbox'
+import { getGalleryImages, getAbsoluteImageUrl, type GalleryImageDto } from '../../api/galleryApi'
 import imgBg from '../../assets/gallery/bg.png';
-import img1 from '../../assets/gallery/1.jpg';
-import img2 from '../../assets/gallery/2.jpg';
-import img3 from '../../assets/gallery/3.jpg';
-import img4 from '../../assets/gallery/4.jpg';
-import img5 from '../../assets/gallery/5.jpg';
-import img6 from '../../assets/gallery/6.jpg';
-import img7 from '../../assets/gallery/7.jpg';
-import img8 from '../../assets/gallery/8.jpg';
-import img9 from '../../assets/gallery/9.jpg';
 
 import './galleryPage.scss';
 
-const allImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img1, img2, img3, img4, img5]
-
 export function GalleryPage() {
+  const [images, setImages] = useState<GalleryImageDto[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    async function loadImages() {
+      try {
+        setLoading(true)
+        const data = await getGalleryImages()
+        setImages(data)
+      } catch (err) {
+        setError('Failed to load gallery images.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadImages()
+  }, [])
 
   const openLightbox = (idx: number) => setLightboxIndex(idx)
   const closeLightbox = () => setLightboxIndex(null)
-  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % allImages.length : null)
-  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + allImages.length) % allImages.length : null)
+  
+  const absoluteImageUrls = images.map(img => getAbsoluteImageUrl(img.imageUrl))
+  
+  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % absoluteImageUrls.length : null)
+  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + absoluteImageUrls.length) % absoluteImageUrls.length : null)
 
   return (
     <motion.div
@@ -82,7 +93,7 @@ export function GalleryPage() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="gallery-toolbar"
           >
-            <div className="gallery-resultCount">{allImages.length} Result</div>
+            <div className="gallery-resultCount">{images.length} Result{images.length !== 1 && 's'}</div>
             <div className="gallery-sortControl">
               <span className="gallery-sortLabel">Sort by</span>
               <div className="gallery-sortDropdown">
@@ -92,75 +103,78 @@ export function GalleryPage() {
             </div>
           </motion.div>
 
-          {/* Masonry Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ staggerChildren: 0.06 }}
-            className="gallery-masonry"
-          >
-            {allImages.map((imgSrc, idx) => (
-              <motion.div
-                key={idx}
-                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
-                whileHover="hover"
-                className="gallery-masonryItem"
-                onClick={() => openLightbox(idx)}
-                role="button"
-                tabIndex={0}
-                aria-label={`View image ${idx + 1}`}
-                onKeyDown={e => e.key === 'Enter' && openLightbox(idx)}
-                style={{ cursor: 'pointer' }}
-              >
-                <motion.img
-                  variants={{ hover: { scale: 1.04 } }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  src={imgSrc}
-                  alt={`Gallery item ${idx + 1}`}
-                  className="gallery-img"
-                />
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}>
+              <Loader2 className="animate-spin" size={36} color="#1e659e" />
+            </div>
+          ) : error ? (
+            <div style={{ color: '#ef4444', textAlign: 'center', padding: '40px', background: '#fef2f2', borderRadius: '12px', border: '1px solid #fee2e2' }}>
+              {error}
+            </div>
+          ) : images.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px', background: '#f8fafc', borderRadius: '12px', color: '#64748b' }}>
+              No images in the gallery yet.
+            </div>
+          ) : (
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ staggerChildren: 0.06 }}
+              className="gallery-masonry"
+            >
+              {images.map((img, idx) => (
                 <motion.div
-                  variants={{ hover: { opacity: 1 } }}
-                  transition={{ duration: 0.25 }}
-                  className="gallery-imgOverlay"
+                  key={img.id}
+                  variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  whileHover="hover"
+                  className="gallery-masonryItem"
+                  onClick={() => openLightbox(idx)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View image ${idx + 1}`}
+                  onKeyDown={e => e.key === 'Enter' && openLightbox(idx)}
+                  style={{ cursor: 'pointer' }}
                 >
+                  <motion.img
+                    variants={{ hover: { scale: 1.04 } }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    src={getAbsoluteImageUrl(img.imageUrl)}
+                    alt={`Gallery item ${idx + 1}`}
+                    className="gallery-img"
+                  />
                   <motion.div
-                    variants={{ hover: { scale: 1.06 } }}
+                    variants={{ hover: { opacity: 1 } }}
                     transition={{ duration: 0.25 }}
-                    className="gallery-zoomIcon"
+                    className="gallery-imgOverlay"
                   >
-                    <Plus size={24} />
+                    <motion.div
+                      variants={{ hover: { scale: 1.06 } }}
+                      transition={{ duration: 0.25 }}
+                      className="gallery-zoomIcon"
+                    >
+                      <Plus size={24} />
+                    </motion.div>
                   </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* See More Button */}
-          <div className="gallery-actionRow">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="gallery-seeMoreBtn"
-              type="button"
-            >
-              See More
-            </motion.button>
-          </div>
+              ))}
+            </motion.div>
+          )}
 
         </div>
       </section>
 
       {/* Lightbox */}
-      <ImageLightbox
-        images={allImages}
-        activeIndex={lightboxIndex}
-        onClose={closeLightbox}
-        onNext={nextImage}
-        onPrev={prevImage}
-      />
+      {absoluteImageUrls.length > 0 && (
+        <ImageLightbox
+          images={absoluteImageUrls}
+          activeIndex={lightboxIndex}
+          onClose={closeLightbox}
+          onNext={nextImage}
+          onPrev={prevImage}
+        />
+      )}
 
     </motion.div>
   );

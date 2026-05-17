@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X, Globe } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import logo from '../../assets/brand/logo.svg'
 import dropChevron from '../../assets/desinations/4.svg'
 import cartIcon from '../../assets/cart/cartIcon.png'
@@ -31,6 +32,7 @@ const navItems: NavItem[] = [
   },
   { label: 'Trips', path: '/trips' },
   { label: 'Gallery', path: '/gallery' },
+  { label: 'FAQ', path: '/faq' },
   { label: 'Blogs', path: '/blogs' },
   { label: 'About Us', path: '/about-us' },
   { label: 'Contact Us', path: '/contact-us' },
@@ -38,8 +40,10 @@ const navItems: NavItem[] = [
 
 export function Header() {
   const { pathname } = useLocation()
+  const { i18n } = useTranslation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   /* Lock body scroll when mobile menu is open */
@@ -53,6 +57,7 @@ export function Header() {
     function handleClick(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpenDropdown(null)
+        setLangDropdownOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClick)
@@ -139,7 +144,43 @@ export function Header() {
         </nav>
 
         <div className="site-header__actions">
-          <Link to="/cart" className="site-header__cartLink">
+          
+          {/* Language Switcher */}
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <button
+              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', color: '#0f2f44', fontWeight: 500, fontSize: '14px' }}
+              aria-label="Change Language"
+            >
+              <Globe size={18} />
+              <span style={{ textTransform: 'uppercase' }}>{i18n.language || 'en'}</span>
+            </button>
+            
+            {langDropdownOpen && (
+              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '12px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', padding: '8px 0', minWidth: '120px', zIndex: 50 }}>
+                {[
+                  { code: 'en', label: 'English' },
+                  { code: 'fr', label: 'Français' },
+                  { code: 'ru', label: 'Русский' },
+                  { code: 'ro', label: 'Română' }
+                ].map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => {
+                      i18n.changeLanguage(lang.code)
+                      setLangDropdownOpen(false)
+                      window.location.reload()
+                    }}
+                    style={{ display: 'block', width: '100%', textAlign: 'left', padding: '8px 16px', background: i18n.language === lang.code ? '#f8fafc' : 'none', border: 'none', cursor: 'pointer', fontSize: '14px', color: '#0f2f44' }}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link to="/cart" className="site-header__cartLink" style={{ marginLeft: '12px' }}>
             <img src={cartIcon} alt="Cart" />
           </Link>
           

@@ -1,24 +1,28 @@
-import { useMemo, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import icon     from '../../../assets/ask/icon.svg'
-import askImage from '../../../assets/ask/imageAsk.png'
+import { Link } from 'react-router-dom'
+import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react'
+import { getQuestions, type DtoQuestionRead } from '../../../api/questionsApi'
 import { fadeUp, fadeRight, stagger, springUp, viewport } from '../../../lib/animations'
+import icon from '../../../assets/ask/icon.svg'
+import askImage from '../../../assets/ask/imageAsk.png'
 import '../styles/ask.scss'
 
-type FaqItem = { id: string; q: string; a: string }
-
 export function Ask() {
-  const items: FaqItem[] = useMemo(
-    () => [
-      { id: 'safe',     q: 'Is the hot air balloon ride safe?',    a: 'Yes, the ride is operated by licensed and experienced pilots and follows strict safety regulations.'                                              },
-      { id: 'start',    q: 'What time does the tour start?',       a: 'Most tours start early in the morning. Exact pickup time will be confirmed after booking based on your location.'                                },
-      { id: 'pickup',   q: 'Do you provide hotel pickup?',         a: 'Yes. Pickup and drop-off are available for most experiences. Details depend on the tour and your accommodation.'                                 },
-      { id: 'duration', q: 'How long is the balloon ride?',        a: 'The flight typically lasts around 45–60 minutes depending on weather conditions and air-traffic permissions.'                                    },
-    ],
-    [],
-  )
+  const [questions, setQuestions] = useState<DtoQuestionRead[]>([])
+  const [loading, setLoading] = useState(true)
+  const [openId, setOpenId] = useState<number | null>(null)
 
-  const [openId, setOpenId] = useState<string>(items[0]?.id ?? '')
+  useEffect(() => {
+    getQuestions(1, 5)
+      .then(res => {
+        const items = res.data || []
+        setQuestions(items)
+        if (items.length > 0) setOpenId(items[0].id)
+      })
+      .catch(() => setQuestions([]))
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <section className="home-ask">
@@ -50,7 +54,7 @@ export function Ask() {
 
         <div className="home-ask__content">
 
-          {/* FAQ list – stagger spring up */}
+          {/* FAQ list */}
           <motion.div
             className="home-ask__left"
             variants={stagger(0.14, 0.05)}
@@ -58,51 +62,88 @@ export function Ask() {
             whileInView="visible"
             viewport={viewport}
           >
-            <div className="home-ask__faq" role="list">
-              {items.map((it) => {
-                const isOpen = it.id === openId
-                return (
-                  <motion.div
-                    key={it.id}
-                    className={`home-ask__item ${isOpen ? 'is-open' : ''}`}
-                    variants={springUp}
-                  >
-                    <button
-                      className="home-ask__question"
-                      onClick={() => setOpenId(isOpen ? '' : it.id)}
-                    >
-                      <span>{it.q}</span>
-                      <motion.span
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            {loading ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[1, 2, 3].map(i => (
+                  <div key={i} style={{ height: '56px', background: '#e2e8f0', borderRadius: '8px', animation: 'pulse 1.5s ease-in-out infinite' }} />
+                ))}
+              </div>
+            ) : questions.length === 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 0', color: '#64748b' }}>
+                <HelpCircle size={40} style={{ opacity: 0.4 }} />
+                <p style={{ margin: 0, fontSize: '15px' }}>No questions available yet.</p>
+              </div>
+            ) : (
+              <>
+                <div className="home-ask__faq" role="list">
+                  {questions.map((item) => {
+                    const isOpen = item.id === openId
+                    return (
+                      <motion.div
+                        key={item.id}
+                        className={`home-ask__item ${isOpen ? 'is-open' : ''}`}
+                        variants={springUp}
                       >
-                        ˅
-                      </motion.span>
-                    </button>
-
-                    {/* Smooth expand/collapse */}
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          className="home-ask__answer"
-                          key="answer"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.35, ease: 'easeInOut' }}
-                          style={{ overflow: 'hidden' }}
+                        <button
+                          className="home-ask__question"
+                          onClick={() => setOpenId(isOpen ? null : item.id)}
                         >
-                          {it.a}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                )
-              })}
-            </div>
+                          <span>{item.text}</span>
+                          <motion.span
+                            animate={{ rotate: isOpen ? 180 : 0 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                          >
+                            <ChevronDown size={18} />
+                          </motion.span>
+                        </button>
+
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.div
+                              className="home-ask__answer"
+                              key="answer"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.35, ease: 'easeInOut' }}
+                              style={{ overflow: 'hidden' }}
+                            >
+                              {item.answer}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+
+                {/* View All Link */}
+                <motion.div variants={fadeUp} style={{ marginTop: '24px' }}>
+                  <Link
+                    to="/faq"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#1e659e',
+                      fontWeight: 600,
+                      fontSize: '15px',
+                      textDecoration: 'none',
+                      borderBottom: '2px solid transparent',
+                      paddingBottom: '2px',
+                      transition: 'border-color 0.2s'
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = '#1e659e')}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = 'transparent')}
+                  >
+                    View All FAQs <ArrowRight size={16} />
+                  </Link>
+                </motion.div>
+              </>
+            )}
           </motion.div>
 
-          {/* Illustration – slides from right */}
+          {/* Illustration */}
           <motion.div
             className="home-ask__illustrations"
             aria-hidden="true"

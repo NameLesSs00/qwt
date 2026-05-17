@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { getGalleryImages, getAbsoluteImageUrl } from '../../../api/galleryApi'
 import bg      from '../../../assets/recentgallery/bg.png'
 import person  from '../../../assets/recentgallery/photo.png'
 import aswan   from '../../../assets/recentgallery/aswan.jpg'
@@ -15,9 +16,8 @@ import type { Variants } from 'framer-motion'
 import type React from 'react'
 import '../styles/recentGallery.scss'
 
-type GalleryItem = { id: string; image: string; alt: string; className: string }
-
-const items: GalleryItem[] = [
+// Fallback images in case the API has no images yet
+const fallbackItems = [
   { id: 'aswan',  image: aswan,  alt: 'Aswan',   className: 'is-aswan'  },
   { id: 'see',    image: see,    alt: 'Walkway',  className: 'is-see'    },
   { id: 'temple', image: temple, alt: 'Temple',   className: 'is-temple' },
@@ -25,6 +25,8 @@ const items: GalleryItem[] = [
   { id: 'safari', image: safari, alt: 'Safari',   className: 'is-safari' },
   { id: 'dive',   image: dive,   alt: 'Diving',   className: 'is-dive'   },
 ]
+
+const layoutClasses = ['is-aswan', 'is-see', 'is-temple', 'is-luxor', 'is-safari', 'is-dive']
 
 // Each tile enters from a slightly different angle
 const tileVariants: Variants = {
@@ -40,13 +42,45 @@ const containerVariants: Variants = {
 export function RecentGallery() {
   const navigate = useNavigate()
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [displayItems, setDisplayItems] = useState<{ id: string; image: string; alt: string; className: string }[]>([])
+
+  useEffect(() => {
+    async function loadImages() {
+      try {
+        const apiImages = await getGalleryImages()
+        if (apiImages && apiImages.length > 0) {
+          // Strictly show ONLY featured images on the homepage
+          const featured = apiImages.filter(img => img.isFeatured).slice(0, 6)
+          
+          if (featured.length > 0) {
+            const itemsMapped = featured.map((img, idx) => ({
+              id: String(img.id),
+              image: getAbsoluteImageUrl(img.imageUrl),
+              alt: `Gallery Item ${img.id}`,
+              className: layoutClasses[idx] || 'is-aswan'
+            }))
+            setDisplayItems(itemsMapped)
+          } else {
+            setDisplayItems(fallbackItems)
+          }
+        } else {
+          setDisplayItems(fallbackItems)
+        }
+      } catch (err) {
+        console.error('Failed to load gallery images for homepage, using fallbacks', err)
+        setDisplayItems(fallbackItems)
+      }
+    }
+    loadImages()
+  }, [])
 
   const openLightbox = (idx: number) => setLightboxIndex(idx)
   const closeLightbox = () => setLightboxIndex(null)
-  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % items.length : null)
-  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + items.length) % items.length : null)
-
-  const allImages = items.map(item => item.image)
+  
+  const allImages = displayItems.map(item => item.image)
+  
+  const nextImage = () => setLightboxIndex(prev => prev !== null ? (prev + 1) % allImages.length : null)
+  const prevImage = () => setLightboxIndex(prev => prev !== null ? (prev - 1 + allImages.length) % allImages.length : null)
 
   return (
     <section
@@ -92,7 +126,7 @@ export function RecentGallery() {
           </motion.div>
 
           {/* Photo tiles */}
-          {items.map((item, idx) => (
+          {displayItems.map((item, idx) => (
             <motion.div
               key={item.id}
               className={`recent-gallery__item ${item.className}`}
@@ -136,13 +170,15 @@ export function RecentGallery() {
       </div>
 
       {/* Lightbox */}
-      <ImageLightbox
-        images={allImages}
-        activeIndex={lightboxIndex}
-        onClose={closeLightbox}
-        onNext={nextImage}
-        onPrev={prevImage}
-      />
+      {allImages.length > 0 && (
+        <ImageLightbox
+          images={allImages}
+          activeIndex={lightboxIndex}
+          onClose={closeLightbox}
+          onNext={nextImage}
+          onPrev={prevImage}
+        />
+      )}
     </section>
   )
 }

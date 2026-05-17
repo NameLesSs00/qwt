@@ -1,36 +1,115 @@
 import axios from 'axios';
 
-const axiosClient = axios.create({
-  baseURL: import.meta.env.MODE === 'development' ? '/api' : 'https://travelapi.runasp.net/api',
+// ── Base URL ─────────────────────────────────────────────────────────────────
+// Production: https://travelapi.runasp.net/api
+// Development: proxied through Vite to /api
+export const BASE_URL =
+  import.meta.env.MODE === 'development'
+    ? '/api'
+    : 'https://travelapi.runasp.net/api';
+
+// ── Public customer client ────────────────────────────────────────────────────
+export const axiosClient = axios.create({
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'text/plain',
+    Accept: 'text/plain',
   },
 });
 
-// Request interceptor to attach token
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) {
-    if (config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  const lang = localStorage.getItem('i18nextLng') || 'en';
+  if (config.headers && !config.headers['Accept-Language']) {
+    config.headers['Accept-Language'] = lang;
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
 });
 
-// Response interceptor
-axiosClient.interceptors.response.use((response) => {
-  return response;
-}, (error) => {
-  // Handle global API errors here (e.g., redirect to login on 401)
-  if (error.response && error.response.status === 401) {
-    localStorage.removeItem('token');
-    // Optionally redirect to login, but handling this via Redux state is cleaner.
+axiosClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+    }
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
+);
+
+// ── Admin client (JWT + silent refresh) ──────────────────────────────────────
+export const adminAxiosClient = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 });
+
+// Attach admin access token and language to every request
+adminAxiosClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  const lang = localStorage.getItem('i18nextLng') || 'en';
+  if (config.headers && !config.headers['Accept-Language']) {
+    config.headers['Accept-Language'] = lang;
+  }
+  return config;
+});
+
+// On 401: silently attempt token refresh, then retry original request.
+// If refresh also fails → redirect to /404 (hides admin panel existence).
+adminAxiosClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const original = error.config;
+
+    // Do not trigger global 401 redirect logic for auth endpoints
+    if (
+      original.url?.includes('/Auth/login') ||
+      original.url?.includes('/Auth/refresh') ||
+      original.url?.includes('/Auth/logout')
+    ) {
+      return Promise.reject(error);
+    }
+
+    if (error.response?.status === 401 && !original._retry) {
+      original._retry = true;
+      const refreshToken = localStorage.getItem('adminRefreshToken');
+
+      if (refreshToken) {
+        try {
+          // POST /api/Auth/refresh — body: { refreshToken }
+          // Response: { success, data: { accesstoken } }  ← spec uses lowercase 't'
+          const { data } = await axios.post(
+            `${BASE_URL}/Auth/refresh`,
+            { refreshToken },
+            { headers: { 'Content-Type': 'application/json' } }
+          );
+
+          const newAccessToken = data?.data?.accesstoken ?? data?.data?.accessToken;
+          if (!newAccessToken) throw new Error('No access token in refresh response');
+
+          localStorage.setItem('adminToken', newAccessToken);
+          original.headers.Authorization = `Bearer ${newAccessToken}`;
+          return adminAxiosClient(original);
+        } catch {
+          // Refresh failed — clear all admin session data
+        }
+      }
+
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminRefreshToken');
+      // Security: redirect to 404 — do not reveal /admin/login exists
+      window.location.href = '/404';
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosClient;

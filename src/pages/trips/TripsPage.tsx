@@ -7,7 +7,6 @@ import {
 
 import imgHero from '../../assets/trips/Frame 140.png';
 import imgTrip from '../../assets/trips/Frame 23.png';
-import iconRibbon from '../../assets/trips/Frame 24.svg';
 import iconFilter from '../../assets/trips/mage_filter.png';
 
 import './tripsPage.scss';
