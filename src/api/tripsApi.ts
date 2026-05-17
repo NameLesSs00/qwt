@@ -59,7 +59,7 @@ export interface DtoTripCreate {
   includes?: TranslationInputDto[];
   excludes?: TranslationInputDto[];
   whatToBring?: TranslationInputDto[];
-  availabilityDayIds?: number[];
+  availabilityDayNo?: number[];
 }
 
 export interface DtoTripUpdate extends DtoTripCreate {

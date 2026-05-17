@@ -128,7 +128,7 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
         includes: includes.length ? includes : undefined,
         excludes: excludes.length ? excludes : undefined,
         whatToBring: whatToBring.length ? whatToBring : undefined,
-        availabilityDayIds: availabilityDayIds.length ? availabilityDayIds : undefined
+        availabilityDayNo: availabilityDayIds.length ? availabilityDayIds : undefined
       }
       if (tripId) {
         await updateTrip({ ...payload, id: tripId })
