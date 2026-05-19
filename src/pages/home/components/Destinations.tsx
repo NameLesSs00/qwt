@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import aswanImg    from '../../../assets/images/detinations/aswan.png'
 import hurghadaImg from '../../../assets/images/detinations/hurghada.png'
@@ -6,19 +8,18 @@ import { fadeUp, fadeLeft, fadeRight, stagger, viewport } from '../../../lib/ani
 import '../styles/destinations.scss'
 
 type Destination = {
-  id: string; name: string; toursLabel: string; image: string; size: 'small' | 'large'
+  id: string; nameKey: string; image: string; size: 'small' | 'large'
 }
 
 const destinations: Destination[] = [
-  { id: 'aswan',    name: 'Aswan',    toursLabel: '5 Tours', image: aswanImg,    size: 'small' },
-  { id: 'luxor',    name: 'Luxor',    toursLabel: '5 Tours', image: luxorImg,    size: 'small' },
-  { id: 'hurghada', name: 'Hurghada', toursLabel: '5 Tours', image: hurghadaImg, size: 'large' },
+  { id: 'aswan',    nameKey: 'aswan',    image: aswanImg,    size: 'small' },
+  { id: 'luxor',    nameKey: 'luxor',    image: luxorImg,    size: 'small' },
+  { id: 'hurghada', nameKey: 'hurghada', image: hurghadaImg, size: 'large' },
 ]
 
-// Image zoom variant used inside each card
-const imgHover = { scale: 1.08, transition: { duration: 0.45, ease: 'easeOut' } }
-
 export function Destinations() {
+  const navigate = useNavigate()
+  const { t } = useTranslation()
   const left  = destinations.filter((d) => d.size === 'small')
   const right = destinations.find((d) => d.size === 'large')
 
@@ -35,12 +36,11 @@ export function Destinations() {
           viewport={viewport}
         >
           <h2 className="home-destinations__title">
-            Awasome <span className="home-destinations__titleAccent">Destiantions</span>
+            {t('homePage.destinations.title')}{' '}
+            <span className="home-destinations__titleAccent">{t('homePage.destinations.titleAccent')}</span>
           </h2>
           <p className="home-destinations__sub">
-            Choose your next unforgettable experience across
-            <br />
-            Egypt's most iconic destinations
+            {t('homePage.destinations.sub')}
           </p>
         </motion.header>
 
@@ -65,16 +65,17 @@ export function Destinations() {
                 <motion.img
                   className="destination-card__img"
                   src={d.image}
-                  alt={d.name}
-                  whileHover={imgHover}
+                  alt={t('homePage.destinations.' + d.nameKey)}
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ duration: 0.45, ease: 'easeOut' }}
                 />
                 <div className="destination-card__overlay" aria-hidden="true" />
                 <div className="destination-card__ribbon" aria-hidden="true">
-                  <span>{d.toursLabel}</span>
+                  <span>{t('homePage.destinations.toursCount', { count: 5 })}</span>
                 </div>
                 <div className="destination-card__text">
-                  <span className="destination-card__kicker">Travel To</span>
-                  <span className="destination-card__name">{d.name}</span>
+                  <span className="destination-card__kicker">{t('homePage.destinations.travelTo')}</span>
+                  <span className="destination-card__name">{t('homePage.destinations.' + d.nameKey)}</span>
                 </div>
               </motion.article>
             ))}
@@ -93,16 +94,17 @@ export function Destinations() {
               <motion.img
                 className="destination-card__img"
                 src={right.image}
-                alt={right.name}
-                whileHover={imgHover}
+                alt={t('homePage.destinations.' + right.nameKey)}
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.45, ease: 'easeOut' }}
               />
               <div className="destination-card__overlay" aria-hidden="true" />
               <div className="destination-card__ribbon" aria-hidden="true">
-                <span>{right.toursLabel}</span>
+                <span>{t('homePage.destinations.toursCount', { count: 5 })}</span>
               </div>
               <div className="destination-card__text">
-                <span className="destination-card__kicker">Travel To</span>
-                <span className="destination-card__name">{right.name}</span>
+                <span className="destination-card__kicker">{t('homePage.destinations.travelTo')}</span>
+                <span className="destination-card__name">{t('homePage.destinations.' + right.nameKey)}</span>
               </div>
             </motion.article>
           )}
@@ -122,8 +124,9 @@ export function Destinations() {
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 350, damping: 18 }}
+            onClick={() => navigate('/trips')}
           >
-            See More
+            {t('homePage.destinations.seeMore')}
           </motion.button>
         </motion.div>
 

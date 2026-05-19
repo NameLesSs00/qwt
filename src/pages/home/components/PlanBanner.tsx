@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import view   from '../../../assets/plan/view.png'
 import vector from '../../../assets/plan/Vector.svg'
@@ -8,6 +10,9 @@ import { fadeLeft, fadeRight, viewport } from '../../../lib/animations'
 import '../styles/planBanner.scss'
 
 export function PlanBanner() {
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+
   return (
     <section className="plan-banner">
       <div className="plan-banner__bg">
@@ -63,13 +68,10 @@ export function PlanBanner() {
             viewport={viewport}
           >
             <h2 className="plan-banner__title">
-              Start Planning Your Dream
-              <br />
-              Trip Today
+              {t('homePage.planBanner.title')}
             </h2>
             <p className="plan-banner__sub">
-              Enjoy 15% Off on our most popular
-              tours &nbsp; for a limited time only!
+              {t('homePage.planBanner.sub')}
             </p>
 
             <motion.button
@@ -78,8 +80,9 @@ export function PlanBanner() {
               whileHover={{ scale: 1.07, y: -3 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 380, damping: 18 }}
+              onClick={() => navigate('/trips')}
             >
-              Book Now
+              {t('homePage.planBanner.bookNow')}
             </motion.button>
           </motion.div>
 

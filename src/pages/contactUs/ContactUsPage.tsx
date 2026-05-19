@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import imgBg from '../../assets/contactus/bg.png';
 import iconLocation from '../../assets/contactus/Frame 193.svg';
 import iconEmail from '../../assets/contactus/Frame 194.svg';
@@ -12,6 +13,8 @@ import iconTwitter from '../../assets/contactus/prime_twitter.svg';
 import './contactUsPage.scss';
 
 export function ContactUsPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="contact-page">
       
@@ -20,8 +23,8 @@ export function ContactUsPage() {
         <img className="contact-heroBg" src={imgBg} alt="Contact Us Background" />
         <div className="contact-heroOverlay"></div>
         <div className="contact-heroInner">
-          <h1 className="contact-heroTitle">Contact Us</h1>
-          <h2 className="contact-heroSubtitle">Let's Plan Your Next Adventure</h2>
+          <h1 className="contact-heroTitle">{t('contactUs.heroTitle')}</h1>
+          <h2 className="contact-heroSubtitle">{t('contactUs.heroSubtitle')}</h2>
         </div>
       </section>
 
@@ -31,9 +34,9 @@ export function ContactUsPage() {
           
           {/* Breadcrumb */}
           <div className="contact-breadcrumb">
-            <Link to="/" className="contact-breadcrumbLink">Home</Link>
+            <Link to="/" className="contact-breadcrumbLink">{t('contactUs.breadcrumbHome')}</Link>
             <span className="contact-breadcrumbSep">&gt;</span>
-            <span className="contact-breadcrumbActive">contact Us</span>
+            <span className="contact-breadcrumbActive">{t('contactUs.breadcrumbActive')}</span>
           </div>
 
           {/* Cards Row */}
@@ -43,10 +46,11 @@ export function ContactUsPage() {
               <div className="contact-cardIconWrap">
                 <img src={iconEmail} alt="Office Location" />
               </div>
-              <h3 className="contact-cardTitle">Office Location</h3>
+              <h3 className="contact-cardTitle">{t('contactUs.officeLocation')}</h3>
               <p className="contact-cardText">
-                55 Main Street<br />
-                2nd Floor Red sea
+                {t('contactUs.officeAddress').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </div>
 
@@ -55,23 +59,24 @@ export function ContactUsPage() {
               <div className="contact-cardIconWrap">
                 <img src={iconLocation} alt="Email Address" />
               </div>
-              <h3 className="contact-cardTitle">Email Address</h3>
+              <h3 className="contact-cardTitle">{t('contactUs.emailAddress')}</h3>
               <p className="contact-cardText">
-                contact@example.com<br />
-                info@example.com
+                {t('contactUs.emails').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </div>
 
             {/* Card 3: Hotline */}
             <div className="contact-card">
               <div className="contact-cardIconWrap">
-              {/* Fallback to Lucide Phone if dashicons missing but we know dashicons_phone exists */}
                 <img src={iconPhone} alt="Hotline" style={{ width: 80 }} /> 
               </div>
-              <h3 className="contact-cardTitle">Hotline</h3>
+              <h3 className="contact-cardTitle">{t('contactUs.hotline')}</h3>
               <p className="contact-cardText">
-                +1 (307) 778-0608<br />
-                666 8888 000
+                {t('contactUs.phones').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </div>
           </div>
@@ -82,8 +87,9 @@ export function ContactUsPage() {
             {/* Left Side */}
             <div className="contact-splitLeft">
               <h2 className="contact-splitTitle">
-                Have questions? Feel free to<br />
-                write us
+                {t('contactUs.questionsTitle').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </h2>
               <div className="contact-socials">
                 <a href="#" className="contact-socialBtn">
@@ -106,22 +112,22 @@ export function ContactUsPage() {
               <form className="contact-form">
                 
                 <div className="contact-formGroup">
-                  <label className="contact-formLabel">Your name</label>
-                  <input type="text" className="contact-formInput" placeholder="Enter Name" />
+                  <label className="contact-formLabel">{t('contactUs.usernameLabel')}</label>
+                  <input type="text" className="contact-formInput" placeholder={t('contactUs.usernamePlaceholder')} />
                 </div>
 
                 <div className="contact-formGroup">
-                  <label className="contact-formLabel">Email address</label>
-                  <input type="email" className="contact-formInput" placeholder="Enter Email" />
+                  <label className="contact-formLabel">{t('contactUs.whatsappLabel')}</label>
+                  <input type="tel" className="contact-formInput" placeholder={t('contactUs.whatsappPlaceholder')} />
                 </div>
 
                 <div className="contact-formGroup">
-                  <label className="contact-formLabel">Massage</label>
-                  <textarea className="contact-formTextarea" placeholder="Write your massage" rows={5}></textarea>
+                  <label className="contact-formLabel">{t('contactUs.messageLabel')}</label>
+                  <textarea className="contact-formTextarea" placeholder={t('contactUs.messagePlaceholder')} rows={5}></textarea>
                 </div>
 
                 <div className="contact-formAction">
-                  <button type="button" className="contact-submitBtn">Send Message</button>
+                  <button type="button" className="contact-submitBtn">{t('contactUs.submitBtn')}</button>
                 </div>
                 
               </form>

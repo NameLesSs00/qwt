@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import heroDesertPc from '../../../assets/images/hero-desert-pc.png'
@@ -96,37 +98,36 @@ function useTypewriter(fullText: string, onDone: () => void, isPaused: boolean) 
 
 // ─────────────────────────────────────────────────────────────────
 export function HeroSlider() {
+  const navigate = useNavigate()
+  const { t } = useTranslation()
   const slides = useMemo<Slide[]>(
     () => [
       {
-        title: 'Feel the Thrill of the Egyptian Desert',
-        description:
-          'Ride quad bikes, explore golden dunes, and experience authentic Bedouin life under the desert sky.',
-        ctaLabel: 'Explore Desert Trips',
+        title: t('homePage.hero.slide1.title'),
+        description: t('homePage.hero.slide1.description'),
+        ctaLabel: t('homePage.hero.slide1.cta'),
         image: heroDesertPc,
         imagePosition: 'center 80%',
         imageScale: 1.1,
       },
       {
-        title: 'Walk Through Thousands of Years of History',
-        description:
-          "Discover ancient temples, majestic pyramids, and the timeless stories of Egypt's civilization.",
-        ctaLabel: 'Explore Historical Trips',
+        title: t('homePage.hero.slide2.title'),
+        description: t('homePage.hero.slide2.description'),
+        ctaLabel: t('homePage.hero.slide2.cta'),
         image: heroHistoricalPc,
         imagePosition: 'center 80%',
         imageScale: 1.1,
       },
       {
-        title: "Escape to Egypt's Most Stunning Islands",
-        description:
-          'Crystal-clear waters, colorful coral reefs, and unforgettable island adventures in the Red Sea.',
-        ctaLabel: 'Explore Sea Trips',
+        title: t('homePage.hero.slide3.title'),
+        description: t('homePage.hero.slide3.description'),
+        ctaLabel: t('homePage.hero.slide3.cta'),
         image: heroSeaPc,
         imagePosition: 'center',
         imageScale: 1,
       },
     ],
-    [],
+    [t],
   )
 
   const [activeIndex, setActiveIndex] = useState(0)
@@ -197,6 +198,7 @@ export function HeroSlider() {
             whileHover={{ scale: 1.07, y: -3 }}
             whileTap={{ scale: 0.94 }}
             transition={{ type: 'spring', stiffness: 380, damping: 18 }}
+            onClick={() => navigate('/trips')}
           >
             <span>{currentSlide.ctaLabel}</span>
             <span className="home-hero__ctaIcon" aria-hidden="true">→</span>

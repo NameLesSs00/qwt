@@ -2,6 +2,7 @@ import { useState, useEffect, type FormEvent, useRef } from 'react'
 import { Plus, Trash2, Loader2, X, Image as ImageIcon } from 'lucide-react'
 import { getGalleryImages, addGalleryImage, deleteGalleryImage, getAbsoluteImageUrl, type GalleryImageDto } from '../../../api/galleryApi'
 import { ImageLightbox } from '../../../components/imageLightbox/ImageLightbox'
+import { useToast } from '../../../components/toast/ToastProvider'
 import '../../../components/admin/admin.scss'
 
 export function AdminGalleryPage() {
@@ -9,6 +10,7 @@ export function AdminGalleryPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const { toast, confirm } = useToast()
   
   // Modal state
   const [isCreateOpen, setIsCreateOpen] = useState(false)
@@ -65,7 +67,7 @@ export function AdminGalleryPage() {
   const handleCreateSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!selectedFile) {
-      alert('Please select an image file first.')
+      toast.warning('Please select an image file first.')
       return
     }
 
@@ -75,20 +77,28 @@ export function AdminGalleryPage() {
       setIsCreateOpen(false)
       resetUploadForm()
       fetchImages()
+      toast.success('Image uploaded successfully!')
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to upload image')
+      toast.error(err?.response?.data?.message || 'Failed to upload image')
     } finally {
       setFormLoading(false)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm('Are you sure you want to delete this image?')) return
+    const ok = await confirm({
+      title: 'Delete Image',
+      message: 'Are you sure you want to permanently delete this image?',
+      confirmLabel: 'Delete',
+      danger: true
+    })
+    if (!ok) return
     try {
       await deleteGalleryImage(id)
       fetchImages()
+      toast.success('Image deleted')
     } catch (err: any) {
-      alert('Failed to delete image')
+      toast.error('Failed to delete image')
     }
   }
 

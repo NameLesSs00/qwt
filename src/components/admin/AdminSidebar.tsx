@@ -1,11 +1,10 @@
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import {
   BarChart2, Map, BookOpen, ShoppingBag, Image,
   Tag, HelpCircle, Star, List, Users, LogOut,
 } from 'lucide-react'
 import logo from '../../assets/brand/logo.svg'
-import { adminLogout } from '../../store/slices/adminAuthSlice'
 import type { RootState } from '../../store/store'
 import './admin.scss'
 
@@ -27,8 +26,6 @@ const navItems = [
 type Props = { isOpen?: boolean; onClose?: () => void }
 
 export function AdminSidebar({ isOpen, onClose }: Props) {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const adminUser = useSelector((s: RootState) => s.adminAuth.adminUser)
 
   async function handleLogout() {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import i18n from '../i18n';
 
 // ── Base URL ─────────────────────────────────────────────────────────────────
 // Production: https://travelapi.runasp.net/api
@@ -22,9 +23,25 @@ axiosClient.interceptors.request.use((config) => {
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  const lang = localStorage.getItem('i18nextLng') || 'en';
-  if (config.headers && !config.headers['Accept-Language']) {
-    config.headers['Accept-Language'] = lang;
+  const lang = (i18n.language || localStorage.getItem('i18nextLng') || 'en').split('-')[0];
+  if (config.headers) {
+    const hasLang = (typeof config.headers.has === 'function')
+      ? config.headers.has('Accept-Language')
+      : (config.headers['Accept-Language'] || config.headers['accept-language']);
+    
+    const val = (typeof config.headers.get === 'function')
+      ? config.headers.get('Accept-Language')
+      : (config.headers['Accept-Language'] || config.headers['accept-language']);
+
+    console.log(`[axiosClient] Request to ${config.url} | Custom language header present: ${!!hasLang} | Value: ${val}`);
+
+    if (!hasLang) {
+      if (typeof config.headers.set === 'function') {
+        config.headers.set('Accept-Language', lang);
+      } else {
+        config.headers['Accept-Language'] = lang;
+      }
+    }
   }
   return config;
 });
@@ -54,9 +71,25 @@ adminAxiosClient.interceptors.request.use((config) => {
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  const lang = localStorage.getItem('i18nextLng') || 'en';
-  if (config.headers && !config.headers['Accept-Language']) {
-    config.headers['Accept-Language'] = lang;
+  const lang = (i18n.language || localStorage.getItem('i18nextLng') || 'en').split('-')[0];
+  if (config.headers) {
+    const hasLang = (typeof config.headers.has === 'function')
+      ? config.headers.has('Accept-Language')
+      : (config.headers['Accept-Language'] || config.headers['accept-language']);
+
+    const val = (typeof config.headers.get === 'function')
+      ? config.headers.get('Accept-Language')
+      : (config.headers['Accept-Language'] || config.headers['accept-language']);
+
+    console.log(`[adminAxiosClient] Request to ${config.url} | Custom language header present: ${!!hasLang} | Value: ${val}`);
+
+    if (!hasLang) {
+      if (typeof config.headers.set === 'function') {
+        config.headers.set('Accept-Language', lang);
+      } else {
+        config.headers['Accept-Language'] = lang;
+      }
+    }
   }
   return config;
 });

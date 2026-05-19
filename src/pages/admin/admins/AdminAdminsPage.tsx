@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../../../store/store'
 import { getAdmins, createAdmin, updateAdmin, deleteAdmin, type AdminDto } from '../../../api/adminsApi'
 import { changePassword } from '../../../api/adminAuthApi'
+import { useToast } from '../../../components/toast/ToastProvider'
 import '../../../components/admin/admin.scss'
 
 export function AdminAdminsPage() {
@@ -11,6 +12,7 @@ export function AdminAdminsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const page = 1
+  const { toast, confirm } = useToast()
   
   // Modals state
   const [isCreateOpen, setIsCreateOpen] = useState(false)
@@ -67,8 +69,9 @@ export function AdminAdminsPage() {
       setIsCreateOpen(false)
       resetForm()
       fetchAdmins()
+      toast.success('Admin created successfully!')
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to create admin')
+      toast.error(err?.response?.data?.message || 'Failed to create admin')
     } finally {
       setFormLoading(false)
     }
@@ -88,20 +91,28 @@ export function AdminAdminsPage() {
       setEditAdminId(null)
       resetForm()
       fetchAdmins()
+      toast.success('Admin updated successfully!')
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to update admin')
+      toast.error(err?.response?.data?.message || 'Failed to update admin')
     } finally {
       setFormLoading(false)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm('Are you sure you want to delete this admin?')) return
+    const isConfirmed = await confirm({
+      title: 'Delete Admin',
+      message: 'Are you sure you want to delete this admin? This action cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true
+    })
+    if (!isConfirmed) return
     try {
       await deleteAdmin(id)
       fetchAdmins()
+      toast.success('Admin deleted successfully')
     } catch (err: any) {
-      alert('Failed to delete admin')
+      toast.error('Failed to delete admin')
     }
   }
 
@@ -125,28 +136,28 @@ export function AdminAdminsPage() {
     e.preventDefault()
     
     if (!adminUser || !adminUser.id || adminUser.id === 'admin') {
-      alert('Could not determine your admin ID. Please re-login.')
+      toast.error('Could not determine your admin ID. Please re-login.')
       return
     }
 
     if (!isStrongPassword(passwordData.newPassword)) {
-      alert('New password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
+      toast.error('New password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
       return
     }
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert('New passwords do not match.')
+      toast.error('New passwords do not match.')
       return
     }
 
     setFormLoading(true)
     try {
       await changePassword(Number(adminUser.id), passwordData.oldPassword, passwordData.newPassword)
-      alert('Password changed successfully!')
+      toast.success('Password changed successfully!')
       setIsChangePasswordOpen(false)
       setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' })
     } catch (err: any) {
-      alert(err?.response?.data?.message || err?.response?.data || 'Failed to change password.')
+      toast.error(err?.response?.data?.message || err?.response?.data || 'Failed to change password.')
     } finally {
       setFormLoading(false)
     }
@@ -256,7 +267,7 @@ export function AdminAdminsPage() {
               {isCreateOpen ? (
                 <>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: 500 }}>Email Address</label>
+                    <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: 500 }}>blogsblogs</label>
                     <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={{ width: '100%', padding: '10px', border: '1px solid #cbd5e1', borderRadius: '6px' }} />
                   </div>
                   <div>

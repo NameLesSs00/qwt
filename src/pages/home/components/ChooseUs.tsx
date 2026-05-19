@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import localExpertsIcon from '../../../assets/chooseUs/allOver.png'
 import safeTripsIcon    from '../../../assets/chooseUs/safe.png'
@@ -5,15 +6,17 @@ import fastBookingIcon  from '../../../assets/chooseUs/speed.png'
 import { fadeUp, scalePop, stagger, viewport } from '../../../lib/animations'
 import '../styles/chooseUs.scss'
 
-type Feature = { id: string; title: string; desc: string; icon: string }
+type Feature = { id: string; icon: string }
 
 const features: Feature[] = [
-  { id: 'local', title: 'Local Experts',          desc: 'Our experienced local guides and\noperators ensure authentic and well-\nplanned trips',        icon: localExpertsIcon },
-  { id: 'safe',  title: 'Safe & Reliable Trips',  desc: 'All tours are organized with licensed\nguides, insured transportation, and\ntrusted partners.',    icon: safeTripsIcon    },
-  { id: 'fast',  title: 'Easy & Fast Booking',    desc: 'Simple steps, instant confirmation, and\nflexible booking options',                                   icon: fastBookingIcon  },
+  { id: 'local', icon: localExpertsIcon },
+  { id: 'safe',  icon: safeTripsIcon    },
+  { id: 'fast',  icon: fastBookingIcon  },
 ]
 
 export function ChooseUs() {
+  const { t } = useTranslation()
+
   return (
     <section className="choose-us">
       <div className="choose-us__inner">
@@ -26,12 +29,10 @@ export function ChooseUs() {
           viewport={viewport}
         >
           <h2 className="choose-us__title">
-            Why Choose <span className="choose-us__titleAccent">Us?</span>
+            {t('homePage.chooseUs.title')} <span className="choose-us__titleAccent">{t('homePage.chooseUs.titleAccent')}</span>
           </h2>
           <p className="choose-us__sub">
-            We create unforgettable travel experiences across Egypt with
-            <br />
-            comfort, safety, and quality you can trust.
+            {t('homePage.chooseUs.sub')}
           </p>
         </motion.header>
 
@@ -59,8 +60,8 @@ export function ChooseUs() {
               >
                 <img className="choose-us__icon" src={f.icon} alt="" />
               </motion.div>
-              <h3 className="choose-us__cardTitle">{f.title}</h3>
-              <p className="choose-us__cardDesc">{f.desc}</p>
+              <h3 className="choose-us__cardTitle">{t(`homePage.chooseUs.features.${f.id}.title`)}</h3>
+              <p className="choose-us__cardDesc">{t(`homePage.chooseUs.features.${f.id}.desc`)}</p>
             </motion.article>
           ))}
         </motion.div>

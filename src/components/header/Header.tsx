@@ -9,38 +9,38 @@ import cartIcon from '../../assets/cart/cartIcon.png'
 import './header.scss'
 
 type SubItem = {
-  label: string
+  key: string
   path: string
 }
 
 type NavItem = {
-  label: string
+  key: string
   path: string
   dropdownItems?: SubItem[]
 }
 
 const navItems: NavItem[] = [
-  { label: 'Home', path: '/' },
+  { key: 'home', path: '/' },
   {
-    label: 'Destinations',
+    key: 'destinations',
     path: '/destinations',
     dropdownItems: [
-      { label: 'Luxor', path: '/destinations/luxor' },
-      { label: 'Red Sea', path: '/destinations/red-sea' },
-      { label: 'Cairo', path: '/destinations/cairo' },
+      { key: 'luxor', path: '/destinations/luxor' },
+      { key: 'redSea', path: '/destinations/red-sea' },
+      { key: 'cairo', path: '/destinations/cairo' },
     ],
   },
-  { label: 'Trips', path: '/trips' },
-  { label: 'Gallery', path: '/gallery' },
-  { label: 'FAQ', path: '/faq' },
-  { label: 'Blogs', path: '/blogs' },
-  { label: 'About Us', path: '/about-us' },
-  { label: 'Contact Us', path: '/contact-us' },
+  { key: 'trips', path: '/trips' },
+  { key: 'gallery', path: '/gallery' },
+  { key: 'faq', path: '/faq' },
+  { key: 'blogs', path: '/blogs' },
+  { key: 'aboutUs', path: '/about-us' },
+  { key: 'contactUs', path: '/contact-us' },
 ]
 
 export function Header() {
   const { pathname } = useLocation()
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [langDropdownOpen, setLangDropdownOpen] = useState(false)
@@ -64,8 +64,8 @@ export function Header() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  function toggleDropdown(label: string) {
-    setOpenDropdown((prev) => (prev === label ? null : label))
+  function toggleDropdown(key: string) {
+    setOpenDropdown((prev) => (prev === key ? null : key))
   }
 
   return (
@@ -83,10 +83,10 @@ export function Header() {
                 : pathname.startsWith(item.path)
 
             const hasDropdown = !!item.dropdownItems?.length
-            const isOpen = openDropdown === item.label
+            const isOpen = openDropdown === item.key
 
             return (
-              <div key={item.label} className="site-header__navItem">
+              <div key={item.key} className="site-header__navItem">
                 {/* Main nav link */}
                 <Link
                   to={item.path}
@@ -96,7 +96,7 @@ export function Header() {
                     if (hasDropdown) {
                       if (!isOpen) {
                         e.preventDefault()
-                        toggleDropdown(item.label)
+                        toggleDropdown(item.key)
                       } else {
                         setOpenDropdown(null)
                       }
@@ -105,7 +105,7 @@ export function Header() {
                     }
                   }}
                 >
-                  <span>{item.label}</span>
+                  <span>{t(`header.${item.key}`)}</span>
                   {hasDropdown && (
                     <img
                       src={dropChevron}
@@ -120,14 +120,14 @@ export function Header() {
                   <div className="site-header__dropdown">
                     {item.dropdownItems!.map((sub) => (
                       <Link
-                        key={sub.label}
+                        key={sub.key}
                         to={sub.path}
                         className={`site-header__dropItem ${
                           pathname === sub.path ? 'site-header__dropItem--active' : ''
                         }`}
                         onClick={() => setOpenDropdown(null)}
                       >
-                        {sub.label}
+                        {t(`header.${sub.key}`)}
                       </Link>
                     ))}
                   </div>
@@ -199,33 +199,33 @@ export function Header() {
       <nav className={`site-header__mobileNav ${isMobileMenuOpen ? 'is-open' : ''}`}>
         <div className="site-header__mobileNavInner">
           {navItems.map((item) => (
-            <div key={item.label} className="site-header__mobileNavItem">
+            <div key={item.key} className="site-header__mobileNavItem">
               {item.dropdownItems ? (
                 <>
                   <Link 
                     to={item.path}
                     className="site-header__mobileNavLink"
                     onClick={(e) => {
-                      if (openDropdown !== item.label) {
+                      if (openDropdown !== item.key) {
                         e.preventDefault()
-                        setOpenDropdown(item.label)
+                        setOpenDropdown(item.key)
                       } else {
                         setIsMobileMenuOpen(false)
                       }
                     }}
                   >
-                    <span>{item.label}</span>
-                    <ChevronDown size={14} style={{ transform: openDropdown === item.label ? 'rotate(180deg)' : 'none' }} />
+                    <span>{t(`header.${item.key}`)}</span>
+                    <ChevronDown size={14} style={{ transform: openDropdown === item.key ? 'rotate(180deg)' : 'none' }} />
                   </Link>
-                  {openDropdown === item.label && (
+                  {openDropdown === item.key && (
                     <div className="site-header__mobileDropdown">
                       {item.dropdownItems.map((sub) => (
                         <Link 
-                          key={sub.label} 
+                          key={sub.key} 
                           to={sub.path} 
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          {sub.label}
+                          {t(`header.${sub.key}`)}
                         </Link>
                       ))}
                     </div>
@@ -237,7 +237,7 @@ export function Header() {
                   className="site-header__mobileNavLink"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item.label}
+                  {t(`header.${item.key}`)}
                 </Link>
               )}
             </div>

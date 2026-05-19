@@ -33,7 +33,7 @@ export function BlogFormModal({ existingBlog, onClose, onSaved }: Props) {
   const [description, setDescription] = useState(existingBlog?.description || '')
 
   // Cover Image
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(existingBlog?.imageUrl || null)
+  const [coverImageUrl] = useState<string | null>(existingBlog?.imageUrl || null)
   const [coverFile, setCoverFile] = useState<File | null>(null)
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null)
   const [deleteCover, setDeleteCover] = useState(false)
@@ -384,7 +384,7 @@ export function BlogFormModal({ existingBlog, onClose, onSaved }: Props) {
                             </>
                           )}
                         </div>
-                        <input type="file" ref={el => sectionInputRefs.current[index] = el} onChange={e => handleSectionImageSelect(index, e)} accept="image/*" style={{ display: 'none' }} />
+                        <input type="file" ref={el => { sectionInputRefs.current[index] = el; }} onChange={e => handleSectionImageSelect(index, e)} accept="image/*" style={{ display: 'none' }} />
                         
                         {(section.previewUrl || (section.imageUrl && !section.deleteImage)) && (
                           <button onClick={() => handleRemoveSectionImage(index)} style={{ marginTop: '8px', width: '100%', background: 'transparent', color: '#ef4444', border: 'none', padding: '4px', fontSize: '12px', cursor: 'pointer', fontWeight: 600, textAlign: 'center' }}>

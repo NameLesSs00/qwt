@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 import { motion } from "motion/react";
 import imgBg from '../../assets/aboutUs/bg.png';
@@ -13,6 +14,8 @@ import iconTemple from '../../assets/aboutUs/game-icons_egyptian-temple.svg';
 import './aboutUsPage.scss';
 
 export function AboutUsPage() {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -39,7 +42,7 @@ export function AboutUsPage() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="about-heroTitle"
           >
-            About
+            {t('aboutPage.heroTitle')}
           </motion.h1>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
@@ -47,7 +50,7 @@ export function AboutUsPage() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="about-heroSubtitle"
           >
-            People Don't Take, Trips Take People
+            {t('aboutPage.heroSubtitle')}
           </motion.h2>
         </div>
       </section>
@@ -64,9 +67,9 @@ export function AboutUsPage() {
             transition={{ duration: 0.45 }}
             className="about-breadcrumb"
           >
-            <Link to="/" className="about-breadcrumbLink">Home</Link>
+            <Link to="/" className="about-breadcrumbLink">{t('aboutPage.breadcrumbHome')}</Link>
             <span className="about-breadcrumbSep">&gt;</span>
-            <span className="about-breadcrumbActive">About Us</span>
+            <span className="about-breadcrumbActive">{t('aboutPage.breadcrumbActive')}</span>
           </motion.div>
 
           <motion.div
@@ -83,7 +86,7 @@ export function AboutUsPage() {
               transition={{ duration: 0.5, delay: 0.05 }}
               className="about-introTitle"
             >
-              Your Journey Begins With Us
+              {t('aboutPage.introTitle')}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -92,8 +95,7 @@ export function AboutUsPage() {
               transition={{ duration: 0.6, delay: 0.12 }}
               className="about-introText"
             >
-              We are a travel experiences company dedicated to creating unforgettable adventures across Egypt. From breathtaking sea trips and
-              thrilling desert safaris to timeless historical tours, we help you discover destinations in a way that feels authentic, exciting, and effortless.
+              {t('aboutPage.introText')}
             </motion.p>
           </motion.div>
 
@@ -127,12 +129,9 @@ export function AboutUsPage() {
               transition={{ duration: 0.55, delay: 0.08 }}
               className="about-whoText"
             >
-              <h2 className="about-sectionTitle">Who We Are ?</h2>
+              <h2 className="about-sectionTitle">{t('aboutPage.sectionTitle')}</h2>
               <p className="about-whoDesc">
-                We believe that travel is more than just visiting places it's about stories, moments,
-                and memories that last a lifetime.
-                Our team is made up of local experts and travel enthusiasts who know every 
-                hidden gem, every perfect timing, and every detail that turns a trip into an experience.
+                {t('aboutPage.whoDesc')}
               </p>
             </motion.div>
           </motion.div>
@@ -150,7 +149,7 @@ export function AboutUsPage() {
             transition={{ duration: 0.55 }}
             className="about-offerMainTitle"
           >
-            What We Offer?
+            {t('aboutPage.offerMainTitle')}
           </motion.h2>
           
           <div className="about-offerGrid">
@@ -167,10 +166,11 @@ export function AboutUsPage() {
               <div className="about-offerIconWrap">
                 <img src={iconJacket} alt="Sea Trips" />
               </div>
-              <h3 className="about-offerTitle">Sea Trips</h3>
+              <h3 className="about-offerTitle">{t('aboutPage.offer1Title')}</h3>
               <p className="about-offerDesc">
-                Snorkeling, Islands, crystal-clear<br/>
-                waters, and relaxation.
+                {t('aboutPage.offer1Desc').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </motion.div>
 
@@ -186,10 +186,11 @@ export function AboutUsPage() {
               <div className="about-offerIconWrap">
                 <img src={iconCamel} alt="Desert Safari" />
               </div>
-              <h3 className="about-offerTitle">Desert Safari</h3>
+              <h3 className="about-offerTitle">{t('aboutPage.offer2Title')}</h3>
               <p className="about-offerDesc">
-                Adventure, culture, and unforgettable<br/>
-                desert views
+                {t('aboutPage.offer2Desc').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </motion.div>
 
@@ -205,10 +206,11 @@ export function AboutUsPage() {
               <div className="about-offerIconWrap">
                 <img src={iconTemple} alt="Historical Tours" />
               </div>
-              <h3 className="about-offerTitle">Historical Tours</h3>
+              <h3 className="about-offerTitle">{t('aboutPage.offer3Title')}</h3>
               <p className="about-offerDesc">
-                Explore Egypt's ancient wonders with<br/>
-                expert guides
+                {t('aboutPage.offer3Desc').split('\n').map((line, idx, arr) => (
+                  <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+                ))}
               </p>
             </motion.div>
 
@@ -228,19 +230,23 @@ export function AboutUsPage() {
           className="about-ctaInner"
         >
           <h2 className="about-ctaTitle">
-            Start your journey with<br/>us today
+            {t('aboutPage.ctaTitle').split('\n').map((line, idx, arr) => (
+              <span key={idx}>{line}{idx < arr.length - 1 && <br />}</span>
+            ))}
           </h2>
           <p className="about-ctaDesc">
-            Discover your next adventure and create memories worth sharing
+            {t('aboutPage.ctaDesc')}
           </p>
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="about-ctaBtn"
-            type="button"
-          >
-            Explore Trips <ArrowRight size={16} />
-          </motion.button>
+          <Link to="/trips">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="about-ctaBtn"
+              type="button"
+            >
+              {t('aboutPage.ctaBtn')} <ArrowRight size={16} />
+            </motion.button>
+          </Link>
         </motion.div>
       </section>
 

@@ -6,5 +6,377 @@
   "gallery": "Galerie",
   "blogs": "Blogs",
   "contact": "Contact",
-  "login": "Connexion"
+  "login": "Connexion",
+  "contactUs": {
+    "heroTitle": "Contactez-nous",
+    "heroSubtitle": "Planifions votre prochaine aventure",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbActive": "Contactez-nous",
+    "officeLocation": "Adresse du bureau",
+    "officeAddress": "55, rue principale\n2e étage, Mer Rouge",
+    "emailAddress": "Adresse e-mail",
+    "emails": "contact@example.com\ninfo@example.com",
+    "hotline": "Ligne d'assistance",
+    "phones": "+1 (307) 778-0608\n666 8888 000",
+    "questionsTitle": "Des questions? N'hésitez pas à\nnous écrire",
+    "usernameLabel": "Nom d'utilisateur",
+    "usernamePlaceholder": "Entrez le nom d'utilisateur",
+    "whatsappLabel": "Numéro WhatsApp",
+    "whatsappPlaceholder": "Entrez le numéro WhatsApp",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Écrivez votre message",
+    "submitBtn": "Envoyer le message"
+  },
+  "header": {
+    "home": "Accueil",
+    "destinations": "Destinations",
+    "luxor": "Louxor",
+    "redSea": "Mer Rouge",
+    "cairo": "Le Caire",
+    "trips": "Voyages",
+    "gallery": "Galerie",
+    "faq": "FAQ",
+    "blogs": "Blogs",
+    "aboutUs": "À propos de nous",
+    "contactUs": "Contactez-nous"
+  },
+  "footer": {
+    "description": "Chaque voyage est une opportunité d'explorer, de se détendre et de créer des souvenirs inoubliables conçus avec soin, confort et expertise locale",
+    "quickAction": "Actions rapides",
+    "contactUs": "Contactez-nous",
+    "paymentChannels": "Canaux de paiement",
+    "followUs": "Suivez-nous",
+    "copyright": "Propulsé par Tech Gear Solutions © 2026 Tous droits réservés",
+    "phone": "+00 (123) 456 889",
+    "email": "contact@example.com",
+    "address": "583 Main Street, NY, USA",
+    "links": {
+      "home": "Accueil",
+      "destinations": "Destinations",
+      "trips": "Voyages",
+      "gallery": "Galerie",
+      "aboutUs": "À propos de nous",
+      "blogs": "Blogs",
+      "contactUs": "Contactez-nous",
+      "faq": "FAQ"
+    }
+  },
+  "aboutPage": {
+    "heroTitle": "À propos",
+    "heroSubtitle": "Ce ne sont pas les gens qui font les voyages, ce sont les voyages qui font les gens",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbActive": "À propos de nous",
+    "introTitle": "Votre voyage commence avec nous",
+    "introText": "Nous sommes une entreprise d'expériences de voyage dédiée à la création d'aventures inoubliables à travers l'Égypte. Des excursions maritimes à couper le souffle et des safaris passionnants dans le désert aux visites historiques intemporelles, nous vous aidons à découvrir les destinations d'une manière authentique, excitante et sans effort.",
+    "sectionTitle": "Qui sommes-nous ?",
+    "whoDesc": "Nous pensons que voyager est plus que simplement visiter des lieux, c'est une question d'histoires, de moments et de souvenirs qui durent toute une vie. Notre équipe est composée d'experts locaux et de passionnés de voyage qui connaissent chaque joyau caché, chaque moment idéal et chaque détail qui transforme un voyage en expérience.",
+    "offerMainTitle": "Ce que nous offrons ?",
+    "offer1Title": "Sorties en mer",
+    "offer1Desc": "Plongée en apnée, îles, eaux\ncristallines et détente.",
+    "offer2Title": "Safari dans le désert",
+    "offer2Desc": "Aventure, culture et vues\ninsolites sur le désert",
+    "offer3Title": "Visites historiques",
+    "offer3Desc": "Explorez les merveilles de l'Égypte antique\navec des guides experts",
+    "ctaTitle": "Commencez votre voyage avec\nnous aujourd'hui",
+    "ctaDesc": "Découvrez votre prochaine aventure et créez des souvenirs uniques",
+    "ctaBtn": "Explorer les voyages"
+  },
+  "blogsPage": {
+    "breadcrumbHome": "Accueil",
+    "breadcrumbActive": "Blogs",
+    "searchPlaceholder": "Rechercher",
+    "loadingText": "Chargement des blogs...",
+    "readMoreBtn": "Lire la suite",
+    "seeMoreBtn": "Voir plus",
+    "noBlogsFound": "Aucun blog ne correspond à la recherche."
+  },
+  "blogDetailsPage": {
+    "loadingText": "Chargement des détails du blog...",
+    "notFoundText": "Blog non trouvé.",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbBlogs": "Blogs",
+    "breadcrumbActive": "Détails du blog",
+    "recentPostsTitle": "Articles récents"
+  },
+  "faqPage": {
+    "heroTitle": "Questions fréquemment posées",
+    "heroSub": "Trouvez les réponses aux questions les plus courantes sur nos visites et services.",
+    "loadingText": "Chargement des questions...",
+    "emptyText": "Aucune question disponible pour le moment. Revenez bientôt !",
+    "errorText": "Échec du chargement des questions. Veuillez réessayer plus tard."
+  },
+  "galleryPage": {
+    "heroTitle": "Explorez des moments qui racontent l'histoire",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbActive": "Galerie",
+    "result": "Résultat",
+    "results": "Résultats",
+    "errorText": "Échec du chargement des images de la galerie.",
+    "emptyText": "Aucune image dans la galerie pour le moment.",
+    "loadMoreBtn": "Charger plus de photos"
+  },
+  "tripsPage": {
+    "heroTitle": "Découvrez les meilleures visites guidées d'Égypte",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbActive": "Explorer",
+    "filterTitle": "Filtrer",
+    "clearAllBtn": "Effacer les filtres",
+    "destinationHeader": "Destination",
+    "allDestinations": "Toutes les destinations",
+    "priceRangeHeader": "Gamme de prix (€)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "tripTypeHeader": "Types de voyages",
+    "allTypes": "Tous les types",
+    "applyBtn": "Appliquer",
+    "tripFound": "Voyage trouvé",
+    "tripsFound": "Voyages trouvés",
+    "searchPlaceholder": "Rechercher",
+    "sortBy": "Trier par",
+    "latest": "Plus récents",
+    "oldest": "Plus anciens",
+    "loadingText": "Chargement des visites actives...",
+    "noTripsFound": "Aucun voyage ne correspond à la configuration de filtre choisie.",
+    "bookNowBtn": "Réserver maintenant"
+  },
+  "cartPage": {
+    "title": "Panier de réservation",
+    "subtitle": "Vérifiez vos visites sélectionnées avant le paiement",
+    "emptyText": "Votre panier est vide.",
+    "emptyLink": "Parcourir les visites",
+    "removeBtn": "Supprimer",
+    "adult": "Adulte",
+    "adults": "Adultes",
+    "child": "Enfant",
+    "children": "Enfants",
+    "total": "Total",
+    "checkoutBtn": "Passer à la caisse",
+    "summaryTitle": "Résumé de la réservation",
+    "package": "Forfait",
+    "adultLabel": "Adulte",
+    "childLabel": "Enfant"
+  },
+  "checkoutPage": {
+    "emptyTitle": "Votre panier est vide",
+    "emptySub": "Explorez nos magnifiques destinations et ajoutez un tour à votre panier.",
+    "browseToursBtn": "Parcourir les visites",
+    "title": "Passer la commande",
+    "subtitle": "Remplissez vos détails de réservation ci-dessous",
+    "billingDetails": "Détails de facturation",
+    "requiredFields": "* Champs obligatoires",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "nationality": "Nationalité",
+    "selectNationality": "Sélectionnez votre nationalité",
+    "emailAddress": "Adresse e-mail",
+    "phoneNumber": "Numéro de téléphone",
+    "haveCoupon": "Avez-vous un coupon ?",
+    "promoCodePlaceholder": "Saisissez votre code promo",
+    "orderSummary": "Résumé de la commande",
+    "guestsLabel": "Participants :",
+    "adultLabel": "Adulte x",
+    "childLabel": "Enfant x",
+    "totalAmount": "Montant total",
+    "confirmBookBtn": "Confirmer & Réserver",
+    "processing": "Traitement...",
+    "toastFillFields": "Veuillez remplir tous les champs obligatoires.",
+    "toastEmptyCart": "Votre panier est vide.",
+    "toastSuccess": "Réservation confirmée avec succès !",
+    "toastFail": "Échec de l'envoi de la réservation. Veuillez réessayer.",
+    "toastError": "Une erreur est survenue lors de l'envoi de votre réservation.",
+    "nationalityUS": "États-Unis",
+    "nationalityUK": "Royaume-Uni",
+    "nationalityEG": "Égypte",
+    "nationalityCA": "Canada",
+    "nationalityAU": "Australie",
+    "nationalityFR": "France",
+    "nationalityDE": "Allemagne",
+    "nationalityIT": "Italie",
+    "nationalityRU": "Russie",
+    "nationalityOther": "Autre"
+  },
+  "singleTripPage": {
+    "viewOverlay": "Voir",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbTrips": "Voyages",
+    "durationLabel": "Durée",
+    "adult": "Adulte",
+    "fromPrice": "À partir de",
+    "perPerson": "pers.",
+    "children": "Enfants",
+    "checkAvailabilityBtn": "Vérifier la disponibilité",
+    "infoDestination": "Destination",
+    "infoDuration": "Durée",
+    "infoTourType": "Type de circuit",
+    "infoTimeStart": "Heure de départ",
+    "incExcTitle": "Inclus / Exclus",
+    "included": "Inclus",
+    "excluded": "Exclus",
+    "tripInfoBadge": "Infos voyage",
+    "infoLocation": "Lieu",
+    "infoAvailableDays": "Jours disponibles",
+    "whatToBringTitle": "Que faut-il apporter",
+    "highlightsTitle": "Points forts du circuit",
+    "customerReviewsTitle": "Avis clients",
+    "reviewsCount": "avis",
+    "noReviewsYet": "Pas encore d'avis. Soyez le premier à laisser un avis !",
+    "addReviewTitle": "Ajouter un avis",
+    "requiredFieldsNote": "Votre adresse e-mail ne sera pas publiée. Les champs obligatoires sont marqués",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "yourRating": "Votre note",
+    "comment": "Commentaire",
+    "commentPlaceholder": "Écrivez votre avis ici...",
+    "submitting": "Envoi...",
+    "submitBtn": "Envoyer l'avis",
+    "tripNotFound": "Voyage non trouvé.",
+    "errorLoadTrip": "Échec du chargement des détails du voyage. Veuillez réessayer.",
+    "backToTripsBtn": "← Retour à tous les voyages",
+    "toastFillFields": "Veuillez remplir tous les champs obligatoires.",
+    "toastSuccess": "Avis envoyé avec succès !",
+    "toastFail": "Échec de l'envoi de l'avis.",
+    "toastError": "Une erreur est survenue lors de l'envoi de l'avis."
+  },
+  "tripTypes": {
+    "adventure": "Aventure",
+    "historical": "Visites historiques",
+    "historicaltours": "Visites historiques",
+    "seatrips": "Sorties en mer",
+    "seatrip": "Sorties en mer",
+    "desertsafari": "Safari dans le désert"
+  },
+  "homePage": {
+    "hero": {
+      "slide1": {
+        "title": "Ressentez le frisson du désert égyptien",
+        "description": "Montez à quad, explorez les dunes dorées et vivez une vie de bédouin authentique sous le ciel du désert.",
+        "cta": "Explorer les voyages dans le désert"
+      },
+      "slide2": {
+        "title": "Traversez des milliers d'années d'histoire",
+        "description": "Découvrez des temples anciens, des pyramides majestueuses et les histoires intemporelles de la civilisation égyptienne.",
+        "cta": "Explorer les voyages historiques"
+      },
+      "slide3": {
+        "title": "Évadez-vous vers les plus belles îles d'Égypte",
+        "description": "Des eaux cristallines, des récifs coralliens colorés et des aventures insulaires inoubliables dans la mer Rouge.",
+        "cta": "Explorer les voyages en mer"
+      }
+    },
+    "popularTours": {
+      "eyebrow": "Les plus populaires",
+      "eyebrowScript": "Voyages",
+      "subtitle": "Les circuits les mieux notés et appréciés par nos voyageurs",
+      "all": "Tout",
+      "empty": "Aucun voyage disponible dans cette catégorie.",
+      "viewTrip": "Voir le voyage",
+      "seeMore": "Voir plus",
+      "days": "Jours",
+      "day": "Jour",
+      "hours": "Heures",
+      "hour": "Heure"
+    },
+    "destinations": {
+      "title": "Superbes",
+      "titleAccent": "Destinations",
+      "sub": "Choisissez votre prochaine expérience inoubliable à travers les destinations les plus emblématiques d'Égypte",
+      "travelTo": "Voyager à",
+      "toursCount": "{{count}} Voyages",
+      "seeMore": "Voir plus",
+      "aswan": "Assouan",
+      "luxor": "Louxor",
+      "hurghada": "Hurghada"
+    },
+    "recentGallery": {
+      "kicker": "Rendez votre voyage plus agréable",
+      "title": "Galerie récente",
+      "seeMore": "Voir plus"
+    },
+    "howItWorks": {
+      "title": "Comment ça",
+      "titleAccent": "marche ?",
+      "sub": "Planifiez votre voyage en quelques étapes simples",
+      "steps": {
+        "book": {
+          "title": "Réserver un circuit",
+          "desc": "Parcourez nos circuits et choisissez l'expérience qui vous convient le mieux"
+        },
+        "pay": {
+          "title": "Paiement sécurisé",
+          "desc": "Finalisez votre réservation avec un processus de paiement sûr et facile"
+        },
+        "confirm": {
+          "title": "Confirmation instantanée",
+          "desc": "Recevez votre confirmation de réservation instantanément par e-mail ou WhatsApp."
+        },
+        "trip": {
+          "title": "Bon voyage",
+          "desc": "Profitez de votre voyage et créez des souvenirs inoubliables en Égypte."
+        }
+      }
+    },
+    "chooseUs": {
+      "title": "Pourquoi nous",
+      "titleAccent": "choisir ?",
+      "sub": "Nous créons des expériences de voyage inoubliables en Égypte avec le confort, la sécurité et la qualité en lesquels vous pouvez avoir confiance.",
+      "features": {
+        "local": {
+          "title": "Experts locaux",
+          "desc": "Nos guides locaux et opérateurs expérimentés garantissent des voyages authentiques et bien planifiés"
+        },
+        "safe": {
+          "title": "Voyages sûrs et fiables",
+          "desc": "Tous les circuits sont organisés avec des guides agréés, des transports assurés et des partenaires de confiance."
+        },
+        "fast": {
+          "title": "Réservation simple et rapide",
+          "desc": "Des étapes simples, une confirmation instantanée et des options de réservation flexibles"
+        }
+      }
+    },
+    "blogs": {
+      "title": "Depuis nos",
+      "titleAccent": "Blogs",
+      "sub": "Laissez-vous inspirer par des guides de voyage, des conseils utiles et des récits qui facilitent et enrichissent votre voyage en Égypte.",
+      "readMore": "Lire la suite",
+      "seeMore": "Voir plus",
+      "failed": "Échec du chargement des blogs.",
+      "empty": "Aucun blog disponible pour le moment."
+    },
+    "ask": {
+      "title": "Questions fréquemment",
+      "titleAccent": "posées ?",
+      "sub": "Votre voyage parfait, conçu avec soin",
+      "viewAll": "Voir toutes les FAQ",
+      "empty": "Aucune question disponible pour le moment."
+    },
+    "planBanner": {
+      "title": "Commencez à planifier votre voyage de rêve dès aujourd'hui",
+      "sub": "Profitez de 15% de réduction sur nos circuits les plus populaires pour une durée limitée !",
+      "bookNow": "Réserver maintenant"
+    },
+    "reviews": {
+      "title": "Ce que disent nos",
+      "accent": "voyageurs ?",
+      "sub": "Retours d'expérience réels de voyageurs qui ont exploré l'Égypte avec nous",
+      "steve": {
+        "quote": "Une expérience absolument incroyable ! Eau cristalline, personnel amical et organisation parfaite. Fortement recommandé.",
+        "country": "Royaume-Uni",
+        "tourName": "Excursion à l'île d'Orange Bay"
+      },
+      "marta": {
+        "quote": "L'excursion en safari était palpitante et bien organisée. Rouler dans le désert au coucher du soleil était inoubliable.",
+        "country": "Allemagne",
+        "tourName": "Aventure en quad dans le désert"
+      },
+      "eric": {
+        "quote": "Un merveilleux voyage à travers l'histoire. Le guide était très compétent, tout était fluide et confortable.",
+        "country": "France",
+        "tourName": "Visite d'une journée à Louxor"
+      }
+    }
+  }
 }
+

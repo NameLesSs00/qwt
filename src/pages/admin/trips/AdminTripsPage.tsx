@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   Plus, Edit2, Loader2, X, AlertCircle,
-  ToggleLeft, ToggleRight, Image, ChevronRight, ChevronLeft, Trash2, Star
+  ToggleLeft, ToggleRight, Image, ChevronRight, ChevronLeft
 } from 'lucide-react'
 import {
   getTrips, deactivateTrip, reactivateTrip, getTripImageUrl,
@@ -21,8 +21,15 @@ export function AdminTripsPage() {
 
   // Filters
   const [search, setSearch] = useState('')
+  const [destination, setDestination] = useState('')
+  const [minPrice, setMinPrice] = useState<number | ''>('')
+  const [maxPrice, setMaxPrice] = useState<number | ''>('')
   const [typeFilter, setTypeFilter] = useState<number | ''>('')
   const [includeInactive, setIncludeInactive] = useState(false)
+  
+  // Pagination
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   // Modals
   const [formModal, setFormModal] = useState<{ open: boolean; tripId?: number }>({ open: false })
@@ -33,8 +40,12 @@ export function AdminTripsPage() {
       setLoading(true)
       setActionError('')
       const res = await getTrips({
-        PageSize: 100,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
         SearchItem: search || undefined,
+        Destination: destination || undefined,
+        MinPrice: minPrice !== '' ? Number(minPrice) : undefined,
+        MaxPrice: maxPrice !== '' ? Number(maxPrice) : undefined,
         TypeId: typeFilter || undefined,
         includeInactive
       })
@@ -50,7 +61,15 @@ export function AdminTripsPage() {
     getTripTypes(1, 100).then(r => setTripTypes(r.data || []))
   }, [])
 
-  useEffect(() => { fetchTrips() }, [search, typeFilter, includeInactive])
+  // Reset page to 1 when any filter changes
+  useEffect(() => {
+    setPageNumber(1)
+  }, [search, destination, minPrice, maxPrice, typeFilter, includeInactive, pageSize])
+
+  // Fetch when filters or page changes
+  useEffect(() => { 
+    fetchTrips() 
+  }, [pageNumber, pageSize, search, destination, minPrice, maxPrice, typeFilter, includeInactive])
 
   const handleToggleActive = async (trip: DtoTripRead) => {
     try {
@@ -87,26 +106,57 @@ export function AdminTripsPage() {
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <input
-          type="text"
-          placeholder="Search trips..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', minWidth: '220px', flex: 1 }}
-        />
-        <select
-          value={typeFilter}
-          onChange={e => setTypeFilter(e.target.value ? Number(e.target.value) : '')}
-          style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', minWidth: '160px' }}
-        >
-          <option value="">All Types</option>
-          {tripTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-        </select>
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#475569', cursor: 'pointer', userSelect: 'none' }}>
-          <input type="checkbox" checked={includeInactive} onChange={e => setIncludeInactive(e.target.checked)} />
-          Include Inactive
-        </label>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <input
+            type="text"
+            placeholder="Search trips..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', flex: '1 1 200px' }}
+          />
+          <input
+            type="text"
+            placeholder="Destination..."
+            value={destination}
+            onChange={e => setDestination(e.target.value)}
+            style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', flex: '1 1 160px' }}
+          />
+          <select
+            value={typeFilter}
+            onChange={e => setTypeFilter(e.target.value ? Number(e.target.value) : '')}
+            style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', flex: '1 1 160px' }}
+          >
+            <option value="">All Types</option>
+            {tripTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+          </select>
+        </div>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '14px', color: '#475569' }}>Price:</span>
+            <input
+              type="number"
+              placeholder="Min"
+              value={minPrice}
+              onChange={e => setMinPrice(e.target.value ? Number(e.target.value) : '')}
+              style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', width: '100px' }}
+            />
+            <span style={{ color: '#94a3b8' }}>-</span>
+            <input
+              type="number"
+              placeholder="Max"
+              value={maxPrice}
+              onChange={e => setMaxPrice(e.target.value ? Number(e.target.value) : '')}
+              style={{ padding: '9px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', width: '100px' }}
+            />
+          </div>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#475569' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', userSelect: 'none' }}>
+              <input type="checkbox" checked={includeInactive} onChange={e => setIncludeInactive(e.target.checked)} />
+              Include Inactive
+            </label>
+          </div>
+        </div>
       </div>
 
       {/* Error Banner */}
@@ -185,6 +235,45 @@ export function AdminTripsPage() {
               )}
             </tbody>
           </table>
+          
+          {/* Pagination Footer */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '13px', color: '#64748b' }}>Items per page:</span>
+              <select
+                value={pageSize}
+                onChange={e => setPageSize(Number(e.target.value))}
+                style={{ padding: '6px 12px', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '13px' }}
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <span style={{ fontSize: '13px', color: '#475569', fontWeight: 500 }}>
+                Page {pageNumber}
+              </span>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  onClick={() => setPageNumber(prev => Math.max(1, prev - 1))}
+                  disabled={pageNumber === 1}
+                  style={{ display: 'flex', alignItems: 'center', padding: '6px', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '6px', cursor: pageNumber === 1 ? 'not-allowed' : 'pointer', opacity: pageNumber === 1 ? 0.5 : 1 }}
+                >
+                  <ChevronLeft size={16} color="#475569" />
+                </button>
+                <button
+                  onClick={() => setPageNumber(prev => prev + 1)}
+                  disabled={trips.length < pageSize}
+                  style={{ display: 'flex', alignItems: 'center', padding: '6px', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '6px', cursor: trips.length < pageSize ? 'not-allowed' : 'pointer', opacity: trips.length < pageSize ? 0.5 : 1 }}
+                >
+                  <ChevronRight size={16} color="#475569" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

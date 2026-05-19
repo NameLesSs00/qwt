@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
-import { Plus, Edit2, Trash2, Loader2, X, AlertCircle } from 'lucide-react'
+import { Plus, Edit2, Trash2, Loader2, X } from 'lucide-react'
 import { getTripTypes, createTripType, updateTripType, deleteTripType, getTripTypeById, type TripTypeDto } from '../../../api/tripTypesApi'
+import { useToast } from '../../../components/toast/ToastProvider'
 import '../../../components/admin/admin.scss'
 
 export function AdminTripTypesPage() {
@@ -8,7 +9,8 @@ export function AdminTripTypesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [actionError, setActionError] = useState('')
-  const [page, setPage] = useState(1)
+  const { toast } = useToast()
+  const page = 1
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -86,8 +88,9 @@ export function AdminTripTypesPage() {
       }
       setIsModalOpen(false)
       fetchTripTypes()
+      toast.success(editingId ? 'Trip type updated!' : 'Trip type created!')
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to save trip type')
+      toast.error(err?.response?.data?.message || 'Failed to save trip type')
     } finally {
       setFormLoading(false)
     }
@@ -104,9 +107,10 @@ export function AdminTripTypesPage() {
       setFormLoading(true)
       await deleteTripType(deleteConfirmId)
       fetchTripTypes()
+      toast.success('Trip type deleted successfully')
     } catch (err: any) {
-      // The API returns 'Message' with an uppercase 'M' for these constraint errors
       const errMsg = err?.response?.data?.Message || err?.response?.data?.message || 'Failed to delete trip type. You may not have permission.'
+      toast.error(errMsg)
       setActionError(errMsg)
     } finally {
       setDeleteConfirmId(null)

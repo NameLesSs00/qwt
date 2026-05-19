@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { X } from 'lucide-react'
+import { useCart } from '../../context/CartContext'
 
 // Assets
-import placeHolderImage1 from '../../assets/cart/placeHolderImage1.png'
-import placeHolderImage2 from '../../assets/cart/placeHolderImage2.png'
 import locIcon from '../../assets/cart/loc.png'
 import dateGrayIcon from '../../assets/cart/dateGray.png'
 import peopleIcon from '../../assets/cart/people.png'
@@ -15,51 +14,9 @@ import arrowRightIcon from '../../assets/cart/arrow-right.png'
 
 import './cartPage.scss'
 
-type CartItem = {
-  id: string
-  title: string
-  category: string
-  location: string
-  date: string
-  adults: number
-  pricePerPerson: number
-  image: string
-}
-
-const initialCartItems: CartItem[] = [
-  {
-    id: '1',
-    title: 'Hot Air Balloon Ride – Luxor',
-    category: 'Historical',
-    location: 'Luxor',
-    date: '18 June 2026',
-    adults: 2,
-    pricePerPerson: 30,
-    image: placeHolderImage1,
-  },
-  {
-    id: '2',
-    title: 'Orange Bay Island Trip',
-    category: 'Sea Trip',
-    location: 'Hurghada',
-    date: '20 June 2026',
-    adults: 2,
-    pricePerPerson: 35,
-    image: placeHolderImage2,
-  },
-]
-
 export function CartPage() {
-  const [items, setItems] = useState<CartItem[]>(initialCartItems)
-
-  const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id))
-  }
-
-  // Calculate totals
-  const packageTotal = items.reduce((acc, item) => acc + item.pricePerPerson * item.adults, 0)
-  const medicalInsurance = 20
-  const totalAmount = packageTotal + medicalInsurance
+  const { t } = useTranslation()
+  const { items, removeItem, packageTotal } = useCart()
 
   return (
     <div className="cart-page">
@@ -67,8 +24,8 @@ export function CartPage() {
         {/* Left Column */}
         <div className="cart-page__main">
           <div className="cart-page__header">
-            <h1 className="cart-page__title">Booking Cart</h1>
-            <p className="cart-page__subtitle">Review your selected tours before payment</p>
+            <h1 className="cart-page__title">{t('cartPage.title')}</h1>
+            <p className="cart-page__subtitle">{t('cartPage.subtitle')}</p>
           </div>
 
           <div className="cart-page__items">
@@ -79,71 +36,81 @@ export function CartPage() {
                   animate={{ opacity: 1 }}
                   className="cart-page__empty"
                 >
-                  <p>Your cart is empty.</p>
-                  <Link to="/destinations" className="cart-page__emptyLink">Browse Tours</Link>
+                  <p>{t('cartPage.emptyText')}</p>
+                  <Link to="/trips" className="cart-page__emptyLink">{t('cartPage.emptyLink')}</Link>
                 </motion.div>
               ) : (
-                items.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="cart-page__itemCard"
-                  >
-                    <div className="cart-page__itemImage">
-                      <img src={item.image} alt={item.title} />
-                    </div>
-                    
-                    <div className="cart-page__itemDetails">
-                      <div className="cart-page__itemTop">
-                        <div className="cart-page__itemHeader">
-                          <h3 className="cart-page__itemTitle">{item.title}</h3>
-                          <span className={`cart-page__itemBadge cart-page__itemBadge--${item.category.toLowerCase().replace(' ', '-')}`}>
-                            {item.category}
-                          </span>
-                        </div>
-                        <button 
-                          className="cart-page__removeBtn"
-                          onClick={() => removeItem(item.id)}
-                          aria-label={`Remove ${item.title}`}
-                        >
-                          <img src={deleteIcon} alt="" />
-                          Remove
-                        </button>
+                items.map((item) => {
+                  const uniqueKey = `${item.tripId}-${item.date}`
+                  return (
+                    <motion.div
+                      key={uniqueKey}
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="cart-page__itemCard"
+                    >
+                      <div className="cart-page__itemImage">
+                        {item.tripImage && <img src={item.tripImage} alt={item.tripName} />}
                       </div>
+                      
+                      <div className="cart-page__itemDetails">
+                        <div className="cart-page__itemTop">
+                          <div className="cart-page__itemHeader">
+                            <h3 className="cart-page__itemTitle">{item.tripName}</h3>
+                          </div>
+                          <button 
+                            className="cart-page__removeBtn"
+                            onClick={() => removeItem(item.tripId, item.date)}
+                            aria-label={`${t('cartPage.removeBtn')} ${item.tripName}`}
+                          >
+                            <img src={deleteIcon} alt="" />
+                            {t('cartPage.removeBtn')}
+                          </button>
+                        </div>
 
-                      <div className="cart-page__itemInfo">
-                        <div className="cart-page__infoRow">
-                          <img src={locIcon} alt="" />
-                          <span>{item.location}</span>
+                        <div className="cart-page__itemInfo">
+                          {item.destination && (
+                            <div className="cart-page__infoRow">
+                              <img src={locIcon} alt="" />
+                              <span>{item.destination}</span>
+                            </div>
+                          )}
+                          <div className="cart-page__infoRow">
+                            <img src={dateGrayIcon} alt="" />
+                            <span>{item.date}</span>
+                          </div>
+                          {item.adultCount > 0 && (
+                            <div className="cart-page__infoRow">
+                              <img src={peopleIcon} alt="" />
+                              <span>{item.adultCount} {item.adultCount === 1 ? t('cartPage.adult') : t('cartPage.adults')}</span>
+                            </div>
+                          )}
+                          {item.childCount > 0 && (
+                            <div className="cart-page__infoRow">
+                              <img src={peopleIcon} alt="" />
+                              <span>{item.childCount} {item.childCount === 1 ? t('cartPage.child') : t('cartPage.children')}</span>
+                            </div>
+                          )}
                         </div>
-                        <div className="cart-page__infoRow">
-                          <img src={dateGrayIcon} alt="" />
-                          <span>{item.date}</span>
-                        </div>
-                        <div className="cart-page__infoRow">
-                          <img src={peopleIcon} alt="" />
-                          <span>{item.adults} Adults</span>
-                        </div>
-                      </div>
 
-                      <div className="cart-page__itemPricing">
-                        <span className="cart-page__priceLabel">${item.pricePerPerson} per person</span>
-                        <span className="cart-page__priceTotal">${item.pricePerPerson * item.adults}</span>
+                        <div className="cart-page__itemPricing">
+                          <span className="cart-page__priceLabel">{t('cartPage.total')}</span>
+                          <span className="cart-page__priceTotal">€{(item.adultCount * item.adultPrice) + (item.childCount * item.childPrice)}</span>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))
+                    </motion.div>
+                  )
+                })
               )}
             </AnimatePresence>
           </div>
 
           {items.length > 0 && (
             <Link to="/checkout" className="cart-page__checkoutBtn">
-              Proceed to checkout
+              {t('cartPage.checkoutBtn')}
               <img src={arrowRightIcon} alt="" />
             </Link>
           )}
@@ -152,56 +119,66 @@ export function CartPage() {
         {/* Right Column - Summary */}
         <aside className="cart-page__sidebar">
           <div className="cart-page__summary">
-            <h2 className="cart-page__summaryTitle">Booking summary</h2>
+            <h2 className="cart-page__summaryTitle">{t('cartPage.summaryTitle')}</h2>
 
             <div className="cart-page__summaryItems">
               <AnimatePresence>
-                {items.map((item) => (
-                  <motion.div
-                    key={`summary-${item.id}`}
-                    layout
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="cart-page__summaryCard"
-                  >
-                    <img src={item.image} alt={item.title} className="cart-page__summaryImg" />
-                    <div className="cart-page__summaryCardInfo">
-                      <div className="cart-page__summaryCardHeader">
-                        <h4>{item.title}</h4>
-                        <button onClick={() => removeItem(item.id)} aria-label="Remove item">
-                          <X size={16} color="#6B7280" />
-                        </button>
+                {items.map((item) => {
+                  const uniqueKey = `summary-${item.tripId}-${item.date}`
+                  return (
+                    <motion.div
+                      key={uniqueKey}
+                      layout
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="cart-page__summaryCard"
+                    >
+                      {item.tripImage && <img src={item.tripImage} alt={item.tripName} className="cart-page__summaryImg" />}
+                      <div className="cart-page__summaryCardInfo">
+                        <div className="cart-page__summaryCardHeader">
+                          <h4>{item.tripName}</h4>
+                          <button onClick={() => removeItem(item.tripId, item.date)} aria-label="Remove item">
+                            <X size={16} color="#6B7280" />
+                          </button>
+                        </div>
+                        <div className="cart-page__summaryCardDate">
+                          <img src={dateBlueIcon} alt="" />
+                          <span>{item.date}</span>
+                        </div>
                       </div>
-                      <div className="cart-page__summaryCardDate">
-                        <img src={dateBlueIcon} alt="" />
-                        <span>{item.date}</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
               </AnimatePresence>
             </div>
 
             <div className="cart-page__summaryBreakdown">
-              <h4 className="cart-page__breakdownTitle">Package</h4>
-              {items.map(item => (
-                <div key={`breakdown-${item.id}`} className="cart-page__breakdownRow">
-                  <span>Adult: {item.adults} x${item.pricePerPerson}</span>
-                  <span>${item.adults * item.pricePerPerson}</span>
-                </div>
-              ))}
-              
-              <h4 className="cart-page__breakdownTitle cart-page__breakdownTitle--mt">Extra Services</h4>
-              <div className="cart-page__breakdownRow">
-                <span>Medical insurance</span>
-                <span>${medicalInsurance}</span>
-              </div>
+              <h4 className="cart-page__breakdownTitle">{t('cartPage.package')}</h4>
+              {items.map(item => {
+                const uniqueKey = `breakdown-${item.tripId}-${item.date}`
+                return (
+                  <div key={uniqueKey}>
+                    {item.adultCount > 0 && (
+                      <div className="cart-page__breakdownRow">
+                        <span>{t('cartPage.adultLabel')}: {item.adultCount} x €{item.adultPrice}</span>
+                        <span>€{item.adultCount * item.adultPrice}</span>
+                      </div>
+                    )}
+                    {item.childCount > 0 && (
+                      <div className="cart-page__breakdownRow">
+                        <span>{t('cartPage.childLabel')}: {item.childCount} x €{item.childPrice}</span>
+                        <span>€{item.childCount * item.childPrice}</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
 
             <div className="cart-page__summaryTotal">
-              <span>Total</span>
-              <span className="cart-page__totalAmount">${totalAmount}</span>
+              <span>{t('cartPage.total')}</span>
+              <span className="cart-page__totalAmount">€{packageTotal}</span>
             </div>
           </div>
         </aside>

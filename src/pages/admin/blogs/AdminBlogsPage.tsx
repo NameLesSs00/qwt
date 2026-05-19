@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Plus, Edit2, Loader2, X, AlertCircle, Image, Trash2, Calendar } from 'lucide-react'
+import { Plus, Edit2, Loader2, X, AlertCircle, Image, Trash2 } from 'lucide-react'
 import { getBlogs, deleteBlog, getBlogImageUrl, type DtoBlogRead } from '../../../api/blogsApi'
 import '../../../components/admin/admin.scss'
 import { BlogFormModal } from './components/BlogFormModal'
@@ -63,17 +63,6 @@ export function AdminBlogsPage() {
     b.description?.toLowerCase().includes(search.toLowerCase())
   )
 
-  const formatDate = (dateString: string | null) => {
-    if (!dateString) return '—'
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric', month: 'short', day: 'numeric'
-      })
-    } catch {
-      return dateString
-    }
-  }
-
   return (
     <div className="admin-page">
       {/* Header */}
@@ -126,7 +115,6 @@ export function AdminBlogsPage() {
                 <th style={{ padding: '14px 16px', fontWeight: 600, color: '#475569', fontSize: '12px', width: '60px' }}>IMG</th>
                 <th style={{ padding: '14px 16px', fontWeight: 600, color: '#475569', fontSize: '12px' }}>TITLE & SUMMARY</th>
                 <th style={{ padding: '14px 16px', fontWeight: 600, color: '#475569', fontSize: '12px' }}>SECTIONS</th>
-                <th style={{ padding: '14px 16px', fontWeight: 600, color: '#475569', fontSize: '12px' }}>CREATED</th>
                 <th style={{ padding: '14px 16px', fontWeight: 600, color: '#475569', fontSize: '12px', textAlign: 'right' }}>ACTIONS</th>
               </tr>
             </thead>
@@ -164,13 +152,6 @@ export function AdminBlogsPage() {
                     </span>
                   </td>
 
-                  {/* Created At */}
-                  <td style={{ padding: '12px 16px', color: '#64748b', fontSize: '13px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Calendar size={14}/> {formatDate(blog.createdAt)}
-                    </div>
-                  </td>
-
                   {/* Actions */}
                   <td style={{ padding: '12px 16px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -202,7 +183,7 @@ export function AdminBlogsPage() {
               ))}
               {filteredBlogs.length === 0 && (
                 <tr>
-                  <td colSpan={5} style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>
+                  <td colSpan={4} style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>
                     No blogs found. {search ? 'Try a different search term.' : 'Create your first blog post!'}
                   </td>
                 </tr>

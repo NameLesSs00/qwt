@@ -1,56 +1,64 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from "motion/react";
-import imgHero from '../../../assets/plogs/details/222.png';
-import imgMain from '../../../assets/plogs/details/i 1.png';
-import iconUser from '../../../assets/plogs/details/ri_user-fill.svg';
-import iconCategory from '../../../assets/plogs/details/nrk_category-active.svg';
-import iconQuote from '../../../assets/plogs/details/Quote Icon.svg';
-
-// Recent Posts mock images
-import imgRecent1 from '../../../assets/plogs/details/Frame 153.png';
-import imgRecent2 from '../../../assets/plogs/details/Frame 153-1.png';
+import { getBlogById, getBlogs, getBlogImageUrl } from '../../../api/blogsApi';
+import type { DtoBlogRead } from '../../../api/blogsApi';
+import imgHero from '../../../assets/plogs/details/222.png'; // Fallback hero
 
 import './blogDetailsPage.scss';
 
 export function BlogDetailsPage() {
-  const [activeSection, setActiveSection] = useState('everything');
+  const { t } = useTranslation();
+  const { id } = useParams<{ id: string; name?: string }>();
+  const [blog, setBlog] = useState<DtoBlogRead | null>(null);
+  const [recentBlogs, setRecentBlogs] = useState<DtoBlogRead[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['everything', 'expect', 'wear', 'when', 'safety'];
-      const offsets = sections.map(id => {
-        const el = document.getElementById(id);
-        return { id, top: el ? el.getBoundingClientRect().top : Infinity };
-      });
-      // Find latest section that is near the top of viewport
-      const passedSections = offsets.filter(item => item.top <= 200);
-      if (passedSections.length > 0) {
-        setActiveSection(passedSections[passedSections.length - 1].id);
-      } else {
-        setActiveSection('everything');
+    async function fetchData() {
+      if (!id) return;
+      setIsLoading(true);
+      try {
+        const blogId = parseInt(id, 10);
+        const [blogRes, recentRes] = await Promise.all([
+          getBlogById(blogId),
+          getBlogs(1, 4) // Fetch a few recent blogs
+        ]);
+        
+        if (blogRes.success) {
+          setBlog(blogRes.data);
+        }
+        
+        if (recentRes.success) {
+          // Exclude the current blog from recent posts
+          setRecentBlogs(recentRes.data.filter(b => b.id !== blogId).slice(0, 3));
+        }
+      } catch (error) {
+        console.error('Failed to fetch blog details', error);
+      } finally {
+        setIsLoading(false);
       }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 100; // offset for sticky header
-      window.scrollTo({ top: y, behavior: 'smooth' });
     }
-  };
+    
+    fetchData();
+  }, [id]);
 
-  const steps = [
-    { id: 'everything', label: 'Everything You Need' },
-    { id: 'expect', label: 'What to Expect?' },
-    { id: 'wear', label: 'What to Wear?' },
-    { id: 'when', label: 'When You Go?' },
-    { id: 'safety', label: 'About Safety' },
-  ];
+  if (isLoading) {
+    return (
+      <div className="bd-page" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#1e659e', fontSize: '18px', fontWeight: 500 }}>{t('blogDetailsPage.loadingText')}</p>
+      </div>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <div className="bd-page" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#1e659e', fontSize: '18px', fontWeight: 500 }}>{t('blogDetailsPage.notFoundText')}</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div 
@@ -67,8 +75,8 @@ export function BlogDetailsPage() {
           animate={{ scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="bd-heroBg" 
-          src={imgHero} 
-          alt="Blog Banner" 
+          src={getBlogImageUrl(blog.imageUrl) || imgHero} 
+          alt={blog.title || 'Blog Banner'} 
         />
         <div className="bd-heroOverlay"></div>
         <div className="bd-heroInner">
@@ -78,7 +86,7 @@ export function BlogDetailsPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="bd-heroTitle"
           >
-            Everything You Need to Know Before a Desert Safari
+            {blog.title}
           </motion.h1>
         </div>
       </section>
@@ -94,203 +102,68 @@ export function BlogDetailsPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bd-breadcrumb"
           >
-            <Link to="/" className="bd-breadcrumbLink">Home</Link>
+            <Link to="/" className="bd-breadcrumbLink">{t('blogDetailsPage.breadcrumbHome')}</Link>
             <span className="bd-breadcrumbSep">&gt;</span>
-            <Link to="/blogs" className="bd-breadcrumbLink">Blogs</Link>
+            <Link to="/blogs" className="bd-breadcrumbLink">{t('blogDetailsPage.breadcrumbBlogs')}</Link>
             <span className="bd-breadcrumbSep">&gt;</span>
-            <span className="bd-breadcrumbActive">Blog details</span>
+            <span className="bd-breadcrumbActive">{t('blogDetailsPage.breadcrumbActive')}</span>
           </motion.div>
 
           <div className="bd-splitLayout">
             
             {/* ── Left Content (Main) ── */}
             <div className="bd-mainCol">
-              
-              <img src={imgMain} alt="Safari ATV" className="bd-mainImg" />
-              
-              <div className="bd-metaRow">
-                <div className="bd-metaLeft">
-                  <motion.span 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="bd-metaItem"
-                  >
-                    <img src={iconUser} alt="User" /> Admin
-                  </motion.span>
-                  <motion.span 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="bd-metaItem"
-                  >
-                    <img src={iconCategory} alt="Category" /> Safari
-                  </motion.span>
-                </div>
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  className="bd-metaRight"
-                >
-                  12 Jan 2026
-                </motion.div>
-              </div>
-
               <article className="bd-article">
                 <motion.h2 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  id="everything" 
                   className="bd-articleMainTitle"
                 >
-                  Everything You Need to Know Before a Desert Safari
+                  {blog.title}
                 </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                >
-                  A desert safari is one of the most exciting experiences you can have in Egypt. From riding quad bikes across golden dunes to enjoying breathtaking desert sunsets, this adventure combines adrenaline, culture, and nature. Before you go, here's everything you need to know to be fully prepared.
-                </motion.p>
-
-                <motion.h3 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  id="expect"
-                >
-                  What to Expect on a Desert Safari
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  Most desert safari trips include thrilling activities such as quad biking or jeep rides, camel riding, and visits to traditional Bedouin villages. Many tours also offer tea, dinner, or stargazing experiences under the desert sky.
-                </motion.p>
-
-                <motion.h3 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  id="wear"
-                >
-                  What to Wear
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  Choose comfortable, lightweight clothing and closed shoes suitable for sand. Sunglasses, sunscreen, and a scarf are highly recommended to protect you from the sun and dust.
-                </motion.p>
-
-                <motion.h3 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  id="when"
-                >
-                  Best Time to Go
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  The best time for a desert safari is during the early morning or late afternoon, especially around sunset. These times offer cooler temperatures and stunning views of the desert landscape.
-                </motion.p>
-
-                <motion.h3 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  id="safety"
-                >
-                  Safety Tips
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  Always follow your guide's instructions, wear protective gear when riding quad bikes, and stay hydrated throughout the trip. Desert safaris are safe when organized by experienced and licensed operators.
-                </motion.p>
-              </article>
-
-              {/* Comments Section */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bd-commentsSection"
-              >
-                <h3 className="bd-sectionTitle">Comments</h3>
                 
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bd-commentBlock"
-                >
-                  <div className="bd-quoteHeader">
-                    <img src={iconQuote} alt="Quote" className="bd-quoteIcon" />
-                    <span className="bd-commentAuthor">Emily R</span>
-                  </div>
-                  <p className="bd-commentText">
-                    Great content! I appreciate how you explained the experience step by step. It made the whole safari feel less intimidating.
-                  </p>
-                </motion.div>
-              </motion.div>
+                {blog.description && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {blog.description}
+                  </motion.p>
+                )}
 
-              {/* Add Comment Form */}
-              <div className="bd-addCommentSection">
-                <h3 className="bd-sectionTitle">Add Comment</h3>
-                
-                <form className="bd-commentForm">
-                  <div className="bd-formGroup">
-                    <label>Your name</label>
-                    <motion.input 
-                      whileFocus={{ scale: 1.01, borderColor: "#1e659e" }}
-                      type="text" 
-                      placeholder="Enter Name" 
-                    />
-                  </div>
-                  
-                  <div className="bd-formGroup">
-                    <label>Email</label>
-                    <motion.input 
-                      whileFocus={{ scale: 1.01, borderColor: "#1e659e" }}
-                      type="email" 
-                      placeholder="Enter Email" 
-                    />
-                  </div>
-
-                  <div className="bd-formGroup">
-                    <label>Comment</label>
-                    <motion.textarea 
-                      whileFocus={{ scale: 1.01, borderColor: "#1e659e" }}
-                      placeholder="Text..." 
-                      rows={4}
-                    ></motion.textarea>
-                  </div>
-
-                  <div className="bd-formAction">
-                    <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      type="button" 
-                      className="bd-submitBtn"
+                {blog.sections?.map((section) => (
+                  <div key={section.id} id={`section-${section.id}`} style={{ marginTop: '40px' }}>
+                    <motion.h3 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
                     >
-                      Post Comment
-                    </motion.button>
+                      {section.title}
+                    </motion.h3>
+                    {section.imageUrl && (
+                      <motion.img 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        src={getBlogImageUrl(section.imageUrl)} 
+                        alt={section.title || ''} 
+                        className="bd-mainImg"
+                        style={{ marginTop: '20px', marginBottom: '20px' }}
+                      />
+                    )}
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                    >
+                      {section.content}
+                    </motion.p>
                   </div>
-                </form>
-              </div>
-
+                ))}
+              </article>
             </div>
 
             {/* ── Right Sidebar ── */}
@@ -301,75 +174,33 @@ export function BlogDetailsPage() {
               className="bd-sidebarCol"
             >
               
-              {/* Table of Contents / Stepper */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-                className="bd-tocWidget"
-              >
-                <ul className="bd-stepper">
-                  {steps.map((step, idx) => (
-                    <motion.li 
-                      key={step.id} 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + idx * 0.1 }}
-                      className={`bd-stepperItem ${activeSection === step.id ? 'active' : ''}`}
-                      onClick={() => scrollToSection(step.id)}
-                    >
-                      <motion.span 
-                        animate={activeSection === step.id ? { scale: [1, 1.2, 1] } : { scale: 1 }}
-                        transition={{ repeat: activeSection === step.id ? Infinity : 0, duration: 2 }}
-                        className="bd-stepDot"
-                      ></motion.span>
-                      <span className="bd-stepText">{step.label}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-
               {/* Recent Posts Widget */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-                className="bd-recentWidget"
-              >
-                <h4 className="bd-widgetTitle">Recent Posts</h4>
-                
-                <div className="bd-recentList">
-                  <motion.div whileHover={{ x: 5 }}>
-                    <Link to="#" className="bd-recentItem">
-                      <img src={imgRecent1} alt="Recent 1" className="bd-recentThumb" />
-                      <div className="bd-recentInfo">
-                        <h5 className="bd-recentTitle">A Beginner's Guide to Visiting Luxor</h5>
-                        <span className="bd-recentComments">25 Comments</span>
-                      </div>
-                    </Link>
-                  </motion.div>
-
-                  <motion.div whileHover={{ x: 5 }}>
-                    <Link to="#" className="bd-recentItem">
-                      <img src={imgRecent2} alt="Recent 2" className="bd-recentThumb" />
-                      <div className="bd-recentInfo">
-                        <h5 className="bd-recentTitle">Top 7 Snorkeling Spots in the Red Sea</h5>
-                        <span className="bd-recentComments">25 Comments</span>
-                      </div>
-                    </Link>
-                  </motion.div>
-
-                  <motion.div whileHover={{ x: 5 }}>
-                    <Link to="#" className="bd-recentItem">
-                      <img src={imgRecent2} alt="Recent 3" className="bd-recentThumb" />
-                      <div className="bd-recentInfo">
-                        <h5 className="bd-recentTitle">Top 7 Snorkeling Spots in the Red Sea</h5>
-                        <span className="bd-recentComments">25 Comments</span>
-                      </div>
-                    </Link>
-                  </motion.div>
-                </div>
-              </motion.div>
+              {recentBlogs.length > 0 && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                  className="bd-recentWidget"
+                >
+                  <h4 className="bd-widgetTitle">{t('blogDetailsPage.recentPostsTitle')}</h4>
+                  
+                  <div className="bd-recentList">
+                    {recentBlogs.map(recent => {
+                      const slug = recent.title ? recent.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'blog';
+                      return (
+                        <motion.div whileHover={{ x: 5 }} key={recent.id}>
+                          <Link to={`/blogs/details/${recent.id}/${slug}`} className="bd-recentItem">
+                            <img src={getBlogImageUrl(recent.imageUrl) || imgHero} alt={recent.title || 'Recent'} className="bd-recentThumb" />
+                            <div className="bd-recentInfo">
+                              <h5 className="bd-recentTitle">{recent.title}</h5>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
 
             </motion.div>
           </div>

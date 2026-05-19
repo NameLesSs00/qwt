@@ -1,26 +1,34 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, HelpCircle, Loader2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { getQuestions, type DtoQuestionRead } from '../../api/questionsApi'
-import { fadeUp, stagger, springUp, viewport } from '../../lib/animations'
+import { fadeUp, stagger, springUp } from '../../lib/animations'
 import './faqPage.scss'
 
 export function FaqPage() {
+  const { t, i18n } = useTranslation()
   const [questions, setQuestions] = useState<DtoQuestionRead[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [openId, setOpenId] = useState<number | null>(null)
 
   useEffect(() => {
+    setLoading(true)
     getQuestions(1, 100)
       .then(res => {
         const items = res.data || []
         setQuestions(items)
-        if (items.length > 0) setOpenId(items[0].id)
+        if (items.length > 0) {
+          setOpenId(items[0].id)
+        } else {
+          setOpenId(null)
+        }
+        setError('')
       })
-      .catch(() => setError('Failed to load questions. Please try again later.'))
+      .catch(() => setError(t('faqPage.errorText')))
       .finally(() => setLoading(false))
-  }, [])
+  }, [i18n.language, t])
 
   return (
     <main className="faq-page">
@@ -33,10 +41,8 @@ export function FaqPage() {
       >
         <div className="faq-page__heroInner">
           <HelpCircle size={40} className="faq-page__heroIcon" />
-          <h1 className="faq-page__heroTitle">Frequently Asked Questions</h1>
-          <p className="faq-page__heroSub">
-            Find answers to the most common questions about our tours and services.
-          </p>
+          <h1 className="faq-page__heroTitle">{t('faqPage.heroTitle')}</h1>
+          <p className="faq-page__heroSub">{t('faqPage.heroSub')}</p>
         </div>
       </motion.section>
 
@@ -46,14 +52,14 @@ export function FaqPage() {
           {loading ? (
             <div className="faq-page__loading">
               <Loader2 className="animate-spin" size={40} />
-              <p>Loading questions…</p>
+              <p>{t('faqPage.loadingText')}</p>
             </div>
           ) : error ? (
             <div className="faq-page__error">{error}</div>
           ) : questions.length === 0 ? (
             <div className="faq-page__empty">
               <HelpCircle size={48} />
-              <p>No questions available yet. Check back soon!</p>
+              <p>{t('faqPage.emptyText')}</p>
             </div>
           ) : (
             <motion.div

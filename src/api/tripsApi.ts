@@ -1,4 +1,4 @@
-import { axiosClient, adminAxiosClient, BASE_URL } from './axiosClient';
+import { axiosClient, adminAxiosClient } from './axiosClient';
 
 // ── Enums ────────────────────────────────────────────────────────────────────
 export const DurationType = {
@@ -115,8 +115,15 @@ export async function getTrips(params?: TripsListParams): Promise<TripsListRespo
 
 /** Public: get single trip by ID */
 export async function getTripById(id: number, lang?: string): Promise<SingleTripResponse> {
-  const config = lang ? { headers: { 'Accept-Language': lang } } : {};
-  const response = await axiosClient.get<SingleTripResponse>(`/Trips/${id}`, config);
+  const headers: Record<string, string> = {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+  };
+  if (lang) {
+    headers['Accept-Language'] = lang;
+  }
+  const response = await axiosClient.get<SingleTripResponse>(`/Trips/${id}`, { headers });
   return response.data;
 }
 

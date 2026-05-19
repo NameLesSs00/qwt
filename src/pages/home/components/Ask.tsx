@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react'
@@ -9,20 +10,29 @@ import askImage from '../../../assets/ask/imageAsk.png'
 import '../styles/ask.scss'
 
 export function Ask() {
+  const { t, i18n } = useTranslation()
   const [questions, setQuestions] = useState<DtoQuestionRead[]>([])
   const [loading, setLoading] = useState(true)
   const [openId, setOpenId] = useState<number | null>(null)
 
   useEffect(() => {
+    let active = true
+    setLoading(true)
     getQuestions(1, 5)
       .then(res => {
+        if (!active) return
         const items = res.data || []
         setQuestions(items)
         if (items.length > 0) setOpenId(items[0].id)
       })
-      .catch(() => setQuestions([]))
-      .finally(() => setLoading(false))
-  }, [])
+      .catch(() => {
+        if (active) setQuestions([])
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => { active = false }
+  }, [i18n.language])
 
   return (
     <section className="home-ask">
@@ -45,11 +55,11 @@ export function Ask() {
               whileHover={{ rotate: [0, -15, 15, 0], transition: { duration: 0.5 } }}
             />
             <h2 className="home-ask__title">
-              Frequently Asked{' '}
-              <span className="home-ask__titleAccent">Questions?</span>
+              {t('homePage.ask.title')}{' '}
+              <span className="home-ask__titleAccent">{t('homePage.ask.titleAccent')}</span>
             </h2>
           </div>
-          <p className="home-ask__sub">Your Perfect Journey, Crafted with Care</p>
+          <p className="home-ask__sub">{t('homePage.ask.sub')}</p>
         </motion.header>
 
         <div className="home-ask__content">
@@ -71,7 +81,7 @@ export function Ask() {
             ) : questions.length === 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 0', color: '#64748b' }}>
                 <HelpCircle size={40} style={{ opacity: 0.4 }} />
-                <p style={{ margin: 0, fontSize: '15px' }}>No questions available yet.</p>
+                <p style={{ margin: 0, fontSize: '15px' }}>{t('homePage.ask.empty')}</p>
               </div>
             ) : (
               <>
@@ -121,22 +131,9 @@ export function Ask() {
                 <motion.div variants={fadeUp} style={{ marginTop: '24px' }}>
                   <Link
                     to="/faq"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      color: '#1e659e',
-                      fontWeight: 600,
-                      fontSize: '15px',
-                      textDecoration: 'none',
-                      borderBottom: '2px solid transparent',
-                      paddingBottom: '2px',
-                      transition: 'border-color 0.2s'
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = '#1e659e')}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = 'transparent')}
+                    className="home-ask__moreBtn"
                   >
-                    View All FAQs <ArrowRight size={16} />
+                    {t('homePage.ask.viewAll')} <ArrowRight size={16} />
                   </Link>
                 </motion.div>
               </>

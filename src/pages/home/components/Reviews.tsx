@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import icon    from '../../../assets/reviews/icon.svg'
 import avatar1 from '../../../assets/reviews/1.jpg'
@@ -11,14 +12,20 @@ import type { Variants } from 'framer-motion'
 import '../styles/reviews.scss'
 
 interface Review {
-  id: number; avatar: string; name: string; country: string; time: string
-  rating: number; quote: string; tourImage: string; tourName: string; featured?: boolean
+  id: number
+  key: string
+  avatar: string
+  name: string
+  time: string
+  rating: number
+  tourImage: string
+  featured?: boolean
 }
 
 const reviews: Review[] = [
-  { id: 1, avatar: avatar1, name: 'Sarah M.',  country: 'United Kingdom', time: '3:00Pm 12/1/2025', rating: 5, quote: 'An absolutely amazing experience! Crystal-clear water, friendly staff, and perfect organization. Highly recommended.', tourImage: tour1, tourName: 'Orange Bay Island Trip'        },
-  { id: 2, avatar: avatar2, name: 'Mark D.',   country: 'Germany',        time: '3:00Pm 12/1/2025', rating: 5, quote: 'The safari trip was thrilling and well-organized. Riding through the desert at sunset was unforgettable.',          tourImage: tour2, tourName: 'Desert Safari Quad Adventure' },
-  { id: 3, avatar: avatar3, name: 'Emily R.',  country: 'France',         time: '3:00Pm 12/1/2025', rating: 5, quote: 'A wonderful journey through history. The guide was knowledgeable, and everything was smooth and comfortable.',    tourImage: tour3, tourName: 'Luxor Day Tour'              },
+  { id: 1, key: 'steve', avatar: avatar1, name: 'Steve M.', time: '3:00Pm 12/1/2025', rating: 5, tourImage: tour1 },
+  { id: 2, key: 'marta', avatar: avatar2, name: 'Marta D.', time: '3:00Pm 12/1/2025', rating: 5, tourImage: tour2 },
+  { id: 3, key: 'eric',  avatar: avatar3, name: 'Eric R.',  time: '3:00Pm 12/1/2025', rating: 5, tourImage: tour3 },
 ]
 
 // Card tilts slightly as it rises in
@@ -47,6 +54,8 @@ function StarRating({ count }: { count: number }) {
 }
 
 export function Reviews() {
+  const { t } = useTranslation()
+
   return (
     <section className="reviews">
       <div className="reviews__container">
@@ -60,11 +69,11 @@ export function Reviews() {
           viewport={viewport}
         >
           <h2 className="reviews__title">
-            What Our <span className="reviews__accent">Travellers Say?</span>
+            {t('homePage.reviews.title')} <span className="reviews__accent">{t('homePage.reviews.accent')}</span>
             <img className="reviews__icon" src={icon} alt="" aria-hidden="true" />
           </h2>
           <p className="reviews__subtitle">
-            Real experiences from travelers who explored Egypt with us
+            {t('homePage.reviews.sub')}
           </p>
         </motion.div>
 
@@ -95,18 +104,18 @@ export function Reviews() {
                 <div className="reviews__meta">
                   <div className="reviews__nameRow">
                     <span className="reviews__name">{review.name} –</span>
-                    <span className="reviews__country">{review.country}</span>
+                    <span className="reviews__country">{t(`homePage.reviews.${review.key}.country`)}</span>
                   </div>
                   <span className="reviews__time">{review.time}</span>
                   <StarRating count={review.rating} />
                 </div>
               </div>
 
-              <p className="reviews__quote">"{review.quote}"</p>
+              <p className="reviews__quote">"{t(`homePage.reviews.${review.key}.quote`)}"</p>
 
               <div className="reviews__tour">
                 <img className="reviews__tourImg" src={review.tourImage} alt="" />
-                <span className="reviews__tourName">{review.tourName}</span>
+                <span className="reviews__tourName">{t(`homePage.reviews.${review.key}.tourName`)}</span>
               </div>
             </motion.article>
           ))}

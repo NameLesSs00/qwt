@@ -6,5 +6,377 @@
   "gallery": "Galerie",
   "blogs": "Bloguri",
   "contact": "Contact",
-  "login": "Autentificare"
+  "login": "Autentificare",
+  "contactUs": {
+    "heroTitle": "Contactați-ne",
+    "heroSubtitle": "Să planificăm următoarea ta aventură",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbActive": "Contactați-ne",
+    "officeLocation": "Locația biroului",
+    "officeAddress": "Strada Principală nr. 55\nEtajul 2, Marea Roșie",
+    "emailAddress": "Adresă de e-mail",
+    "emails": "contact@example.com\ninfo@example.com",
+    "hotline": "Linie telefonică directă",
+    "phones": "+1 (307) 778-0608\n666 8888 000",
+    "questionsTitle": "Aveți întrebări? Nu ezitați să\nne scrieți",
+    "usernameLabel": "Nume de utilizator",
+    "usernamePlaceholder": "Introduceți numele de utilizator",
+    "whatsappLabel": "Număr de WhatsApp",
+    "whatsappPlaceholder": "Introduceți numărul de WhatsApp",
+    "messageLabel": "Mesaj",
+    "messagePlaceholder": "Scrieți mesajul dvs.",
+    "submitBtn": "Trimite mesajul"
+  },
+  "header": {
+    "home": "Acasă",
+    "destinations": "Destinații",
+    "luxor": "Luxor",
+    "redSea": "Marea Roșie",
+    "cairo": "Cairo",
+    "trips": "Excursii",
+    "gallery": "Galerie",
+    "faq": "Întrebări frecvente",
+    "blogs": "Bloguri",
+    "aboutUs": "Despre noi",
+    "contactUs": "Contactați-ne"
+  },
+  "footer": {
+    "description": "Fiecare călătorie este o oportunitate de a explora, de a te relaxa și de a crea amintiri de neuitat, create cu grijă, confort și expertiză locală",
+    "quickAction": "Actiuni rapide",
+    "contactUs": "Contactați-ne",
+    "paymentChannels": "Canale de plată",
+    "followUs": "Urmărește-ne",
+    "copyright": "Dezvoltat de Tech Gear Solutions © 2026 Toate drepturile rezervate",
+    "phone": "+00 (123) 456 889",
+    "email": "contact@example.com",
+    "address": "Strada Principală 583, NY, SUA",
+    "links": {
+      "home": "Acasă",
+      "destinations": "Destinații",
+      "trips": "Excursii",
+      "gallery": "Galerie",
+      "aboutUs": "Despre noi",
+      "blogs": "Bloguri",
+      "contactUs": "Contactați-ne",
+      "faq": "Întrebări frecvente"
+    }
+  },
+  "aboutPage": {
+    "heroTitle": "Despre noi",
+    "heroSubtitle": "Nu oamenii fac călătoriile, ci călătoriile îi fac pe oameni",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbActive": "Despre noi",
+    "introTitle": "Călătoria ta începe cu noi",
+    "introText": "Suntem o companie dedicată creării de aventuri de neuitat în tot Egiptul. De la excursii maritime uluitoare și safari-uri palpitante în deșert până la tururi istorice atemporale, te ajutăm să descoperi destinații într-un mod autentic, incitant și fără efort.",
+    "sectionTitle": "Cine suntem?",
+    "whoDesc": "Credem că o călătorie este mai mult decât vizitarea unor locuri - este vorba despre povești, momente și amintiri care durează o viață. Echipa noastră este formată din experți locali și pasionați de călătorie care cunosc fiecare loc ascuns, momentul perfect și fiecare detaliu care transformă o călătorie într-o experiență.",
+    "offerMainTitle": "Ce oferim?",
+    "offer1Title": "Excursii maritime",
+    "offer1Desc": "Snorkeling, insule, ape de\ncristal și relaxare.",
+    "offer2Title": "Safari în deșert",
+    "offer2Desc": "Aventură, cultura și peisaje\ndeșertice de neuitat",
+    "offer3Title": "Tururi istorice",
+    "offer3Desc": "Explorează minunile Egiptului antic\ncu ghizi experți",
+    "ctaTitle": "Începe-ți călătoria cu noi\nchiar astăzi",
+    "ctaDesc": "Descoperă următoarea ta aventură și creează amintiri memorabile",
+    "ctaBtn": "Explorează excursii"
+  },
+  "blogsPage": {
+    "breadcrumbHome": "Acasă",
+    "breadcrumbActive": "Bloguri",
+    "searchPlaceholder": "Caută",
+    "loadingText": "Se încarcă blogurile...",
+    "readMoreBtn": "Citește mai mult",
+    "seeMoreBtn": "Vezi mai mult",
+    "noBlogsFound": "Nu s-au găsit bloguri care să corespundă căutării."
+  },
+  "blogDetailsPage": {
+    "loadingText": "Se încarcă detaliile blogului...",
+    "notFoundText": "Blogul nu a fost găsit.",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbBlogs": "Bloguri",
+    "breadcrumbActive": "Detalii blog",
+    "recentPostsTitle": "Postări recente"
+  },
+  "faqPage": {
+    "heroTitle": "Întrebări frecvente",
+    "heroSub": "Găsiți răspunsuri la cele mai frecvente întrebări despre tururile și serviciile noastre.",
+    "loadingText": "Se încarcă întrebările...",
+    "emptyText": "Nu există întrebări disponibile încă. Reveniți în curând!",
+    "errorText": "Eroare la încărcarea întrebărilor. Vă rugăm să încercați din nou mai târziu."
+  },
+  "galleryPage": {
+    "heroTitle": "Explorează momente care spun o poveste",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbActive": "Galerie",
+    "result": "Rezultat",
+    "results": "Rezultate",
+    "errorText": "Eroare la încărcarea imaginilor din galerie.",
+    "emptyText": "Nu există imagini în galerie încă.",
+    "loadMoreBtn": "Încarcă mai multe fotografii"
+  },
+  "tripsPage": {
+    "heroTitle": "Descoperiți cele mai bune tururi ghidate din Egipt",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbActive": "Explorează",
+    "filterTitle": "Filtru",
+    "clearAllBtn": "Șterge toate filtrele",
+    "destinationHeader": "Destinație",
+    "allDestinations": "Toate destinațiile",
+    "priceRangeHeader": "Gama de prețuri (€)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "tripTypeHeader": "Tipuri de excursii",
+    "allTypes": "Toate tipurile",
+    "applyBtn": "Aplică",
+    "tripFound": "Excursie găsită",
+    "tripsFound": "Excursii găsite",
+    "searchPlaceholder": "Caută",
+    "sortBy": "Ordonează după",
+    "latest": "Cele mai noi",
+    "oldest": "Cele mai vechi",
+    "loadingText": "Se încarcă tururile active...",
+    "noTripsFound": "Nu există excursii care să corespundă configurării filtrelor alese.",
+    "bookNowBtn": "Rezervă acum"
+  },
+  "cartPage": {
+    "title": "Coșul de rezervări",
+    "subtitle": "Verificați tururile selectate înainte de plată",
+    "emptyText": "Coșul dumneavoastră este gol.",
+    "emptyLink": "Răsfoiți tururi",
+    "removeBtn": "Elimină",
+    "adult": "Adult",
+    "adults": "Adulți",
+    "child": "Copil",
+    "children": "Copii",
+    "total": "Total",
+    "checkoutBtn": "Treci la finalizarea comenzii",
+    "summaryTitle": "Rezumatul rezervării",
+    "package": "Pachet",
+    "adultLabel": "Adult",
+    "childLabel": "Copil"
+  },
+  "checkoutPage": {
+    "emptyTitle": "Coșul dumneavoastră este gol",
+    "emptySub": "Explorați destinațiile noastre frumoase și adăugați un tur în coș.",
+    "browseToursBtn": "Răsfoiți tururi",
+    "title": "Finalizare comandă",
+    "subtitle": "Completați detaliile rezervării dumneavoastră mai jos",
+    "billingDetails": "Detalii de facturare",
+    "requiredFields": "* Câmpuri obligatorii",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "nationality": "Naționalitate",
+    "selectNationality": "Selectați naționalitatea dumneavoastră",
+    "emailAddress": "Adresă de e-mail",
+    "phoneNumber": "Număr de telefon",
+    "haveCoupon": "Aveți un cupon?",
+    "promoCodePlaceholder": "Introduceți codul promoțional",
+    "orderSummary": "Rezumatul comenzii",
+    "guestsLabel": "Oaspeți:",
+    "adultLabel": "Adult x",
+    "childLabel": "Copil x",
+    "totalAmount": "Valoare totală",
+    "confirmBookBtn": "Confirmă și rezervă acum",
+    "processing": "Se procesează...",
+    "toastFillFields": "Vă rugăm să completați toate câmpurile obligatorii.",
+    "toastEmptyCart": "Coșul dumneavoastră este gol.",
+    "toastSuccess": "Rezervare confirmată cu succes!",
+    "toastFail": "Nu s-a putut trimite rezervarea. Vă rugăm să încercați din nou.",
+    "toastError": "A apărut o eroare la trimiterea rezervării.",
+    "nationalityUS": "Statele Unite",
+    "nationalityUK": "Regatul Unit",
+    "nationalityEG": "Egipt",
+    "nationalityCA": "Canada",
+    "nationalityAU": "Australia",
+    "nationalityFR": "Franța",
+    "nationalityDE": "Germania",
+    "nationalityIT": "Italia",
+    "nationalityRU": "Rusia",
+    "nationalityOther": "Alta"
+  },
+  "singleTripPage": {
+    "viewOverlay": "Vezi",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbTrips": "Excursii",
+    "durationLabel": "Durată",
+    "adult": "Adult",
+    "fromPrice": "De la",
+    "perPerson": "pers.",
+    "children": "Copii",
+    "checkAvailabilityBtn": "Verifică disponibilitatea",
+    "infoDestination": "Destinație",
+    "infoDuration": "Durată",
+    "infoTourType": "Tipul turului",
+    "infoTimeStart": "Oră începere",
+    "incExcTitle": "Inclus / Exclus",
+    "included": "Inclus",
+    "excluded": "Exclus",
+    "tripInfoBadge": "Info excursie",
+    "infoLocation": "Locație",
+    "infoAvailableDays": "Zile disponibile",
+    "whatToBringTitle": "Ce să aduci cu tine",
+    "highlightsTitle": "Reperele turului",
+    "customerReviewsTitle": "Recenzii clienți",
+    "reviewsCount": "recenzii",
+    "noReviewsYet": "Nu există recenzii încă. Fii primul care lasă o recenzie!",
+    "addReviewTitle": "Adaugă o recenzie",
+    "requiredFieldsNote": "Adresa dumneavoastră de e-mail nu va fi publicată. Câmpurile obligatorii sunt marcate",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "yourRating": "Nota dumneavoastră",
+    "comment": "Comentariu",
+    "commentPlaceholder": "Scrieți recenzia dumneavoastră aici...",
+    "submitting": "Se trimite...",
+    "submitBtn": "Trimite recenzia",
+    "tripNotFound": "Excursia nu a fost găsită.",
+    "errorLoadTrip": "Eroare la încărcarea detaliilor excursiei. Vă rugăm să încercați din nou.",
+    "backToTripsBtn": "← Înapoi la toate excursiile",
+    "toastFillFields": "Vă rugăm să completați toate câmpurile obligatorii.",
+    "toastSuccess": "Recenzia a fost trimisă cu succes!",
+    "toastFail": "Eroare la trimiterea recenziei.",
+    "toastError": "A apărut o eroare la trimiterea recenziei."
+  },
+  "tripTypes": {
+    "adventure": "Aventură",
+    "historical": "Tururi istorice",
+    "historicaltours": "Tururi istorice",
+    "seatrips": "Excursii pe mare",
+    "seatrip": "Excursii pe mare",
+    "desertsafari": "Safari în deșert"
+  },
+  "homePage": {
+    "hero": {
+      "slide1": {
+        "title": "Simte adrenalina deșertului egiptean",
+        "description": "Condu ATV-uri, explorează dunele de aur și trăiește o viață autentică de beduin sub cerul deșertului.",
+        "cta": "Explorează excursii în deșert"
+      },
+      "slide2": {
+        "title": "Mers prin mii de ani de istorie",
+        "description": "Descoperă temple antice, piramide maiestuoase și poveștile atemporale ale civilizației Egiptului.",
+        "cta": "Explorează excursii istorice"
+      },
+      "slide3": {
+        "title": "Evadează pe cele mai uimitoare insule ale Egiptului",
+        "description": "Ape de cristal, recife de corali colorate și aventuri insulare de neuitat în Marea Roșie.",
+        "cta": "Explorează excursii pe mare"
+      }
+    },
+    "popularTours": {
+      "eyebrow": "Cele mai populare",
+      "eyebrowScript": "Excursii",
+      "subtitle": "Excursii de top, îndrăgite de călătorii noștri",
+      "all": "Toate",
+      "empty": "Nu există excursii disponibile în această categorie.",
+      "viewTrip": "Vezi excursia",
+      "seeMore": "Vezi mai mult",
+      "days": "Zile",
+      "day": "Zi",
+      "hours": "Ore",
+      "hour": "Oră"
+    },
+    "destinations": {
+      "title": "Destinații",
+      "titleAccent": "Uimitoare",
+      "sub": "Alege următoarea ta experiență de neuitat în cele mai iconice destinații din Egipt",
+      "travelTo": "Călătorește în",
+      "toursCount": "{{count}} Excursii",
+      "seeMore": "Vezi mai mult",
+      "aswan": "Aswan",
+      "luxor": "Luxor",
+      "hurghada": "Hurghada"
+    },
+    "recentGallery": {
+      "kicker": "Fă-ți turul mai plăcut",
+      "title": "Galerie recentă",
+      "seeMore": "Vezi mai mult"
+    },
+    "howItWorks": {
+      "title": "Cum",
+      "titleAccent": "funcționează?",
+      "sub": "Planifică-ți călătoria în doar câțiva pași simpli",
+      "steps": {
+        "book": {
+          "title": "Rezervă un tur",
+          "desc": "Răsfoiește tururile noastre și alege experiența care ți se potrivește cel mai bine"
+        },
+        "pay": {
+          "title": "Plată securizată",
+          "desc": "Finalizează rezervarea printr-un proces de plată sigur și simplu"
+        },
+        "confirm": {
+          "title": "Confirmare instantanee",
+          "desc": "Primești confirmarea rezervării instantaneu prin e-mail sau WhatsApp."
+        },
+        "trip": {
+          "title": "Drum bun",
+          "desc": "Bucură-te de călătorie și creează amintiri de neuitat în Egipt."
+        }
+      }
+    },
+    "chooseUs": {
+      "title": "De ce să ne",
+      "titleAccent": "alegi?",
+      "sub": "Creăm experiențe de călătorie de neuitat în Egipt, cu confort, siguranță și calitate în care poți avea încredere.",
+      "features": {
+        "local": {
+          "title": "Experți locali",
+          "desc": "Ghidurile și operatorii noștri locali experimentați asigură călătorii autentice și bine planificate"
+        },
+        "safe": {
+          "title": "Călătorii sigure și de încredere",
+          "desc": "Toate tururile sunt organizate cu ghizi autorizați, transport asigurat și parteneri de încredere."
+        },
+        "fast": {
+          "title": "Rezervare simplă și rapidă",
+          "desc": "Pași simpli, confirmare instantanee și opțiuni flexibile de rezervare"
+        }
+      }
+    },
+    "blogs": {
+      "title": "Din",
+      "titleAccent": "Blogurile noastre",
+      "sub": "Inspiră-te din ghiduri de călătorie, sfaturi utile și povești care îți fac călătoria prin Egipt mai ușoară și mai memorabilă.",
+      "readMore": "Citește mai mult",
+      "seeMore": "Vezi mai mult",
+      "failed": "Eroare la încărcarea blogurilor.",
+      "empty": "Niciun blog disponibil în acest moment."
+    },
+    "ask": {
+      "title": "Întrebări",
+      "titleAccent": "frecvente?",
+      "sub": "Călătoria ta perfectă, creată cu grijă",
+      "viewAll": "Vezi toate întrebările",
+      "empty": "Nu există întrebări disponibile încă."
+    },
+    "planBanner": {
+      "title": "Începe să îți planifici călătoria de vis de astăzi",
+      "sub": "Bucură-te de 15% reducere la cele mai populare tururi ale noastre pentru o perioadă limitată!",
+      "bookNow": "Rezervă acum"
+    },
+    "reviews": {
+      "title": "Ce spun",
+      "accent": "călătorii noștri?",
+      "sub": "Experiențe reale de la călători care au explorat Egiptul cu noi",
+      "steve": {
+        "quote": "O experiență absolut uimitoare! Apă de cristal, personal prietenos și organizare perfectă. Recomand cu drag.",
+        "country": "Marea Britanie",
+        "tourName": "Excursion pe insula Orange Bay"
+      },
+      "marta": {
+        "quote": "Excursia de safari a fost palpitantă și bine organizată. Plimbarea cu ATV-ul prin deșert la apus a fost de neuitat.",
+        "country": "Germania",
+        "tourName": "Aventură cu ATV în deșert"
+      },
+      "eric": {
+        "quote": "O călătorie minunată prin istorie. Ghidul a fost foarte bine informat și totul a fost lin și confortabil.",
+        "country": "Franța",
+        "tourName": "Tur de o zi în Luxor"
+      }
+    }
+  }
 }
+

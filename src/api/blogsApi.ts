@@ -51,7 +51,7 @@ export interface DtoBlogUpdate {
   sections: DtoBlogSectionUpdate[];
 }
 
-// ── Response wrappers ─────────────────────────────────────────────────────────
+// ── Response wrappers & Raw Backend Schemas ───────────────────────────────────
 
 export interface BlogsListResponse {
   success: boolean;
@@ -71,6 +71,54 @@ export interface StringResponse {
   data: string | null;
 }
 
+// Raw Swagger-matching backend schemas
+interface RawBlogSectionRead {
+  id: number;
+  sectionNumber: number;
+  title: string | null;
+  content: string | null;
+  imageUrl: string | null;
+  blogId: number;
+}
+
+interface RawBlogRead {
+  id: number;
+  title: string | null;
+  content: string | null;
+  imageUrl: string | null;
+  blogSections: RawBlogSectionRead[];
+}
+
+interface RawBlogsListResponse {
+  success: boolean;
+  message: string | null;
+  data: RawBlogRead[];
+}
+
+interface RawSingleBlogResponse {
+  success: boolean;
+  message: string | null;
+  data: RawBlogRead;
+}
+
+// Mapping function: Raw backend model to frontend DTO
+function mapRawToDtoBlogRead(raw: RawBlogRead): DtoBlogRead {
+  if (!raw) return {} as DtoBlogRead;
+  return {
+    id: raw.id,
+    title: raw.title || '',
+    description: raw.content || '',
+    imageUrl: raw.imageUrl || null,
+    createdAt: null,
+    sections: (raw.blogSections || []).map(s => ({
+      id: s.id,
+      title: s.title || '',
+      content: s.content || '',
+      imageUrl: s.imageUrl || null
+    }))
+  };
+}
+
 // ── API Functions ─────────────────────────────────────────────────────────────
 
 /** Public: list all blogs */
@@ -78,22 +126,43 @@ export async function getBlogs(
   pageNumber = 1,
   pageSize = 100
 ): Promise<BlogsListResponse> {
-  const response = await axiosClient.get<BlogsListResponse>('/Blogs', {
+  const response = await axiosClient.get<RawBlogsListResponse>('/Blogs', {
     params: { PageNumber: pageNumber, PageSize: pageSize },
   });
-  return response.data;
+  return {
+    success: response.data.success,
+    message: response.data.message,
+    data: (response.data.data || []).map(mapRawToDtoBlogRead)
+  };
 }
 
 /** Public: get single blog by ID */
 export async function getBlogById(id: number): Promise<SingleBlogResponse> {
-  const response = await axiosClient.get<SingleBlogResponse>(`/Blogs/${id}`);
-  return response.data;
+  const response = await axiosClient.get<RawSingleBlogResponse>(`/Blogs/${id}`);
+  return {
+    success: response.data.success,
+    message: response.data.message,
+    data: mapRawToDtoBlogRead(response.data.data)
+  };
 }
 
 /** Admin: create a new blog */
 export async function createBlog(payload: DtoBlogCreate): Promise<SingleBlogResponse> {
-  const response = await adminAxiosClient.post<SingleBlogResponse>('/Blogs', payload);
-  return response.data;
+  const backendPayload = {
+    title: payload.title,
+    content: payload.description,
+    blogSections: (payload.sections || []).map((s, index) => ({
+      sectionNumber: index + 1,
+      title: s.title,
+      content: s.content
+    }))
+  };
+  const response = await adminAxiosClient.post<RawSingleBlogResponse>('/Blogs', backendPayload);
+  return {
+    success: response.data.success,
+    message: response.data.message,
+    data: mapRawToDtoBlogRead(response.data.data)
+  };
 }
 
 /** Admin: update an existing blog */
@@ -101,8 +170,23 @@ export async function updateBlog(
   id: number,
   payload: DtoBlogUpdate
 ): Promise<SingleBlogResponse> {
-  const response = await adminAxiosClient.put<SingleBlogResponse>(`/Blogs/${id}`, payload);
-  return response.data;
+  const backendPayload = {
+    id: payload.id,
+    title: payload.title,
+    content: payload.description,
+    blogSections: (payload.sections || []).map((s, index) => ({
+      id: s.id || 0,
+      sectionNumber: index + 1,
+      title: s.title,
+      content: s.content
+    }))
+  };
+  const response = await adminAxiosClient.put<RawSingleBlogResponse>(`/Blogs/${id}`, backendPayload);
+  return {
+    success: response.data.success,
+    message: response.data.message,
+    data: mapRawToDtoBlogRead(response.data.data)
+  };
 }
 
 /** Admin: delete a blog */

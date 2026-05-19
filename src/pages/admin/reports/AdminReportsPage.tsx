@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Loader2, Calendar, CreditCard, Users, TrendingUp, AlertCircle, RefreshCw, Trash2 } from 'lucide-react'
+import { Loader2, Calendar, CreditCard, Users, TrendingUp, AlertCircle } from 'lucide-react'
 import { getDailyReport, getMonthlyReport, getYearlyReport, type ReportEntity } from '../../../api/reportsApi'
 import '../../../components/admin/admin.scss'
 

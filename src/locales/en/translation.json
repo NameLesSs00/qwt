@@ -6,5 +6,377 @@
   "gallery": "Gallery",
   "blogs": "Blogs",
   "contact": "Contact",
-  "login": "Login"
+  "login": "Login",
+  "contactUs": {
+    "heroTitle": "Contact Us",
+    "heroSubtitle": "Let's Plan Your Next Adventure",
+    "breadcrumbHome": "Home",
+    "breadcrumbActive": "Contact Us",
+    "officeLocation": "Office Location",
+    "officeAddress": "55 Main Street\n2nd Floor Red sea",
+    "emailAddress": "Email Address",
+    "emails": "contact@example.com\ninfo@example.com",
+    "hotline": "Hotline",
+    "phones": "+1 (307) 778-0608\n666 8888 000",
+    "questionsTitle": "Have questions? Feel free to\nwrite us",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "Enter Username",
+    "whatsappLabel": "WhatsApp number",
+    "whatsappPlaceholder": "Enter WhatsApp Number",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write your message",
+    "submitBtn": "Send Message"
+  },
+  "header": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "luxor": "Luxor",
+    "redSea": "Red Sea",
+    "cairo": "Cairo",
+    "trips": "Trips",
+    "gallery": "Gallery",
+    "faq": "FAQ",
+    "blogs": "Blogs",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us"
+  },
+  "footer": {
+    "description": "Every journey is an opportunity to explore, relax, and create unforgettable memories crafted with care, comfort, and local expertise",
+    "quickAction": "Quick action",
+    "contactUs": "contact Us",
+    "paymentChannels": "Payment Channels",
+    "followUs": "Follow Us",
+    "copyright": "Powered By Tech Gear Solutions © 2026 All Rights Reserved",
+    "phone": "+00 (123) 456 889",
+    "email": "contact@example.com",
+    "address": "583 Main Street, NY, USA",
+    "links": {
+      "home": "Home",
+      "destinations": "Destinations",
+      "trips": "Trips",
+      "gallery": "Gallery",
+      "aboutUs": "About Us",
+      "blogs": "Blogs",
+      "contactUs": "Contact Us",
+      "faq": "FAQ"
+    }
+  },
+  "aboutPage": {
+    "heroTitle": "About",
+    "heroSubtitle": "People Don't Take, Trips Take People",
+    "breadcrumbHome": "Home",
+    "breadcrumbActive": "About Us",
+    "introTitle": "Your Journey Begins With Us",
+    "introText": "We are a travel experiences company dedicated to creating unforgettable adventures across Egypt. From breathtaking sea trips and thrilling desert safaris to timeless historical tours, we help you discover destinations in a way that feels authentic, exciting, and effortless.",
+    "sectionTitle": "Who We Are ?",
+    "whoDesc": "We believe that travel is more than just visiting places it's about stories, moments, and memories that last a lifetime. Our team is made up of local experts and travel enthusiasts who know every hidden gem, every perfect timing, and every detail that turns a trip into an experience.",
+    "offerMainTitle": "What We Offer?",
+    "offer1Title": "Sea Trips",
+    "offer1Desc": "Snorkeling, Islands, crystal-clear\nwaters, and relaxation.",
+    "offer2Title": "Desert Safari",
+    "offer2Desc": "Adventure, culture, and unforgettable\ndesert views",
+    "offer3Title": "Historical Tours",
+    "offer3Desc": "Explore Egypt's ancient wonders with\nexpert guides",
+    "ctaTitle": "Start your journey with\nus today",
+    "ctaDesc": "Discover your next adventure and create memories worth sharing",
+    "ctaBtn": "Explore Trips"
+  },
+  "blogsPage": {
+    "breadcrumbHome": "Home",
+    "breadcrumbActive": "Blogs",
+    "searchPlaceholder": "Search",
+    "loadingText": "Loading blogs...",
+    "readMoreBtn": "Read More",
+    "seeMoreBtn": "See More",
+    "noBlogsFound": "No blogs found matching the search."
+  },
+  "blogDetailsPage": {
+    "loadingText": "Loading blog details...",
+    "notFoundText": "Blog not found.",
+    "breadcrumbHome": "Home",
+    "breadcrumbBlogs": "Blogs",
+    "breadcrumbActive": "Blog details",
+    "recentPostsTitle": "Recent Posts"
+  },
+  "faqPage": {
+    "heroTitle": "Frequently Asked Questions",
+    "heroSub": "Find answers to the most common questions about our tours and services.",
+    "loadingText": "Loading questions…",
+    "emptyText": "No questions available yet. Check back soon!",
+    "errorText": "Failed to load questions. Please try again later."
+  },
+  "galleryPage": {
+    "heroTitle": "Explore Moments That Tell the Story",
+    "breadcrumbHome": "Home",
+    "breadcrumbActive": "Gallery",
+    "result": "Result",
+    "results": "Results",
+    "errorText": "Failed to load gallery images.",
+    "emptyText": "No images in the gallery yet.",
+    "loadMoreBtn": "Load More Photos"
+  },
+  "tripsPage": {
+    "heroTitle": "Discover Egypt's Finest Guided Tours",
+    "breadcrumbHome": "Home",
+    "breadcrumbActive": "Explore",
+    "filterTitle": "Filter",
+    "clearAllBtn": "Clear all filters",
+    "destinationHeader": "Destination",
+    "allDestinations": "All Destinations",
+    "priceRangeHeader": "Price Range (€)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "tripTypeHeader": "Trips Types",
+    "allTypes": "All Types",
+    "applyBtn": "Apply",
+    "tripFound": "Trip Found",
+    "tripsFound": "Trips Found",
+    "searchPlaceholder": "Search",
+    "sortBy": "Sort by",
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "loadingText": "Loading active tours...",
+    "noTripsFound": "No trips match the chosen filter configuration.",
+    "bookNowBtn": "Book Now"
+  },
+  "cartPage": {
+    "title": "Booking Cart",
+    "subtitle": "Review your selected tours before payment",
+    "emptyText": "Your cart is empty.",
+    "emptyLink": "Browse Tours",
+    "removeBtn": "Remove",
+    "adult": "Adult",
+    "adults": "Adults",
+    "child": "Child",
+    "children": "Children",
+    "total": "Total",
+    "checkoutBtn": "Proceed to checkout",
+    "summaryTitle": "Booking summary",
+    "package": "Package",
+    "adultLabel": "Adult",
+    "childLabel": "Child"
+  },
+  "checkoutPage": {
+    "emptyTitle": "Your cart is empty",
+    "emptySub": "Explore our beautiful destinations and add a tour to your cart.",
+    "browseToursBtn": "Browse Tours",
+    "title": "Checkout",
+    "subtitle": "Complete your booking details below",
+    "billingDetails": "Billing Details",
+    "requiredFields": "* Required fields",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "nationality": "Nationality",
+    "selectNationality": "Select your nationality",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "haveCoupon": "Have a Coupon?",
+    "promoCodePlaceholder": "Enter your promo code",
+    "orderSummary": "Order Summary",
+    "guestsLabel": "Guests:",
+    "adultLabel": "Adult x",
+    "childLabel": "Child x",
+    "totalAmount": "Total Amount",
+    "confirmBookBtn": "Confirm & Book Now",
+    "processing": "Processing...",
+    "toastFillFields": "Please fill out all required fields.",
+    "toastEmptyCart": "Your cart is empty.",
+    "toastSuccess": "Booking confirmed successfully!",
+    "toastFail": "Failed to submit booking. Please try again.",
+    "toastError": "An error occurred while submitting your booking.",
+    "nationalityUS": "United States",
+    "nationalityUK": "United Kingdom",
+    "nationalityEG": "Egypt",
+    "nationalityCA": "Canada",
+    "nationalityAU": "Australia",
+    "nationalityFR": "France",
+    "nationalityDE": "Germany",
+    "nationalityIT": "Italy",
+    "nationalityRU": "Russia",
+    "nationalityOther": "Other"
+  },
+  "singleTripPage": {
+    "viewOverlay": "View",
+    "breadcrumbHome": "Home",
+    "breadcrumbTrips": "Trips",
+    "durationLabel": "Duration",
+    "adult": "Adult",
+    "fromPrice": "From",
+    "perPerson": "Person",
+    "children": "Children",
+    "checkAvailabilityBtn": "Check Availability",
+    "infoDestination": "Destination",
+    "infoDuration": "Duration",
+    "infoTourType": "Tour Type",
+    "infoTimeStart": "Time Start",
+    "incExcTitle": "Included / Excluded",
+    "included": "Included",
+    "excluded": "Excluded",
+    "tripInfoBadge": "Trip Info",
+    "infoLocation": "Location",
+    "infoAvailableDays": "Available Days",
+    "whatToBringTitle": "What to Bring",
+    "highlightsTitle": "Tour Highlights",
+    "customerReviewsTitle": "Customer Reviews",
+    "reviewsCount": "reviews",
+    "noReviewsYet": "No reviews yet. Be the first to leave a review!",
+    "addReviewTitle": "Add a Review",
+    "requiredFieldsNote": "Your email address will not be published. Required fields are marked",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "yourRating": "Your Rating",
+    "comment": "Comment",
+    "commentPlaceholder": "Write your review here...",
+    "submitting": "Submitting...",
+    "submitBtn": "Submit Review",
+    "tripNotFound": "Trip not found.",
+    "errorLoadTrip": "Failed to load trip details. Please try again.",
+    "backToTripsBtn": "← Back to all trips",
+    "toastFillFields": "Please fill in all required fields.",
+    "toastSuccess": "Review submitted successfully!",
+    "toastFail": "Failed to submit review.",
+    "toastError": "Error occurred while submitting review."
+  },
+  "tripTypes": {
+    "adventure": "Adventure",
+    "historical": "Historical Tours",
+    "historicaltours": "Historical Tours",
+    "seatrips": "Sea Trips",
+    "seatrip": "Sea Trips",
+    "desertsafari": "Desert Safari"
+  },
+  "homePage": {
+    "hero": {
+      "slide1": {
+        "title": "Feel the Thrill of the Egyptian Desert",
+        "description": "Ride quad bikes, explore golden dunes, and experience authentic Bedouin life under the desert sky.",
+        "cta": "Explore Desert Trips"
+      },
+      "slide2": {
+        "title": "Walk Through Thousands of Years of History",
+        "description": "Discover ancient temples, majestic pyramids, and the timeless stories of Egypt's civilization.",
+        "cta": "Explore Historical Trips"
+      },
+      "slide3": {
+        "title": "Escape to Egypt's Most Stunning Islands",
+        "description": "Crystal-clear waters, colorful coral reefs, and unforgettable island adventures in the Red Sea.",
+        "cta": "Explore Sea Trips"
+      }
+    },
+    "popularTours": {
+      "eyebrow": "Most Popular",
+      "eyebrowScript": "Tours",
+      "subtitle": "Top-rated tours loved by our travelers",
+      "all": "All",
+      "empty": "No trips available in this category.",
+      "viewTrip": "View Trip",
+      "seeMore": "See More",
+      "days": "Days",
+      "day": "Day",
+      "hours": "Hours",
+      "hour": "Hour"
+    },
+    "destinations": {
+      "title": "Awesome",
+      "titleAccent": "Destinations",
+      "sub": "Choose your next unforgettable experience across Egypt's most iconic destinations",
+      "travelTo": "Travel To",
+      "toursCount": "{{count}} Tours",
+      "seeMore": "See More",
+      "aswan": "Aswan",
+      "luxor": "Luxor",
+      "hurghada": "Hurghada"
+    },
+    "recentGallery": {
+      "kicker": "Make Your Tour More Pleasure",
+      "title": "Recent Gallery",
+      "seeMore": "See More"
+    },
+    "howItWorks": {
+      "title": "How It",
+      "titleAccent": "Works?",
+      "sub": "Plan your trip in just a few simple steps",
+      "steps": {
+        "book": {
+          "title": "Book a Tour",
+          "desc": "Browse our tours and choose the experience that suits you best"
+        },
+        "pay": {
+          "title": "Secure Payment",
+          "desc": "Complete your booking with a safe and easy payment process"
+        },
+        "confirm": {
+          "title": "Instant Confirmation",
+          "desc": "Receive your booking confirmation instantly via email or WhatsApp."
+        },
+        "trip": {
+          "title": "Have a Nice Trip",
+          "desc": "Enjoy your journey and create unforgettable memories in Egypt."
+        }
+      }
+    },
+    "chooseUs": {
+      "title": "Why Choose",
+      "titleAccent": "Us?",
+      "sub": "We create unforgettable travel experiences across Egypt with comfort, safety, and quality you can trust.",
+      "features": {
+        "local": {
+          "title": "Local Experts",
+          "desc": "Our experienced local guides and operators ensure authentic and well-planned trips"
+        },
+        "safe": {
+          "title": "Safe & Reliable Trips",
+          "desc": "All tours are organized with licensed guides, insured transportation, and trusted partners."
+        },
+        "fast": {
+          "title": "Easy & Fast Booking",
+          "desc": "Simple steps, instant confirmation, and flexible booking options"
+        }
+      }
+    },
+    "blogs": {
+      "title": "From Our",
+      "titleAccent": "Blogs",
+      "sub": "Get inspired with travel guides, helpful tips, and stories that make your journey across Egypt easier and more memorable.",
+      "readMore": "Read More",
+      "seeMore": "See More",
+      "failed": "Failed to load blogs.",
+      "empty": "No blogs available at the moment."
+    },
+    "ask": {
+      "title": "Frequently Asked",
+      "titleAccent": "Questions?",
+      "sub": "Your Perfect Journey, Crafted with Care",
+      "viewAll": "View All FAQs",
+      "empty": "No questions available yet."
+    },
+    "planBanner": {
+      "title": "Start Planning Your Dream Trip Today",
+      "sub": "Enjoy 15% Off on our most popular tours for a limited time only!",
+      "bookNow": "Book Now"
+    },
+    "reviews": {
+      "title": "What Our",
+      "accent": "Travellers Say?",
+      "sub": "Real experiences from travelers who explored Egypt with us",
+      "steve": {
+        "quote": "An absolutely amazing experience! Crystal-clear water, friendly staff, and perfect organization. Highly recommended.",
+        "country": "United Kingdom",
+        "tourName": "Orange Bay Island Trip"
+      },
+      "marta": {
+        "quote": "The safari trip was thrilling and well-organized. Riding through the desert at sunset was unforgettable.",
+        "country": "Germany",
+        "tourName": "Desert Safari Quad Adventure"
+      },
+      "eric": {
+        "quote": "A wonderful journey through history. The guide was knowledgeable, and everything was smooth and comfortable.",
+        "country": "France",
+        "tourName": "Luxor Day Tour"
+      }
+    }
+  }
 }
+

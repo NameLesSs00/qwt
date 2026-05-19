@@ -47,8 +47,10 @@ function App() {
       <Route path="/about-us" element={<AppLayout><AboutUsPage /></AppLayout>} />
       <Route path="/gallery" element={<AppLayout><GalleryPage /></AppLayout>} />
       <Route path="/blogs" element={<AppLayout><BlogsPage /></AppLayout>} />
-      <Route path="/blogs/details" element={<AppLayout><BlogDetailsPage /></AppLayout>} />
+      <Route path="/blogs/details/:id/:name" element={<AppLayout><BlogDetailsPage /></AppLayout>} />
+      <Route path="/blogs/details/:id" element={<AppLayout><BlogDetailsPage /></AppLayout>} />
       <Route path="/trips" element={<AppLayout><TripsPage /></AppLayout>} />
+      <Route path="/trips/:id/:slug" element={<AppLayout><SingleTripPage /></AppLayout>} />
       <Route path="/trips/:id" element={<AppLayout><SingleTripPage /></AppLayout>} />
       <Route path="/cart" element={<AppLayout><CartPage /></AppLayout>} />
       <Route path="/checkout" element={<AppLayout><CheckoutPage /></AppLayout>} />

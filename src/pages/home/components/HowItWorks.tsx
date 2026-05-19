@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import ticketIcon  from '../../../assets/howworks/heroicons_ticket-solid.svg'
 import cardIcon    from '../../../assets/howworks/solar_card-bold.svg'
@@ -9,13 +10,13 @@ import { fadeUp, stagger, viewport } from '../../../lib/animations'
 import type { Variants } from 'framer-motion'
 import '../styles/howItWorks.scss'
 
-type Step = { id: string; title: string; desc: string; icon: string; cardClassName: string }
+type Step = { id: string; icon: string; cardClassName: string }
 
 const steps: Step[] = [
-  { id: 'book',    title: 'Book a Tour',           desc: 'Browse our tours and choose the experience that suits you best',                                                            icon: ticketIcon,  cardClassName: 'is-down' },
-  { id: 'pay',     title: 'Secure Payment',        desc: 'Complete your booking with a safe and easy payment process',                                                                icon: cardIcon,    cardClassName: 'is-up'   },
-  { id: 'confirm', title: 'Instant Confirmation',  desc: 'Receive your booking confirmation instantly via email or WhatsApp.',                                                        icon: confirmIcon, cardClassName: 'is-down' },
-  { id: 'trip',    title: 'Have a Nice Trip',      desc: 'Enjoy your journey and create unforgettable memories in Egypt.',                                                            icon: tripIcon,    cardClassName: 'is-up'   },
+  { id: 'book',    icon: ticketIcon,  cardClassName: 'is-down' },
+  { id: 'pay',     icon: cardIcon,    cardClassName: 'is-up'   },
+  { id: 'confirm', icon: confirmIcon, cardClassName: 'is-down' },
+  { id: 'trip',    icon: tripIcon,    cardClassName: 'is-up'   },
 ]
 
 // Cards with is-down drop from above; is-up rise from below
@@ -25,6 +26,8 @@ const cardVariant = (dir: 'is-up' | 'is-down'): Variants => ({
 })
 
 export function HowItWorks() {
+  const { t } = useTranslation()
+
   return (
     <section className="howworks">
       {/* Plane drifts in from right */}
@@ -59,9 +62,9 @@ export function HowItWorks() {
           viewport={viewport}
         >
           <h2 className="howworks__title">
-            How It <span className="howworks__titleAccent">Works?</span>
+            {t('homePage.howItWorks.title')} <span className="howworks__titleAccent">{t('homePage.howItWorks.titleAccent')}</span>
           </h2>
-          <p className="howworks__sub">Plan your trip in just a few simple steps</p>
+          <p className="howworks__sub">{t('homePage.howItWorks.sub')}</p>
         </motion.header>
 
         {/* Steps – staggered, each with its own directional entry */}
@@ -87,8 +90,8 @@ export function HowItWorks() {
               >
                 <img className="howworks__icon" src={s.icon} alt="" />
               </motion.div>
-              <h3 className="howworks__cardTitle">{s.title}</h3>
-              <p className="howworks__cardDesc">{s.desc}</p>
+              <h3 className="howworks__cardTitle">{t(`homePage.howItWorks.steps.${s.id}.title`)}</h3>
+              <p className="howworks__cardDesc">{t(`homePage.howItWorks.steps.${s.id}.desc`)}</p>
             </motion.article>
           ))}
         </motion.div>

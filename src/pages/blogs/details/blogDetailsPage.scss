@@ -14,6 +14,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: #0f172a; /* Dark background to blend with overlay when using contain */
 
   @media (max-width: 768px) {
     height: 280px;
@@ -25,7 +26,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Cover layout restored for premium full bleed banner */
 }
 
 .bd-heroOverlay {
@@ -118,47 +119,13 @@
 
 .bd-mainImg {
   width: 100%;
+  max-height: 400px;
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: cover; /* Cover layout restored for standard filled column header */
   margin-bottom: 24px;
 }
 
-/* Meta Data */
-.bd-metaRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-}
 
-.bd-metaLeft {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.bd-metaItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #64748b;
-  font-weight: 500;
-
-  img {
-    width: 16px;
-    height: 16px;
-    opacity: 0.8;
-  }
-}
-
-.bd-metaRight {
-  font-size: 13px;
-  color: #94a3b8;
-  font-weight: 500;
-}
 
 /* Article Typography */
 .bd-article {
@@ -206,103 +173,7 @@
   margin: 40px 0 20px;
 }
 
-/* Comments Block */
-.bd-commentBlock {
-  border-left: 4px solid #1e659e;
-  padding: 12px 0 12px 20px;
-  background: transparent;
-  margin-bottom: 40px;
-}
 
-.bd-quoteHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.bd-quoteIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.bd-commentAuthor {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.bd-commentText {
-  font-size: 14px;
-  color: #475569;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* Add Comment Form */
-.bd-commentForm {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.bd-formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #333;
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-
-    &::placeholder {
-      color: #94a3b8;
-    }
-
-    &:focus {
-      border-color: #1e659e;
-    }
-  }
-
-  textarea {
-    resize: vertical;
-  }
-}
-
-.bd-formAction {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-.bd-submitBtn {
-  background: #1e659e;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 32px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-
-  &:hover {
-    background: #154c79;
-  }
-}
 
 /* ── Right Column (Sidebar) ── */
 .bd-sidebarCol {
@@ -448,20 +319,4 @@
   line-height: 1.4;
 }
 
-.bd-recentComments {
-  font-size: 11px;
-  color: #94a3b8;
-  display: flex;
-  align-items: center;
 
-  &::before {
-    content: ""; /* Can ideally use a tiny comment icon SVG here */
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: #1e659e; /* Placeholder representing icon color */
-    mask: url('../../../assets/plogs/details/basil_comment-solid.svg') no-repeat center / contain;
-    -webkit-mask: url('../../../assets/plogs/details/basil_comment-solid.svg') no-repeat center / contain;
-    margin-right: 4px;
-  }
-}

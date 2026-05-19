@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { getGalleryImages, getAbsoluteImageUrl } from '../../../api/galleryApi'
@@ -41,6 +42,7 @@ const containerVariants: Variants = {
 
 export function RecentGallery() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [displayItems, setDisplayItems] = useState<{ id: string; image: string; alt: string; className: string }[]>([])
 
@@ -97,8 +99,8 @@ export function RecentGallery() {
           whileInView="visible"
           viewport={viewport}
         >
-          <p className="recent-gallery__kicker">Make Your Tour More Pleasure</p>
-          <h2 className="recent-gallery__title">Recent Gallery</h2>
+          <p className="recent-gallery__kicker">{t('homePage.recentGallery.kicker')}</p>
+          <h2 className="recent-gallery__title">{t('homePage.recentGallery.title')}</h2>
         </motion.header>
 
         {/* Grid */}
@@ -162,7 +164,7 @@ export function RecentGallery() {
               transition={{ type: 'spring', stiffness: 380, damping: 18 }}
               onClick={() => navigate('/gallery')}
             >
-              See More
+              {t('homePage.recentGallery.seeMore')}
             </motion.button>
           </motion.div>
         </motion.div>

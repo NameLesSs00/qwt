@@ -58,68 +58,7 @@
   margin-bottom: 40px;
 }
 
-.blogs-tagsRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
 
-.blogs-tagsLabel {
-  font-size: 14px;
-  font-weight: 600;
-  color: #475569;
-  margin-right: 8px;
-}
-
-.blogs-tagBtn {
-  background: #f1f5f9;
-  color: #94a3b8;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #e2e8f0;
-    color: #64748b;
-  }
-
-  &--active {
-    background: #1e659e;
-    color: #fff;
-
-    &:hover {
-      background: #1e659e;
-      color: #fff;
-    }
-  }
-}
-
-.blogs-filters {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.blogs-dropdown {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 140px;
-  height: 40px;
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  padding: 0 16px;
-  font-size: 13px;
-  color: #475569;
-  background: #fff;
-  cursor: pointer;
-}
 
 .blogs-searchBox {
   display: flex;
@@ -163,62 +102,67 @@
 }
 
 .blogs-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.05; /* More squarish aspect ratio based on the image size */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
   border-radius: 20px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  cursor: pointer; /* Pointer to indicate clickable card */
+  cursor: pointer;
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.blogs-cardImageWrap {
+  width: 100%;
+  aspect-ratio: 1.6;
+  overflow: hidden;
+  position: relative;
+  background-color: #f8fafc; /* Nice gray backdrop for contained images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .blogs-cardBg {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Back to cover for full card width integration */
   transition: transform 0.4s;
 }
 
 .blogs-card:hover .blogs-cardBg {
-  transform: scale(1.05);
-}
-
-.blogs-cardOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 50%,
-    rgba(0,0,0,0.6) 100%
-  );
-  pointer-events: none;
+  transform: scale(1.03);
 }
 
 .blogs-cardContent {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding: 24px;
+  padding: 20px 24px 24px;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 16px;
+  flex-grow: 1;
+  background: #fff;
 }
 
 .blogs-cardTitle {
-  color: #fff;
-  font-size: 20px;
+  color: #1e293b;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.45;
   margin: 0;
-  white-space: pre-line;
-  flex: 1;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* extra pop */
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: none; /* Removed shadow since text is on light background now */
 }
+
 
 .blogs-cardBtn {
   background: #fff;
@@ -236,6 +180,7 @@
   white-space: nowrap;
   transition: all 0.2s;
   
+  margin-top: auto;
   flex-shrink: 0; /* Ensures the button doesn't shrink, stays on the right */
 
   &:hover {
@@ -268,34 +213,3 @@
   }
 }
 
-/* Dropdown menu additions */
-.blogs-dropdownContainer {
-  position: relative;
-}
-
-.blogs-dropdownMenu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 140px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-}
-
-.blogs-dropdownItem {
-  padding: 10px 16px;
-  font-size: 13px;
-  color: #475569;
-  cursor: pointer;
-  transition: background 0.2s;
-  
-  &:hover {
-    background: #f1f5f9;
-  }
-}

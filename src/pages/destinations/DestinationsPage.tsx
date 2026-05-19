@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import bg from '../../assets/desinations/bg.png'
 import bg2 from '../../assets/desinations/bg2.png'
 import aswanImg from '../../assets/desinations/aswan.jpg'
@@ -11,6 +12,7 @@ import { motion } from "motion/react"
 import './destinationsPage.scss'
 
 export function DestinationsPage() {
+  const navigate = useNavigate()
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -193,9 +195,9 @@ export function DestinationsPage() {
             whileTap={{ scale: 0.96 }}
             className="destinations-ctaBtn"
             type="button"
+            onClick={() => navigate('/trips')}
           >
             Explore Trips
-            <span className="destinations-ctaArrow" aria-hidden="true">&#8594;</span>
           </motion.button>
         </motion.div>
       </section>

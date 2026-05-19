@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { ChevronDown, Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2 } from 'lucide-react';
 import { motion } from "motion/react";
+import { useTranslation } from 'react-i18next';
 import { ImageLightbox } from '../../components/imageLightbox/ImageLightbox'
 import { getGalleryImages, getAbsoluteImageUrl, type GalleryImageDto } from '../../api/galleryApi'
 import imgBg from '../../assets/gallery/bg.png';
@@ -9,10 +10,12 @@ import imgBg from '../../assets/gallery/bg.png';
 import './galleryPage.scss';
 
 export function GalleryPage() {
+  const { t } = useTranslation()
   const [images, setImages] = useState<GalleryImageDto[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [visibleCount, setVisibleCount] = useState(12)
 
   useEffect(() => {
     async function loadImages() {
@@ -21,13 +24,13 @@ export function GalleryPage() {
         const data = await getGalleryImages()
         setImages(data)
       } catch (err) {
-        setError('Failed to load gallery images.')
+        setError(t('galleryPage.errorText'))
       } finally {
         setLoading(false)
       }
     }
     loadImages()
-  }, [])
+  }, [t])
 
   const openLightbox = (idx: number) => setLightboxIndex(idx)
   const closeLightbox = () => setLightboxIndex(null)
@@ -63,7 +66,7 @@ export function GalleryPage() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="gallery-heroTitle"
           >
-            Explore Moments That Tell the Story
+            {t('galleryPage.heroTitle')}
           </motion.h1>
         </div>
       </section>
@@ -80,9 +83,9 @@ export function GalleryPage() {
             transition={{ duration: 0.45 }}
             className="gallery-breadcrumb"
           >
-            <Link to="/" className="gallery-breadcrumbLink">Home</Link>
+            <Link to="/" className="gallery-breadcrumbLink">{t('galleryPage.breadcrumbHome')}</Link>
             <span className="gallery-breadcrumbSep">&gt;</span>
-            <span className="gallery-breadcrumbActive">Gallery</span>
+            <span className="gallery-breadcrumbActive">{t('galleryPage.breadcrumbActive')}</span>
           </motion.div>
 
           {/* Toolbar */}
@@ -93,13 +96,8 @@ export function GalleryPage() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="gallery-toolbar"
           >
-            <div className="gallery-resultCount">{images.length} Result{images.length !== 1 && 's'}</div>
-            <div className="gallery-sortControl">
-              <span className="gallery-sortLabel">Sort by</span>
-              <div className="gallery-sortDropdown">
-                <span>Latest</span>
-                <ChevronDown size={16} color="#94a3b8" />
-              </div>
+            <div className="gallery-resultCount">
+              {images.length} {images.length === 1 ? t('galleryPage.result') : t('galleryPage.results')}
             </div>
           </motion.div>
 
@@ -113,17 +111,18 @@ export function GalleryPage() {
             </div>
           ) : images.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px', background: '#f8fafc', borderRadius: '12px', color: '#64748b' }}>
-              No images in the gallery yet.
+              {t('galleryPage.emptyText')}
             </div>
           ) : (
-            <motion.div
+            <>
+              <motion.div
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
               transition={{ staggerChildren: 0.06 }}
               className="gallery-masonry"
             >
-              {images.map((img, idx) => (
+              {images.slice(0, visibleCount).map((img, idx) => (
                 <motion.div
                   key={img.id}
                   variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
@@ -141,7 +140,8 @@ export function GalleryPage() {
                     variants={{ hover: { scale: 1.04 } }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     src={getAbsoluteImageUrl(img.imageUrl)}
-                    alt={`Gallery item ${idx + 1}`}
+                    alt={`Egypt Travel Adventure Photo - Gallery Image #${img.id}`}
+                    loading="lazy"
                     className="gallery-img"
                   />
                   <motion.div
@@ -160,7 +160,38 @@ export function GalleryPage() {
                 </motion.div>
               ))}
             </motion.div>
-          )}
+            
+            {images.length > visibleCount && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '48px' }}>
+                <button
+                  onClick={() => setVisibleCount(prev => prev + 12)}
+                  style={{
+                    background: '#1e659e',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '12px 36px',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 12px rgba(30, 101, 158, 0.2)'
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(30, 101, 158, 0.3)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(30, 101, 158, 0.2)';
+                  }}
+                >
+                  {t('galleryPage.loadMoreBtn')}
+                </button>
+              </div>
+            )}
+          </>
+        )}
 
         </div>
       </section>

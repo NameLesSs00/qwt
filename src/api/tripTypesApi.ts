@@ -47,8 +47,15 @@ export async function getTripTypes(pageNumber = 1, pageSize = 50): Promise<TripT
  * Public/Admin: Get single trip type by ID
  */
 export async function getTripTypeById(id: number, lang?: string): Promise<SingleTripTypeApiResponse> {
-  const config = lang ? { headers: { 'Accept-Language': lang } } : {};
-  const response = await axiosClient.get<SingleTripTypeApiResponse>(`/TripTypes/${id}`, config);
+  const headers: Record<string, string> = {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+  };
+  if (lang) {
+    headers['Accept-Language'] = lang;
+  }
+  const response = await axiosClient.get<SingleTripTypeApiResponse>(`/TripTypes/${id}`, { headers });
   return response.data;
 }
 

@@ -46,8 +46,15 @@ export async function getQuestions(pageNumber = 1, pageSize = 50): Promise<Quest
 
 /** Public: Get single question by ID with optional explicit language */
 export async function getQuestionById(id: number, lang?: string): Promise<SingleQuestionResponse> {
-  const config = lang ? { headers: { 'Accept-Language': lang } } : {};
-  const response = await axiosClient.get<SingleQuestionResponse>(`/Questions/${id}`, config);
+  const headers: Record<string, string> = {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+  };
+  if (lang) {
+    headers['Accept-Language'] = lang;
+  }
+  const response = await axiosClient.get<SingleQuestionResponse>(`/Questions/${id}`, { headers });
   return response.data;
 }
 
