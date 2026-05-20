@@ -195,6 +195,35 @@
     "nationalityRU": "Russie",
     "nationalityOther": "Autre"
   },
+  "bookingConfirmationPage": {
+    "title": "Réservation Confirmée !",
+    "subtitle": "Merci d'avoir réservé avec nous. Votre réservation est en attente de confirmation.",
+    "bookingDetails": "Détails de la réservation",
+    "bookingRef": "ID de réservation",
+    "bookingDate": "Date de réservation",
+    "status": "Statut",
+    "name": "Nom du client",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "nationality": "Nationalité",
+    "orderSummary": "Résumé de la commande",
+    "trip": "Voyage",
+    "date": "Date",
+    "guests": "Participants",
+    "adults": "Adultes",
+    "children": "Enfants",
+    "subtotal": "Sous-total",
+    "pricingBreakdown": "Résumé des prix",
+    "originalTotal": "Sous-total original",
+    "promoDiscount": "Remise promo",
+    "totalPaid": "Prix total (payé)",
+    "pendingStatus": "En attente",
+    "confirmedStatus": "Confirmé",
+    "finishedStatus": "Terminé",
+    "cancelledStatus": "Annulé",
+    "backHome": "Retour à l'accueil",
+    "browseMore": "Voir d'autres voyages"
+  },
   "singleTripPage": {
     "viewOverlay": "Voir",
     "breadcrumbHome": "Accueil",
@@ -246,6 +275,31 @@
     "seatrips": "Sorties en mer",
     "seatrip": "Sorties en mer",
     "desertsafari": "Safari dans le désert"
+  },
+  "weekdays": {
+    "sunday": "Dimanche",
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi"
+  },
+  "bookingModal": {
+    "selectDate": "Veuillez choisir une date pour le tour",
+    "quantity": "Quantité",
+    "minOne": "Min: 1",
+    "adult": "Adulte",
+    "children": "Enfants",
+    "proceedToCheckout": "Passer à la caisse",
+    "bookingSummary": "Résumé de la réservation",
+    "package": "Forfait",
+    "total": "Total",
+    "onlyAvailableOn": "Ce voyage n'est disponible que le : {{days}}",
+    "availableDays": "Jours disponibles :",
+    "selectFutureDate": "Veuillez choisir une date future.",
+    "toastSelectDate": "Veuillez choisir une date pour le tour.",
+    "toastSelectPeople": "Veuillez sélectionner au moins une personne."
   },
   "homePage": {
     "hero": {

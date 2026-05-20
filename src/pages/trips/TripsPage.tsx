@@ -306,7 +306,7 @@ export function TripsPage() {
                           
                           <div className="trips-cardMetaRow">
                             <span className="trips-cardMeta">
-                              <Clock size={16} /> {trip.durationValue} {trip.durationTypeName || 'Days'}
+                              <Clock size={16} /> {trip.durationValue} {trip.durationTypeName ? t('homePage.popularTours.' + trip.durationTypeName.toLowerCase(), { defaultValue: trip.durationTypeName }) : ''}
                             </span>
                             <span className="trips-cardMetaSeparator">|</span>
                             <span className="trips-cardMeta">

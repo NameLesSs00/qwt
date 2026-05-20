@@ -15,6 +15,7 @@ import { TripsPage }         from './pages/trips/TripsPage'
 import { CartPage }          from './pages/cart/CartPage'
 import { SingleTripPage }    from './pages/singleTrip/SingleTripPage'
 import { CheckoutPage }      from './pages/checkout/CheckoutPage'
+import { BookingConfirmationPage } from './pages/bookingConfirmation/BookingConfirmationPage'
 import { NotFoundPage }      from './pages/notFound/NotFoundPage'
 import { FaqPage }           from './pages/faq/FaqPage'
 
@@ -54,6 +55,7 @@ function App() {
       <Route path="/trips/:id" element={<AppLayout><SingleTripPage /></AppLayout>} />
       <Route path="/cart" element={<AppLayout><CartPage /></AppLayout>} />
       <Route path="/checkout" element={<AppLayout><CheckoutPage /></AppLayout>} />
+      <Route path="/booking-confirmation" element={<AppLayout><BookingConfirmationPage /></AppLayout>} />
       <Route path="/faq" element={<AppLayout><FaqPage /></AppLayout>} />
 
       {/* ── Admin login (standalone, no Header/Footer) ───────────────────────── */}

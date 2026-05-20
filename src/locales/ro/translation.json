@@ -195,6 +195,35 @@
     "nationalityRU": "Rusia",
     "nationalityOther": "Alta"
   },
+  "bookingConfirmationPage": {
+    "title": "Rezervare Confirmată!",
+    "subtitle": "Vă mulțumim că ați rezervat cu noi. Rezervarea dvs. este în curs de confirmare.",
+    "bookingDetails": "Detalii Rezervare",
+    "bookingRef": "ID Rezervare",
+    "bookingDate": "Data Rezervării",
+    "status": "Status",
+    "name": "Nume Client",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "nationality": "Naționalitate",
+    "orderSummary": "Rezumatul Comenzii",
+    "trip": "Excursie",
+    "date": "Dată",
+    "guests": "Oaspeți",
+    "adults": "Adulți",
+    "children": "Copii",
+    "subtotal": "Subtotal",
+    "pricingBreakdown": "Rezumatul Prețului",
+    "originalTotal": "Subtotal Original",
+    "promoDiscount": "Reducere Promo",
+    "totalPaid": "Preț Total (Plătit)",
+    "pendingStatus": "În așteptare",
+    "confirmedStatus": "Confirmată",
+    "finishedStatus": "Finalizată",
+    "cancelledStatus": "Anulată",
+    "backHome": "Înapoi la Acasă",
+    "browseMore": "Vezi Mai Multe Excursii"
+  },
   "singleTripPage": {
     "viewOverlay": "Vezi",
     "breadcrumbHome": "Acasă",
@@ -246,6 +275,31 @@
     "seatrips": "Excursii pe mare",
     "seatrip": "Excursii pe mare",
     "desertsafari": "Safari în deșert"
+  },
+  "weekdays": {
+    "sunday": "Duminică",
+    "monday": "Luni",
+    "tuesday": "Marți",
+    "wednesday": "Miercuri",
+    "thursday": "Joi",
+    "friday": "Vineri",
+    "saturday": "Sâmbătă"
+  },
+  "bookingModal": {
+    "selectDate": "Vă rugăm să selectați o dată pentru tur",
+    "quantity": "Cantitate",
+    "minOne": "Min: 1",
+    "adult": "Adult",
+    "children": "Copii",
+    "proceedToCheckout": "Finalizare comandă",
+    "bookingSummary": "Rezumatul rezervării",
+    "package": "Pachet",
+    "total": "Total",
+    "onlyAvailableOn": "Această excursie este disponibilă doar în: {{days}}",
+    "availableDays": "Zile disponibile:",
+    "selectFutureDate": "Vă rugăm să selectați o dată viitoare.",
+    "toastSelectDate": "Vă rugăm să selectați o dată pentru tur.",
+    "toastSelectPeople": "Vă rugăm să selectați cel puțin o persoană."
   },
   "homePage": {
     "hero": {

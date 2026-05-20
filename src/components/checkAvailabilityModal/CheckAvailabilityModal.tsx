@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Minus, Plus, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../../context/CartContext';
 import { useToast } from '../../components/toast/ToastProvider';
 import { type DtoTripRead, getTripImageUrl } from '../../api/tripsApi';
@@ -17,6 +18,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   const [date, setDate] = useState('');
   const [dateError, setDateError] = useState('');
@@ -40,7 +42,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
     // Check min date (today)
     const todayStr = new Date().toISOString().split('T')[0];
     if (val < todayStr) {
-      setDateError('Please select a future date.');
+      setDateError(t('bookingModal.selectFutureDate'));
       return;
     }
 
@@ -54,14 +56,15 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
       const selectedDayName = daysOfWeek[localDate.getDay()];
 
       if (!trip.availableDays.includes(selectedDayName)) {
-        setDateError(`This trip is only available on: ${trip.availableDays.join(', ')}`);
+        const translatedDays = trip.availableDays.map(day => t(`weekdays.${day.toLowerCase()}`, { defaultValue: day })).join(', ');
+        setDateError(t('bookingModal.onlyAvailableOn', { days: translatedDays }));
       }
     }
   };
 
   const handleCheckout = () => {
     if (!date) {
-      toast.warning('Please select a tour date.');
+      toast.warning(t('bookingModal.toastSelectDate'));
       return;
     }
     if (dateError) {
@@ -69,7 +72,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
       return;
     }
     if (adultCount === 0 && childCount === 0) {
-      toast.warning('Please select at least one person.');
+      toast.warning(t('bookingModal.toastSelectPeople'));
       return;
     }
 
@@ -108,7 +111,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
             {/* Left Column */}
             <div className="ca-modal__left">
               <div className="ca-section">
-                <label className="ca-label">Please select a tour date</label>
+                <label className="ca-label">{t('bookingModal.selectDate')}</label>
                 <div className="ca-input-wrap">
                   <Calendar className="ca-input-icon" size={18} color="#9CA3AF" />
                   <input 
@@ -121,7 +124,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
                 </div>
                 {trip.availableDays && trip.availableDays.length > 0 && (
                   <div style={{ fontSize: '13px', color: '#4b5563', marginTop: '8px' }}>
-                    Available days: <span style={{ fontWeight: 600, color: '#1e659e' }}>{trip.availableDays.join(', ')}</span>
+                    {t('bookingModal.availableDays')} <span style={{ fontWeight: 600, color: '#1e659e' }}>{trip.availableDays.map(day => t(`weekdays.${day.toLowerCase()}`, { defaultValue: day })).join(', ')}</span>
                   </div>
                 )}
                 {dateError && (
@@ -133,14 +136,14 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
 
               <div className="ca-section">
                 <div className="ca-label-row">
-                  <label className="ca-label">Quantity</label>
-                  <span className="ca-hint">ⓘ ( Min: 1 )</span>
+                  <label className="ca-label">{t('bookingModal.quantity')}</label>
+                  <span className="ca-hint">ⓘ ( {t('bookingModal.minOne')} )</span>
                 </div>
 
 
                 <div className="ca-quantity-box">
                   <div className="ca-quantity-row">
-                    <span className="ca-quantity-name">Adult</span>
+                    <span className="ca-quantity-name">{t('bookingModal.adult')}</span>
                     <span className="ca-quantity-price">€{adultPrice.toFixed(2)}</span>
                     <div className="ca-quantity-controls">
                       <button onClick={() => setAdultCount(prev => Math.max(0, prev - 1))} className="ca-qty-btn">
@@ -154,7 +157,7 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
                   </div>
 
                   <div className="ca-quantity-row">
-                    <span className="ca-quantity-name">Children</span>
+                    <span className="ca-quantity-name">{t('bookingModal.children')}</span>
                     <span className="ca-quantity-price">€{childPrice.toFixed(2)}</span>
                     <div className="ca-quantity-controls">
                       <button onClick={() => setChildCount(prev => Math.max(0, prev - 1))} className="ca-qty-btn">
@@ -170,14 +173,14 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
               </div>
 
               <button className="ca-checkout-btn" onClick={handleCheckout}>
-                Proceed to check out <ArrowRight size={18} />
+                {t('bookingModal.proceedToCheckout')} <ArrowRight size={18} />
               </button>
             </div>
 
             {/* Right Column (Summary) */}
             <div className="ca-modal__right">
               <div className="ca-summary">
-                <h3 className="ca-summary__title">Booking summary</h3>
+                <h3 className="ca-summary__title">{t('bookingModal.bookingSummary')}</h3>
                 
                 <div className="ca-summary__card">
                   {tripImgUrl && <img src={tripImgUrl} alt={trip.name || 'Trip'} className="ca-summary__img" />}
@@ -193,25 +196,25 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
                 </div>
 
                 <div className="ca-summary__breakdown">
-                  <h5 className="ca-summary__subtitle">Package</h5>
+                  <h5 className="ca-summary__subtitle">{t('bookingModal.package')}</h5>
                   
                   {adultCount > 0 && (
                     <div className="ca-summary__row">
-                      <span>Adult: {adultCount} x €{adultPrice}</span>
+                      <span>{t('bookingModal.adult')}: {adultCount} x €{adultPrice}</span>
                       <span className="ca-summary__val">€{adultCount * adultPrice}</span>
                     </div>
                   )}
                   
                   {childCount > 0 && (
                     <div className="ca-summary__row">
-                      <span>Child: {childCount} x €{childPrice}</span>
+                      <span>{t('bookingModal.children')}: {childCount} x €{childPrice}</span>
                       <span className="ca-summary__val">€{childCount * childPrice}</span>
                     </div>
                   )}
                 </div>
 
                 <div className="ca-summary__total">
-                  <span>Total</span>
+                  <span>{t('bookingModal.total')}</span>
                   <span className="ca-summary__total-val">€{total}</span>
                 </div>
               </div>

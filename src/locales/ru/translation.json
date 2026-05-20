@@ -195,6 +195,35 @@
     "nationalityRU": "Россия",
     "nationalityOther": "Другое"
   },
+  "bookingConfirmationPage": {
+    "title": "Бронирование Подтверждено!",
+    "subtitle": "Благодарим вас за бронирование. Ваша заявка ожидает подтверждения.",
+    "bookingDetails": "Детали Бронирования",
+    "bookingRef": "ID Бронирования",
+    "bookingDate": "Дата Бронирования",
+    "status": "Статус",
+    "name": "Имя Клиента",
+    "email": "Электронная почта",
+    "phone": "Телефон",
+    "nationality": "Гражданство",
+    "orderSummary": "Детали Заказа",
+    "trip": "Тур",
+    "date": "Дата",
+    "guests": "Гости",
+    "adults": "Взрослые",
+    "children": "Дети",
+    "subtotal": "Подытог",
+    "pricingBreakdown": "Сводка цен",
+    "originalTotal": "Начальный подытог",
+    "promoDiscount": "Промо-скидка",
+    "totalPaid": "Итоговая цена (Оплачено)",
+    "pendingStatus": "В ожидании",
+    "confirmedStatus": "Подтверждено",
+    "finishedStatus": "Завершено",
+    "cancelledStatus": "Отменено",
+    "backHome": "На главную",
+    "browseMore": "Посмотреть другие туры"
+  },
   "singleTripPage": {
     "viewOverlay": "Смотреть",
     "breadcrumbHome": "Главная",
@@ -246,6 +275,31 @@
     "seatrips": "Морские прогулки",
     "seatrip": "Морские прогулки",
     "desertsafari": "Сафари в пустыне"
+  },
+  "weekdays": {
+    "sunday": "Воскресенье",
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
+    "thursday": "Четверг",
+    "friday": "Пятница",
+    "saturday": "Суббота"
+  },
+  "bookingModal": {
+    "selectDate": "Пожалуйста, выберите дату тура",
+    "quantity": "Количество",
+    "minOne": "Мин: 1",
+    "adult": "Взрослый",
+    "children": "Дети",
+    "proceedToCheckout": "Перейти к оформлению",
+    "bookingSummary": "Детали бронирования",
+    "package": "Пакет",
+    "total": "Итого",
+    "onlyAvailableOn": "Этот тур доступен только по следующим дням: {{days}}",
+    "availableDays": "Доступные дни:",
+    "selectFutureDate": "Пожалуйста, выберите будущую дату.",
+    "toastSelectDate": "Пожалуйста, выберите дату тура.",
+    "toastSelectPeople": "Пожалуйста, выберите хотя бы одного человека."
   },
   "homePage": {
     "hero": {

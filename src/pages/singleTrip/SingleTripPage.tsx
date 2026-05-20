@@ -288,7 +288,7 @@ export function SingleTripPage() {
                   <div>
                     <div className="st-sidebar__label">{t('singleTripPage.durationLabel')}</div>
                     <div className="st-sidebar__value">
-                      {trip.durationValue} {trip.durationTypeName || 'Days'}
+                      {trip.durationValue} {trip.durationTypeName ? t('homePage.popularTours.' + trip.durationTypeName.toLowerCase(), { defaultValue: trip.durationTypeName }) : ''}
                     </div>
                   </div>
                 </div>
@@ -340,7 +340,7 @@ export function SingleTripPage() {
                 <img src={clockIcon} alt="" />
                 <div>
                   <div className="st-info-card__label">{t('singleTripPage.infoDuration')}</div>
-                  <div className="st-info-card__value">{trip.durationValue} {trip.durationTypeName || 'Days'}</div>
+                  <div className="st-info-card__value">{trip.durationValue} {trip.durationTypeName ? t('homePage.popularTours.' + trip.durationTypeName.toLowerCase(), { defaultValue: trip.durationTypeName }) : ''}</div>
                 </div>
               </div>
               {trip.tripTypeName && (
@@ -415,7 +415,7 @@ export function SingleTripPage() {
                   <img src={clockIcon} alt="" />
                   <div>
                     <div className="st-trip-info__label">{t('singleTripPage.infoDuration')}</div>
-                    <div className="st-trip-info__value">{trip.durationValue} {trip.durationTypeName || 'Days'}</div>
+                    <div className="st-trip-info__value">{trip.durationValue} {trip.durationTypeName ? t('homePage.popularTours.' + trip.durationTypeName.toLowerCase(), { defaultValue: trip.durationTypeName }) : ''}</div>
                   </div>
                 </div>
                 {trip.timeFrom && (
@@ -432,7 +432,7 @@ export function SingleTripPage() {
                     <img src={calendarIcon} alt="" />
                     <div>
                       <div className="st-trip-info__label">{t('singleTripPage.infoAvailableDays')}</div>
-                      <div className="st-trip-info__value">{trip.availableDays.join(', ')}</div>
+                      <div className="st-trip-info__value">{trip.availableDays.map(day => t(`weekdays.${day.toLowerCase()}`, { defaultValue: day })).join(', ')}</div>
                     </div>
                   </div>
                 )}

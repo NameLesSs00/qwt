@@ -195,6 +195,35 @@
     "nationalityRU": "Russia",
     "nationalityOther": "Other"
   },
+  "bookingConfirmationPage": {
+    "title": "Booking Confirmed!",
+    "subtitle": "Thank you for booking with us. Your reservation is pending confirmation.",
+    "bookingDetails": "Booking Details",
+    "bookingRef": "Booking ID",
+    "bookingDate": "Booking Date",
+    "status": "Status",
+    "name": "Customer Name",
+    "email": "Email",
+    "phone": "Phone",
+    "nationality": "Nationality",
+    "orderSummary": "Order Summary",
+    "trip": "Trip",
+    "date": "Date",
+    "guests": "Guests",
+    "adults": "Adults",
+    "children": "Children",
+    "subtotal": "Subtotal",
+    "pricingBreakdown": "Pricing Summary",
+    "originalTotal": "Original Subtotal",
+    "promoDiscount": "Promo Discount",
+    "totalPaid": "Total Price (Paid)",
+    "pendingStatus": "Pending",
+    "confirmedStatus": "Confirmed",
+    "finishedStatus": "Finished",
+    "cancelledStatus": "Cancelled",
+    "backHome": "Back to Home",
+    "browseMore": "Browse More Tours"
+  },
   "singleTripPage": {
     "viewOverlay": "View",
     "breadcrumbHome": "Home",
@@ -246,6 +275,31 @@
     "seatrips": "Sea Trips",
     "seatrip": "Sea Trips",
     "desertsafari": "Desert Safari"
+  },
+  "weekdays": {
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+  "bookingModal": {
+    "selectDate": "Please select a tour date",
+    "quantity": "Quantity",
+    "minOne": "Min: 1",
+    "adult": "Adult",
+    "children": "Children",
+    "proceedToCheckout": "Proceed to check out",
+    "bookingSummary": "Booking summary",
+    "package": "Package",
+    "total": "Total",
+    "onlyAvailableOn": "This trip is only available on: {{days}}",
+    "availableDays": "Available days:",
+    "selectFutureDate": "Please select a future date.",
+    "toastSelectDate": "Please select a tour date.",
+    "toastSelectPeople": "Please select at least one person."
   },
   "homePage": {
     "hero": {

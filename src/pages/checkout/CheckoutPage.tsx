@@ -58,10 +58,15 @@ export function CheckoutPage() {
       };
 
       const res = await createBooking(payload);
-      if (res.success) {
+      if (res.success && res.data) {
         clearCart();
         toast.success(t('checkoutPage.toastSuccess'));
-        navigate('/');
+        try {
+          sessionStorage.setItem('latestBooking', JSON.stringify(res.data));
+        } catch (e) {
+          console.error('sessionStorage write error:', e);
+        }
+        navigate('/booking-confirmation', { state: { booking: res.data } });
       } else {
         toast.error(res.message || t('checkoutPage.toastFail'));
       }
