@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X, Globe } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import logo from '../../assets/brand/logo.svg'
+import logo from '../../assets/HurghadaFunTime.png'
 import dropChevron from '../../assets/desinations/4.svg'
 import cartIcon from '../../assets/cart/cartIcon.png'
 
@@ -122,9 +122,8 @@ export function Header() {
                       <Link
                         key={sub.key}
                         to={sub.path}
-                        className={`site-header__dropItem ${
-                          pathname === sub.path ? 'site-header__dropItem--active' : ''
-                        }`}
+                        className={`site-header__dropItem ${pathname === sub.path ? 'site-header__dropItem--active' : ''
+                          }`}
                         onClick={() => setOpenDropdown(null)}
                       >
                         {t(`header.${sub.key}`)}
@@ -144,7 +143,7 @@ export function Header() {
         </nav>
 
         <div className="site-header__actions">
-          
+
           {/* Language Switcher */}
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <button
@@ -155,7 +154,7 @@ export function Header() {
               <Globe size={18} />
               <span style={{ textTransform: 'uppercase' }}>{i18n.language || 'en'}</span>
             </button>
-            
+
             {langDropdownOpen && (
               <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '12px', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', padding: '8px 0', minWidth: '120px', zIndex: 50 }}>
                 {[
@@ -183,9 +182,9 @@ export function Header() {
           <Link to="/cart" className="site-header__cartLink" style={{ marginLeft: '12px' }}>
             <img src={cartIcon} alt="Cart" />
           </Link>
-          
-          <button 
-            type="button" 
+
+          <button
+            type="button"
             className="site-header__mobileToggle"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
@@ -202,7 +201,7 @@ export function Header() {
             <div key={item.key} className="site-header__mobileNavItem">
               {item.dropdownItems ? (
                 <>
-                  <Link 
+                  <Link
                     to={item.path}
                     className="site-header__mobileNavLink"
                     onClick={(e) => {
@@ -220,9 +219,9 @@ export function Header() {
                   {openDropdown === item.key && (
                     <div className="site-header__mobileDropdown">
                       {item.dropdownItems.map((sub) => (
-                        <Link 
-                          key={sub.key} 
-                          to={sub.path} 
+                        <Link
+                          key={sub.key}
+                          to={sub.path}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {t(`header.${sub.key}`)}
@@ -232,8 +231,8 @@ export function Header() {
                   )}
                 </>
               ) : (
-                <Link 
-                  to={item.path} 
+                <Link
+                  to={item.path}
                   className="site-header__mobileNavLink"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

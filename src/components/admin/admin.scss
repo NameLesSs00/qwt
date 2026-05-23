@@ -43,9 +43,10 @@
   text-decoration: none;
 
   img {
-    height: 28px;
+    height: 65px;
     width: auto;
-    filter: brightness(0) invert(1);
+    object-fit: contain;
+    border-radius: 8px;
   }
 
   span {
@@ -340,8 +341,9 @@
 }
 
 .admin-login__brandLogo {
-  height: 36px;
-  filter: brightness(0) invert(1);
+  height: 140px;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .admin-login__brandTitle {

@@ -4,23 +4,23 @@ import {
   BarChart2, Map, BookOpen, ShoppingBag, Image,
   Tag, HelpCircle, Star, List, Users, LogOut,
 } from 'lucide-react'
-import logo from '../../assets/brand/logo.svg'
+import logo from '../../assets/HurghadaFunTime.png'
 import type { RootState } from '../../store/store'
 import './admin.scss'
 
 import { logoutAdmin } from '../../api/adminAuthApi'
 
 const navItems = [
-  { icon: BarChart2,   label: 'Reports',     path: '/admin/reports' },
-  { icon: Map,         label: 'Trips',        path: '/admin/trips' },
-  { icon: BookOpen,    label: 'Blogs',        path: '/admin/blogs' },
-  { icon: ShoppingBag, label: 'Bookings',     path: '/admin/bookings' },
-  { icon: Image,       label: 'Gallery',      path: '/admin/gallery' },
-  { icon: Tag,         label: 'Promo Codes',  path: '/admin/promo-codes' },
-  { icon: HelpCircle,  label: 'Questions',    path: '/admin/questions' },
-  { icon: Star,        label: 'Reviews',      path: '/admin/reviews' },
-  { icon: List,        label: 'Trip Types',   path: '/admin/trip-types' },
-  { icon: Users,       label: 'Admins',       path: '/admin/admins' },
+  { icon: BarChart2, label: 'Reports', path: '/admin/reports' },
+  { icon: Map, label: 'Trips', path: '/admin/trips' },
+  { icon: BookOpen, label: 'Blogs', path: '/admin/blogs' },
+  { icon: ShoppingBag, label: 'Bookings', path: '/admin/bookings' },
+  { icon: Image, label: 'Gallery', path: '/admin/gallery' },
+  { icon: Tag, label: 'Promo Codes', path: '/admin/promo-codes' },
+  { icon: HelpCircle, label: 'Questions', path: '/admin/questions' },
+  { icon: Star, label: 'Reviews', path: '/admin/reviews' },
+  { icon: List, label: 'Trip Types', path: '/admin/trip-types' },
+  { icon: Users, label: 'Admins', path: '/admin/admins' },
 ]
 
 type Props = { isOpen?: boolean; onClose?: () => void }

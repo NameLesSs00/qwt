@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { adminLogin, adminUpdateUser } from '../../../store/slices/adminAuthSlice'
 import { loginAdmin } from '../../../api/adminAuthApi'
 import { getAdmins } from '../../../api/adminsApi'
-import logo from '../../../assets/brand/logo.svg'
+import logo from '../../../assets/HurghadaFunTime.png'
 import '../../../components/admin/admin.scss'
 
 export function AdminLoginPage() {
@@ -26,9 +26,9 @@ export function AdminLoginPage() {
 
       // Check role if backend returns it
       if (data.role && !data.role.toLowerCase().includes('admin')) {
-         setError('Access denied. You do not have administrator privileges.')
-         setLoading(false)
-         return;
+        setError('Access denied. You do not have administrator privileges.')
+        setLoading(false)
+        return;
       }
 
       // Decode JWT payload safely to extract the admin ID

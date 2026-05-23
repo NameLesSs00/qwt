@@ -15,8 +15,10 @@
   left: 40px;
 
   img {
-    height: 28px;
+    height: 80px;
     width: auto;
+    object-fit: contain;
+    border-radius: 8px;
   }
 
   @media (max-width: 640px) {

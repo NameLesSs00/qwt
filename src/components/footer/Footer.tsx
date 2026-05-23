@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import footerLogo from '../../assets/footer/Logo.svg'
+import footerLogo from '../../assets/HurghadaFunTime.png'
 
 import applePay from '../../assets/footer/logos_apple-pay.svg'
 import googlePay from '../../assets/footer/logos_google-pay.svg'
@@ -41,11 +41,11 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-b from-[#1F6C8B] to-[#0E3A53] text-white">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
-        <div className="space-y-5">
-          <div className="flex items-center gap-3">
-            <img src={footerLogo} alt="Logoipsum" className="h-7 w-auto" />
+        <div className="space-y-5 flex flex-col items-center">
+          <div className="flex items-center justify-center w-full">
+            <img src={footerLogo} alt="Logoipsum" className="h-24 w-auto object-contain rounded-md" />
           </div>
-          <p className="max-w-sm text-sm leading-6 text-white/80">
+          <p className="max-w-sm text-sm leading-6 text-white/80 text-center">
             {t('footer.description')}
           </p>
         </div>

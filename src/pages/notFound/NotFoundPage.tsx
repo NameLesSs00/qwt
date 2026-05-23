@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logo from '../../assets/brand/logo.svg'
+import logo from '../../assets/HurghadaFunTime.png'
 import './notFound.scss'
 
 export function NotFoundPage() {

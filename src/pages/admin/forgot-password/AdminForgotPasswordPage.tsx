@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { forgotPassword, resetPassword } from '../../../api/adminAuthApi'
-import logo from '../../../assets/brand/logo.svg'
+import logo from '../../../assets/HurghadaFunTime.png'
 import '../../../components/admin/admin.scss'
 
 export function AdminForgotPasswordPage() {
@@ -9,7 +9,7 @@ export function AdminForgotPasswordPage() {
 
   // Step 1 state
   const [email, setEmail] = useState('')
-  
+
   // Step 2 state
   const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
@@ -46,7 +46,7 @@ export function AdminForgotPasswordPage() {
   async function handleResetPassword(e: FormEvent) {
     e.preventDefault()
     setError('')
-    
+
     if (!token.trim()) {
       setError('Please enter the security PIN provided in your email.')
       return
@@ -96,7 +96,7 @@ export function AdminForgotPasswordPage() {
       <div className="admin-login__form">
         <div className="admin-login__formInner">
           <h1 className="admin-login__formTitle">Reset Password</h1>
-          
+
           {step === 1 && <p className="admin-login__formSub">Enter your email to receive a security PIN</p>}
           {step === 2 && <p className="admin-login__formSub">Enter the PIN sent to your email and a new password</p>}
           {step === 3 && <p className="admin-login__formSub">Success!</p>}

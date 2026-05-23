@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { resetPassword } from '../../../api/adminAuthApi'
-import logo from '../../../assets/brand/logo.svg'
+import logo from '../../../assets/HurghadaFunTime.png'
 import '../../../components/admin/admin.scss'
 
 export function AdminResetPasswordPage() {
@@ -23,7 +23,7 @@ export function AdminResetPasswordPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
-    
+
     if (!token.trim()) {
       setError('Please enter the reset token/PIN provided in your email.')
       return
