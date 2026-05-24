@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -77,11 +77,7 @@ export function PopularTours() {
     return trips.filter(t => (t.tripTypeName ?? '').toLowerCase() === lower)
   }, [trips, activeTypeName])
 
-  const shouldMarquee = visibleTrips.length >= 4
-  const displayTrips  = useMemo(
-    () => shouldMarquee ? [...visibleTrips, ...visibleTrips, ...visibleTrips] : visibleTrips,
-    [visibleTrips, shouldMarquee],
-  )
+  const trackRef = useRef<HTMLDivElement>(null)
 
   const handleTrip = (trip: DtoTripRead) => {
     const slug = toSlug(trip.name || 'trip')
@@ -174,34 +170,33 @@ export function PopularTours() {
         )}
 
         {/* Empty / error state */}
-        {!loading && displayTrips.length === 0 && (
+        {!loading && visibleTrips.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px 0', color: '#64748b', fontSize: '15px' }}>
             {t('homePage.popularTours.empty')}
           </div>
         )}
 
         {/* Cards */}
-        {!loading && displayTrips.length > 0 && (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTypeId ?? 'all'}
-              className={`popular-tours__track ${shouldMarquee ? 'is-marquee' : 'is-centered'}`}
-              variants={shouldMarquee ? undefined : stagger(0.12, 0.05)}
-              initial={shouldMarquee ? undefined : 'hidden'}
-              animate={shouldMarquee ? undefined : 'visible'}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            >
-              {displayTrips.map((trip, index) => (
-                <motion.article
-                  key={`${trip.id}-${index}`}
-                  className="tour-card"
-                  variants={shouldMarquee ? undefined : cardVariant}
-                  whileHover={
-                    shouldMarquee
-                      ? undefined
-                      : { y: -8, boxShadow: '0 22px 48px rgba(30,101,158,0.16)', transition: { type: 'spring', stiffness: 280, damping: 20 } }
-                  }
-                >
+        {!loading && visibleTrips.length > 0 && (
+          <div ref={trackRef} style={{ overflow: 'hidden' }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTypeId ?? 'all'}
+                className={`popular-tours__track ${visibleTrips.length < 4 ? 'is-centered' : ''}`}
+                variants={stagger(0.12, 0.05)}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                drag={visibleTrips.length >= 4 ? "x" : false}
+                dragConstraints={trackRef}
+              >
+                {visibleTrips.map((trip, index) => (
+                  <motion.article
+                    key={`${trip.id}-${index}`}
+                    className="tour-card"
+                    variants={cardVariant}
+                    whileHover={{ y: -8, boxShadow: '0 22px 48px rgba(30,101,158,0.16)', transition: { type: 'spring', stiffness: 280, damping: 20 } }}
+                  >
                   {/* Image */}
                   <div className="tour-card__imageWrap" style={{ overflow: 'hidden' }}>
                     <motion.img
@@ -272,8 +267,9 @@ export function PopularTours() {
                   </div>
                 </motion.article>
               ))}
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         )}
 
         {/* See More */}

@@ -95,50 +95,27 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
+  cursor: grab;
 
-  &.is-marquee {
-    animation: marquee 40s linear infinite;
-
-    &:hover {
-      animation-play-state: paused;
-    }
-
-    @media (max-width: 1024px) {
-      animation-duration: 30s;
-    }
+  &:active {
+    cursor: grabbing;
   }
 
   &.is-centered {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
-    animation: none;
     padding: 0 48px;
+    cursor: default;
   }
 
   @media (max-width: 768px) {
-    animation: none !important;
     width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     padding: 0 20px;
     margin: 32px auto 0;
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 1024px) {
-  .popular-tours__track {
-    animation-duration: 30s;
+    cursor: default;
   }
 }
 
@@ -172,6 +149,13 @@
     width: 100%;
     flex: 1 1 100%;
     max-width: 340px;
+  }
+
+  // Only show first 3 on mobile
+  @media (max-width: 768px) {
+    &:nth-child(n+4) {
+      display: none !important;
+    }
   }
 }
 

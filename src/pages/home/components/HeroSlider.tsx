@@ -145,9 +145,9 @@ export function HeroSlider() {
 
   // Colorize the last word of the displayed portion
   const words        = displayed.split(' ')
-  const lastWord     = words[words.length - 1]
-  const beforeLast   = words.slice(0, -1).join(' ')
-  const showLastBlue = displayed.length === currentSlide.title.length // only color when complete
+  const lastWord     = words.pop() || ''
+  const beforeLast   = words.join(' ')
+  const showLastBlue = displayed.length > 0 && displayed.length === currentSlide.title.length
 
   return (
     <section
@@ -160,36 +160,36 @@ export function HeroSlider() {
         <div className="home-hero__content">
           {/* Title with typewriter */}
           <h1 className="home-hero__title">
-            {showLastBlue ? (
-              <>
-                {beforeLast && <span>{beforeLast} </span>}
-                <span className="home-hero__titleLast">{lastWord}</span>
-              </>
-            ) : (
-              <span>{displayed || '\u200B'}</span>
-            )}
-            {/* Blinking cursor */}
-            <span
-              className={`home-hero__cursor ${phase === 'pausing' ? 'home-hero__cursor--hidden' : ''}`}
-              aria-hidden="true"
-            >
-              |
+            {beforeLast && <span>{beforeLast} </span>}
+            <span style={{ whiteSpace: 'nowrap' }}>
+              <span className={showLastBlue ? 'home-hero__titleLast' : undefined}>
+                {lastWord || (displayed ? '' : '\u200B')}
+              </span>
+              {/* Blinking cursor */}
+              <span
+                className={`home-hero__cursor ${phase === 'pausing' ? 'home-hero__cursor--hidden' : ''}`}
+                aria-hidden="true"
+              >
+                |
+              </span>
             </span>
           </h1>
 
           {/* Description fades per slide */}
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={activeIndex}
-              className="home-hero__desc"
-              variants={descVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {currentSlide.description}
-            </motion.p>
-          </AnimatePresence>
+          <div className="home-hero__descWrapper">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeIndex}
+                className="home-hero__desc"
+                variants={descVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                {currentSlide.description}
+              </motion.p>
+            </AnimatePresence>
+          </div>
 
           {/* Single CTA – pop on hover */}
           <motion.button
@@ -216,10 +216,6 @@ export function HeroSlider() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                style={{
-                  ['--hero-image-position' as string]: currentSlide.imagePosition ?? 'center',
-                  ['--hero-image-scale'    as string]: String(currentSlide.imageScale ?? 1),
-                } as React.CSSProperties}
               >
                 <picture>
                   <source
