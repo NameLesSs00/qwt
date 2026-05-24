@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, X, Globe } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { getDestinations, type DestinationDto } from '../../api/destinationsApi'
 import logo from '../../assets/HurghadaFunTime.png'
 import dropChevron from '../../assets/desinations/4.svg'
 import cartIcon from '../../assets/cart/cartIcon.png'
@@ -17,19 +18,12 @@ type NavItem = {
   key: string
   path: string
   dropdownItems?: SubItem[]
+  dynamicDropdown?: boolean
 }
 
 const navItems: NavItem[] = [
   { key: 'home', path: '/' },
-  {
-    key: 'destinations',
-    path: '/destinations',
-    dropdownItems: [
-      { key: 'luxor', path: '/destinations/luxor' },
-      { key: 'redSea', path: '/destinations/red-sea' },
-      { key: 'cairo', path: '/destinations/cairo' },
-    ],
-  },
+  { key: 'destinations', path: '/destinations', dynamicDropdown: true },
   { key: 'trips', path: '/trips' },
   { key: 'gallery', path: '/gallery' },
   { key: 'faq', path: '/faq' },
@@ -39,11 +33,13 @@ const navItems: NavItem[] = [
 ]
 
 export function Header() {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const { i18n, t } = useTranslation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [langDropdownOpen, setLangDropdownOpen] = useState(false)
+  const [destinationOptions, setDestinationOptions] = useState<DestinationDto[]>([])
+  const [destinationLoading, setDestinationLoading] = useState(true)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   /* Lock body scroll when mobile menu is open */
@@ -64,6 +60,22 @@ export function Header() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
+  useEffect(() => {
+    async function loadDestinations() {
+      try {
+        setDestinationLoading(true)
+        const response = await getDestinations(1, 1000, undefined, i18n.language)
+        setDestinationOptions(response.data?.filter(dest => !!dest.name) || [])
+      } catch (err) {
+        console.error('Unable to load destination menu items', err)
+      } finally {
+        setDestinationLoading(false)
+      }
+    }
+
+    loadDestinations()
+  }, [i18n.language])
+
   function toggleDropdown(key: string) {
     setOpenDropdown((prev) => (prev === key ? null : key))
   }
@@ -82,7 +94,7 @@ export function Header() {
                 ? pathname === '/'
                 : pathname.startsWith(item.path)
 
-            const hasDropdown = !!item.dropdownItems?.length
+            const hasDropdown = !!item.dropdownItems?.length || item.dynamicDropdown
             const isOpen = openDropdown === item.key
 
             return (
@@ -118,17 +130,45 @@ export function Header() {
                 {/* Dropdown panel */}
                 {hasDropdown && isOpen && (
                   <div className="site-header__dropdown">
-                    {item.dropdownItems!.map((sub) => (
-                      <Link
-                        key={sub.key}
-                        to={sub.path}
-                        className={`site-header__dropItem ${pathname === sub.path ? 'site-header__dropItem--active' : ''
-                          }`}
-                        onClick={() => setOpenDropdown(null)}
-                      >
-                        {t(`header.${sub.key}`)}
-                      </Link>
-                    ))}
+                    {item.dynamicDropdown ? (
+                      <>
+                        <Link
+                          key="all-destinations"
+                          to="/destinations"
+                          className={`site-header__dropItem ${pathname === '/destinations' ? 'site-header__dropItem--active' : ''}`}
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {t('header.destinations')}
+                        </Link>
+                        {destinationLoading ? (
+                          <span className="site-header__dropItem" style={{ opacity: 0.7, cursor: 'default' }}>
+                            Loading...
+                          </span>
+                        ) : (
+                          destinationOptions.map(dest => (
+                            <Link
+                              key={dest.id}
+                              to={`/trips?destination=${encodeURIComponent(dest.name ?? '')}`}
+                              className={`site-header__dropItem ${pathname.startsWith('/trips') && search.includes(`destination=${encodeURIComponent(dest.name ?? '')}`) ? 'site-header__dropItem--active' : ''}`}
+                              onClick={() => setOpenDropdown(null)}
+                            >
+                              {dest.name}
+                            </Link>
+                          ))
+                        )}
+                      </>
+                    ) : (
+                      item.dropdownItems!.map((sub) => (
+                        <Link
+                          key={sub.key}
+                          to={sub.path}
+                          className={`site-header__dropItem ${pathname === sub.path ? 'site-header__dropItem--active' : ''}`}
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {t(`header.${sub.key}`)}
+                        </Link>
+                      ))
+                    )}
                   </div>
                 )}
 
@@ -199,7 +239,7 @@ export function Header() {
         <div className="site-header__mobileNavInner">
           {navItems.map((item) => (
             <div key={item.key} className="site-header__mobileNavItem">
-              {item.dropdownItems ? (
+              {item.dynamicDropdown || item.dropdownItems ? (
                 <>
                   <Link
                     to={item.path}
@@ -218,15 +258,36 @@ export function Header() {
                   </Link>
                   {openDropdown === item.key && (
                     <div className="site-header__mobileDropdown">
-                      {item.dropdownItems.map((sub) => (
-                        <Link
-                          key={sub.key}
-                          to={sub.path}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {t(`header.${sub.key}`)}
-                        </Link>
-                      ))}
+                      {item.dynamicDropdown ? (
+                        <>
+                          <Link to="/destinations" onClick={() => setIsMobileMenuOpen(false)}>
+                            {t('header.destinations')}
+                          </Link>
+                          {destinationLoading ? (
+                            <span style={{ display: 'block', padding: '8px 16px', color: '#64748b' }}>Loading...</span>
+                          ) : (
+                            destinationOptions.map((dest) => (
+                              <Link
+                                key={dest.id}
+                                to={`/trips?destination=${encodeURIComponent(dest.name ?? '')}`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {dest.name}
+                              </Link>
+                            ))
+                          )}
+                        </>
+                      ) : (
+                        item.dropdownItems!.map((sub) => (
+                          <Link
+                            key={sub.key}
+                            to={sub.path}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {t(`header.${sub.key}`)}
+                          </Link>
+                        ))
+                      )}
                     </div>
                   )}
                 </>

@@ -4,6 +4,7 @@ import {
   createTrip, updateTrip, getTripById,
   DurationType, type DtoTripCreate, type TranslationInputDto
 } from '../../../../api/tripsApi'
+import { getDestinations, type DestinationDto } from '../../../../api/destinationsApi'
 import type { TripTypeDto } from '../../../../api/tripTypesApi'
 
 interface Props {
@@ -32,13 +33,15 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
 
   // Step 1 — Core
   const [name, setName] = useState(emptyTranslation())
-  const [destination, setDestination] = useState(emptyTranslation())
+  const [destinationId, setDestinationId] = useState<number>(0)
   const [tripTypeId, setTripTypeId] = useState<number>(tripTypes[0]?.id || 1)
   const [durationValue, setDurationValue] = useState(1)
   const [durationType, setDurationType] = useState<DurationType>(DurationType.Hours)
   const [timeFrom, setTimeFrom] = useState('')
   const [adultPrice, setAdultPrice] = useState(0)
   const [childPrice, setChildPrice] = useState(0)
+  const [destinationOptions, setDestinationOptions] = useState<DestinationDto[]>([])
+  const [destinationsLoading, setDestinationsLoading] = useState(true)
 
   // Step 2 — Description & Lists
   const [description, setDescription] = useState(emptyTranslation())
@@ -51,7 +54,26 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
   const [availabilityDayIds, setAvailabilityDayIds] = useState<number[]>([])
 
   useEffect(() => {
-    if (!tripId) return
+    const loadDestinationOptions = async () => {
+      setDestinationsLoading(true)
+      try {
+        const res = await getDestinations(1, 200, undefined, 'en')
+        setDestinationOptions(res.data || [])
+        if (!tripId) {
+          setDestinationId(res.data?.[0]?.id ?? 0)
+        }
+      } catch {
+        setError('Failed to load destination options.')
+      } finally {
+        setDestinationsLoading(false)
+      }
+    }
+
+    loadDestinationOptions()
+  }, [tripId])
+
+  useEffect(() => {
+    if (!tripId || destinationsLoading || destinationOptions.length === 0) return
     setFetchLoading(true)
     
     Promise.all(LANGS.map(lang => getTripById(tripId, lang)))
@@ -59,7 +81,7 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
         const results = responses.map(r => r.data)
         const t = results[0] // Base data
 
-        const makeTrans = (field: 'name' | 'destination' | 'description'): TranslationInputDto => ({
+        const makeTrans = (field: 'name' | 'description'): TranslationInputDto => ({
           en: results[0][field] || '',
           fr: results[1][field] || '',
           ru: results[2][field] || '',
@@ -67,8 +89,11 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
         })
 
         setName(makeTrans('name'))
-        setDestination(makeTrans('destination'))
         setDescription(makeTrans('description'))
+
+        const destinationName = results[0].destination || ''
+        const matchedDestination = destinationOptions.find(dest => dest.name === destinationName)
+        setDestinationId(matchedDestination?.id ?? destinationOptions[0]?.id ?? 0)
 
         const makeTransArray = (field: 'highlights' | 'includes' | 'excludes' | 'whatToBring'): TranslationInputDto[] => {
           const maxLen = Math.max(...results.map(r => (r[field] || []).length))
@@ -101,7 +126,7 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
       })
       .catch(() => setError('Failed to load trip data.'))
       .finally(() => setFetchLoading(false))
-  }, [tripId, tripTypes])
+  }, [tripId, tripTypes, destinationsLoading, destinationOptions])
 
   const addListItem = (setter: React.Dispatch<React.SetStateAction<TranslationInputDto[]>>) =>
     setter(prev => [...prev, emptyTranslation()])
@@ -120,10 +145,15 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
     setError('')
     try {
       const payload: DtoTripCreate = {
-        name, destination, description,
+        destinationId,
+        name,
+        description,
         timeFrom: timeFrom || undefined,
-        durationValue, durationType,
-        adultPrice, childPrice, tripTypeId,
+        durationValue,
+        durationType,
+        adultPrice,
+        childPrice,
+        tripTypeId,
         highlights: highlights.length ? highlights : undefined,
         includes: includes.length ? includes : undefined,
         excludes: excludes.length ? excludes : undefined,
@@ -218,7 +248,21 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
               {step === 1 && (
                 <div>
                   {renderTranslationFields("Trip Name", name, (lang, val) => setName(prev => ({ ...prev, [lang]: val })))}
-                  {renderTranslationFields("Destination", destination, (lang, val) => setDestination(prev => ({ ...prev, [lang]: val })))}
+                  <div style={{ marginBottom: '20px' }}>
+                    <label style={labelStyle}>Destination <span style={{ color: '#ef4444' }}>*</span></label>
+                    <select
+                      value={destinationId}
+                      onChange={e => setDestinationId(Number(e.target.value))}
+                      style={{ ...inputStyle }}
+                      required
+                      disabled={destinationsLoading}
+                    >
+                      <option value={0} disabled>Select destination</option>
+                      {destinationOptions.map(dest => (
+                        <option key={dest.id} value={dest.id}>{dest.name}</option>
+                      ))}
+                    </select>
+                  </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                     <div>

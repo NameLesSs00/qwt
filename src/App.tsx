@@ -1,10 +1,9 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { AppLayout } from './layouts/AppLayout'
 
 // ── Public pages ──────────────────────────────────────────────────────────────
 import { HomePage }          from './pages/home/HomePage'
 import { DestinationsPage }  from './pages/destinations/DestinationsPage'
-import { LuxorPage }         from './pages/destinations/luxor/LuxorPage'
 import { TripDetailsPage }   from './pages/destinations/tripDetails/TripDetailsPage'
 import { ContactUsPage }     from './pages/contactUs/ContactUsPage'
 import { AboutUsPage }       from './pages/aboutUs/AboutUsPage'
@@ -36,6 +35,12 @@ import { AdminDestinationsPage } from './pages/admin/destinations/AdminDestinati
 import { AdminAdminsPage }     from './pages/admin/admins/AdminAdminsPage'
 import { AdminGuard }          from './guards/AdminGuard'
 
+function DestinationSlugRedirect() {
+  const { slug } = useParams<{ slug: string }>()
+  const destination = slug ? slug.replace(/-/g, ' ') : ''
+  return <Navigate replace to={`/trips?destination=${encodeURIComponent(destination)}`} />
+}
+
 function App() {
   return (
     <Routes>
@@ -43,8 +48,8 @@ function App() {
       {/* ── Public site pages (rendered inside AppLayout with Header + Footer) ── */}
       <Route path="/" element={<AppLayout><HomePage /></AppLayout>} />
       <Route path="/destinations" element={<AppLayout><DestinationsPage /></AppLayout>} />
-      <Route path="/destinations/luxor" element={<AppLayout><LuxorPage /></AppLayout>} />
       <Route path="/destinations/trip-details" element={<AppLayout><TripDetailsPage /></AppLayout>} />
+      <Route path="/destinations/:slug" element={<DestinationSlugRedirect />} />
       <Route path="/contact-us" element={<AppLayout><ContactUsPage /></AppLayout>} />
       <Route path="/about-us" element={<AppLayout><AboutUsPage /></AppLayout>} />
       <Route path="/gallery" element={<AppLayout><GalleryPage /></AppLayout>} />

@@ -46,7 +46,7 @@ export interface DtoTripRead {
 }
 
 export interface DtoTripCreate {
-  destination: TranslationInputDto;
+  destinationId: number;
   name: TranslationInputDto;
   description: TranslationInputDto;
   timeFrom?: string;

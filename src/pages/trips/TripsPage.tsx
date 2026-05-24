@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
   Search, ChevronDown, Check, MapPin, Tag, Clock 
@@ -7,6 +7,7 @@ import {
 
 import { getTrips, getTripImageUrl, type DtoTripRead } from '../../api/tripsApi';
 import { getTripTypes, type TripTypeDto } from '../../api/tripTypesApi';
+import { getDestinations } from '../../api/destinationsApi';
 
 import imgHero from '../../assets/trips/Frame 140.png';
 import imgTrip from '../../assets/trips/Frame 23.png';
@@ -23,12 +24,14 @@ export function TripsPage() {
 
   const [trips, setTrips] = useState<DtoTripRead[]>([]);
   const [tripTypes, setTripTypes] = useState<TripTypeDto[]>([]);
-  const [allDestinations, setAllDestinations] = useState<string[]>(['ALL_DESTINATIONS']);
+  const [destinationOptions, setDestinationOptions] = useState<{ id: number; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // Filters State
-  const [destination, setDestination] = useState<string>('ALL_DESTINATIONS');
+  const [selectedDestinationId, setSelectedDestinationId] = useState<number | null>(null);
   const [destDropdownOpen, setDestDropdownOpen] = useState(false);
+  const destinationQuery = searchParams.get('destination')?.trim() ?? '';
   const [minPrice, setMinPrice] = useState<number | ''>('');
   const [maxPrice, setMaxPrice] = useState<number | ''>('');
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
@@ -43,15 +46,25 @@ export function TripsPage() {
   useEffect(() => {
     async function initData() {
       try {
-        const [tripsRes, typesRes] = await Promise.all([
-          getTrips({ PageSize: 1000 }), // Load system-wide active list to compile unique locations
+        const [destinationsRes, typesRes] = await Promise.all([
+          getDestinations(1, 1000, undefined, i18n.language),
           getTripTypes(1, 100)
         ]);
-        if (tripsRes.success && tripsRes.data) {
-          const dests = tripsRes.data
-            .map(t => t.destination)
-            .filter((d): d is string => !!d);
-          setAllDestinations(['ALL_DESTINATIONS', ...Array.from(new Set(dests))]);
+        if (destinationsRes.success && destinationsRes.data) {
+          const options = destinationsRes.data
+            .filter(d => !!d.name)
+            .map(d => ({ id: d.id, name: d.name! }));
+          setDestinationOptions(options);
+
+          if (destinationQuery) {
+            const matchedDestination = options.find(dest =>
+              dest.name.toLowerCase() === destinationQuery.toLowerCase() ||
+              toSlug(dest.name) === toSlug(destinationQuery)
+            );
+            if (matchedDestination) {
+              setSelectedDestinationId(matchedDestination.id);
+            }
+          }
         }
         if (typesRes.success && typesRes.data) {
           setTripTypes(typesRes.data);
@@ -61,7 +74,11 @@ export function TripsPage() {
       }
     }
     initData();
-  }, [i18n.language]);
+  }, [i18n.language, destinationQuery]);
+
+  const selectedDestinationName = selectedDestinationId == null
+    ? undefined
+    : destinationOptions.find(d => d.id === selectedDestinationId)?.name;
 
   // Fetch filtered trips from backend dynamically
   useEffect(() => {
@@ -70,7 +87,7 @@ export function TripsPage() {
       try {
         const res = await getTrips({
           PageSize: 100,
-          Destination: destination !== 'ALL_DESTINATIONS' ? destination : undefined,
+          Destination: selectedDestinationName || undefined,
           MinPrice: minPrice !== '' ? Number(minPrice) : undefined,
           MaxPrice: maxPrice !== '' ? Number(maxPrice) : undefined,
           TypeId: selectedTypeId || undefined,
@@ -91,7 +108,7 @@ export function TripsPage() {
     }, 300);
 
     return () => clearTimeout(delayDebounce);
-  }, [destination, minPrice, maxPrice, selectedTypeId, searchQuery, i18n.language]);
+  }, [selectedDestinationName, minPrice, maxPrice, selectedTypeId, searchQuery, i18n.language]);
 
   // Client side sorting using createdAt
   const sortedTrips = useMemo(() => {
@@ -103,7 +120,8 @@ export function TripsPage() {
   }, [trips, sortBy]);
 
   const clearFilters = () => {
-    setDestination('ALL_DESTINATIONS');
+    setSelectedDestinationId(null);
+    setSearchParams({});
     setMinPrice('');
     setMaxPrice('');
     setSelectedTypeId(null);
@@ -155,17 +173,24 @@ export function TripsPage() {
                   <MapPin size={16} color="#1e659e" /> {t('tripsPage.destinationHeader')}
                 </div>
                 <div className="trips-sbDropdown" style={{ position: 'relative' }} onClick={() => setDestDropdownOpen(!destDropdownOpen)}>
-                  <span>{destination === 'ALL_DESTINATIONS' ? t('tripsPage.allDestinations') : destination}</span>
+                  <span>{selectedDestinationId == null ? t('tripsPage.allDestinations') : selectedDestinationName}</span>
                   <ChevronDown size={14} color="#64748b" />
                   {destDropdownOpen && (
                     <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', marginTop: '4px', zIndex: 10, overflow: 'hidden' }}>
-                      {allDestinations.map(dest => (
+                      <div
+                        key="all"
+                        style={{ padding: '8px 12px', cursor: 'pointer', fontSize: '13px', borderBottom: '1px solid #f1f5f9' }}
+                        onClick={() => setSelectedDestinationId(null)}
+                      >
+                        {t('tripsPage.allDestinations')}
+                      </div>
+                      {destinationOptions.map(dest => (
                         <div 
-                          key={dest} 
+                          key={dest.id} 
                           style={{ padding: '8px 12px', cursor: 'pointer', fontSize: '13px', borderBottom: '1px solid #f1f5f9' }}
-                          onClick={() => setDestination(dest)}
+                          onClick={() => setSelectedDestinationId(dest.id)}
                         >
-                          {dest === 'ALL_DESTINATIONS' ? t('tripsPage.allDestinations') : dest}
+                          {dest.name}
                         </div>
                       ))}
                     </div>

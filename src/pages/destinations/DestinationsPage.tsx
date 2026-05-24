@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import bg from '../../assets/desinations/bg.png'
 import bg2 from '../../assets/desinations/bg2.png'
 import { motion } from 'motion/react'
@@ -20,9 +20,10 @@ export function DestinationsPage() {
       try {
         setLoading(true)
         setError('')
-        const res = await getDestinations(1, 12, undefined, i18n.language)
-        setDestinations(res.data || [])
-      } catch (err) {
+        const destRes = await getDestinations(1, 12, undefined, i18n.language)
+        setDestinations(destRes.data || [])
+      } catch (error) {
+        console.error(error)
         setError('Unable to load destinations.')
       } finally {
         setLoading(false)
@@ -31,6 +32,10 @@ export function DestinationsPage() {
     fetchDestinations()
   }, [i18n.language])
 
+  const heroStyle: CSSProperties = {
+    '--hero-bg': `url(${bg})`,
+  } as CSSProperties
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,7 +43,7 @@ export function DestinationsPage() {
       transition={{ duration: 0.5 }}
       className="destinations-page"
     >
-      <section className="destinations-hero" style={{ ['--hero-bg' as any]: `url(${bg})` }}>
+      <section className="destinations-hero" style={heroStyle}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -118,9 +123,6 @@ export function DestinationsPage() {
               >
                 <img className="destinationMedia" src={getDestinationImageUrl(destination.imageUrl)} alt={destination.name} />
                 <div className="destinationShade" aria-hidden="true"></div>
-                <div className="destinationBookmark" aria-hidden="true">
-                  <span>{destination.tripsCount} Tours</span>
-                </div>
                 <div className="destinationText">
                   <span className="destinationKicker">Travel To</span>
                   <span className="destinationName">{destination.name}</span>
