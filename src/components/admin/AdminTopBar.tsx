@@ -6,6 +6,7 @@ import type { RootState } from '../../store/store'
 const pageTitles: Record<string, string> = {
   '/admin/reports':    'Reports',
   '/admin/trips':      'Trips',
+  '/admin/destinations': 'Destinations',
   '/admin/blogs':      'Blogs',
   '/admin/bookings':   'Bookings',
   '/admin/gallery':    'Gallery',

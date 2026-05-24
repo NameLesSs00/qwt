@@ -1,27 +1,37 @@
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import aswanImg    from '../../../assets/images/detinations/aswan.png'
-import hurghadaImg from '../../../assets/images/detinations/hurghada.png'
-import luxorImg    from '../../../assets/images/detinations/luxor.png'
 import { fadeUp, fadeLeft, fadeRight, stagger, viewport } from '../../../lib/animations'
+import { getDestinationImageUrl, getDestinations, type DestinationDto } from '../../../api/destinationsApi'
 import '../styles/destinations.scss'
-
-type Destination = {
-  id: string; nameKey: string; image: string; size: 'small' | 'large'
-}
-
-const destinations: Destination[] = [
-  { id: 'aswan',    nameKey: 'aswan',    image: aswanImg,    size: 'small' },
-  { id: 'luxor',    nameKey: 'luxor',    image: luxorImg,    size: 'small' },
-  { id: 'hurghada', nameKey: 'hurghada', image: hurghadaImg, size: 'large' },
-]
 
 export function Destinations() {
   const navigate = useNavigate()
-  const { t } = useTranslation()
-  const left  = destinations.filter((d) => d.size === 'small')
-  const right = destinations.find((d) => d.size === 'large')
+  const { t, i18n } = useTranslation()
+  const [destinations, setDestinations] = useState<DestinationDto[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        setLoading(true)
+        setError('')
+        const res = await getDestinations(1, 6, undefined, i18n.language)
+        setDestinations(res.data || [])
+      } catch (err) {
+        setError('Unable to load destinations')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDestinations()
+  }, [i18n.language])
+
+  const visibleDestinations = useMemo(() => destinations.slice(0, 3), [destinations])
+  const left = visibleDestinations.slice(0, 2)
+  const right = visibleDestinations[2]
 
   return (
     <section className="home-destinations">
@@ -54,60 +64,76 @@ export function Destinations() {
             whileInView="visible"
             viewport={viewport}
           >
-            {left.map((d) => (
+            {loading ? (
+            <div style={{ padding: '40px 0', color: '#64748b', textAlign: 'center', width: '100%' }}>
+              Loading destinations...
+            </div>
+          ) : error ? (
+            <div style={{ padding: '40px 0', color: '#ef4444', textAlign: 'center', width: '100%' }}>
+              {error}
+            </div>
+          ) : left.length > 0 ? (
+            left.map((d) => (
               <motion.article
                 key={d.id}
                 className="destination-card destination-card--small"
                 variants={fadeLeft}
                 whileHover="hover"
-                style={{ overflow: 'hidden' }}
+                style={{ overflow: 'hidden', cursor: 'pointer' }}
+                onClick={() => navigate(`/trips?destination=${encodeURIComponent(d.name)}`)}
               >
                 <motion.img
                   className="destination-card__img"
-                  src={d.image}
-                  alt={t('homePage.destinations.' + d.nameKey)}
+                  src={getDestinationImageUrl(d.imageUrl)}
+                  alt={d.name}
                   whileHover={{ scale: 1.08 }}
                   transition={{ duration: 0.45, ease: 'easeOut' }}
                 />
                 <div className="destination-card__overlay" aria-hidden="true" />
                 <div className="destination-card__ribbon" aria-hidden="true">
-                  <span>{t('homePage.destinations.toursCount', { count: 5 })}</span>
+                  <span>{t('homePage.destinations.toursCount', { count: d.tripsCount || 0 })}</span>
                 </div>
                 <div className="destination-card__text">
                   <span className="destination-card__kicker">{t('homePage.destinations.travelTo')}</span>
-                  <span className="destination-card__name">{t('homePage.destinations.' + d.nameKey)}</span>
+                  <span className="destination-card__name">{d.name}</span>
                 </div>
               </motion.article>
-            ))}
+            ))
+          ) : (
+            <div style={{ padding: '40px 0', color: '#64748b', textAlign: 'center', width: '100%' }}>
+              No destinations found.
+            </div>
+          )}
           </motion.div>
 
           {/* Right card – slides from right */}
-          {right && (
+          {right ? (
             <motion.article
               className="destination-card destination-card--large"
               variants={fadeRight}
               initial="hidden"
               whileInView="visible"
               viewport={viewport}
-              style={{ overflow: 'hidden' }}
+              style={{ overflow: 'hidden', cursor: 'pointer' }}
+              onClick={() => navigate(`/trips?destination=${encodeURIComponent(right.name)}`)}
             >
               <motion.img
                 className="destination-card__img"
-                src={right.image}
-                alt={t('homePage.destinations.' + right.nameKey)}
+                src={getDestinationImageUrl(right.imageUrl)}
+                alt={right.name}
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.45, ease: 'easeOut' }}
               />
               <div className="destination-card__overlay" aria-hidden="true" />
               <div className="destination-card__ribbon" aria-hidden="true">
-                <span>{t('homePage.destinations.toursCount', { count: 5 })}</span>
+                <span>{t('homePage.destinations.toursCount', { count: right.tripsCount || 0 })}</span>
               </div>
               <div className="destination-card__text">
                 <span className="destination-card__kicker">{t('homePage.destinations.travelTo')}</span>
-                <span className="destination-card__name">{t('homePage.destinations.' + right.nameKey)}</span>
+                <span className="destination-card__name">{right.name}</span>
               </div>
             </motion.article>
-          )}
+          ) : null}
         </div>
 
         {/* More button */}

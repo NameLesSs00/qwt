@@ -1,18 +1,36 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react'
 import bg from '../../assets/desinations/bg.png'
 import bg2 from '../../assets/desinations/bg2.png'
-import aswanImg from '../../assets/desinations/aswan.jpg'
-import gizaImg from '../../assets/desinations/giza.jpg'
-import hurghadaImg from '../../assets/desinations/hurghada.jpg'
-import luxorImg from '../../assets/desinations/luxor.jpg'
-import sharmImg from '../../assets/desinations/sharm.png'
-
-import { motion } from "motion/react"
+import { motion } from 'motion/react'
+import { getDestinations, getDestinationImageUrl, type DestinationDto } from '../../api/destinationsApi'
 
 import './destinationsPage.scss'
 
 export function DestinationsPage() {
   const navigate = useNavigate()
+  const { i18n } = useTranslation()
+  const [destinations, setDestinations] = useState<DestinationDto[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        setLoading(true)
+        setError('')
+        const res = await getDestinations(1, 12, undefined, i18n.language)
+        setDestinations(res.data || [])
+      } catch (err) {
+        setError('Unable to load destinations.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDestinations()
+  }, [i18n.language])
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -73,100 +91,43 @@ export function DestinationsPage() {
           </motion.h2>
 
           <div className="destinations-grid">
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.05 }}
-              whileHover={{ y: -6 }}
-              className="destinationCard destinationCardAswan"
-            >
-              <img className="destinationMedia" src={aswanImg} alt="Aswan" />
-              <div className="destinationShade" aria-hidden="true"></div>
-              <div className="destinationBookmark" aria-hidden="true">
-                <span>5 Tours</span>
-              </div>
-              <div className="destinationText">
-                <span className="destinationKicker">Travel To</span>
-                <span className="destinationName">Aswan</span>
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.1 }}
-              whileHover={{ y: -6 }}
-              className="destinationCard destinationCardHurghada"
-            >
-              <img className="destinationMedia" src={hurghadaImg} alt="Hurghada" />
-              <div className="destinationShade" aria-hidden="true"></div>
-              <div className="destinationBookmark destinationBookmarkBlue" aria-hidden="true">
-                <span>12 Tours</span>
-              </div>
-              <div className="destinationText">
-                <span className="destinationKicker">Travel To</span>
-                <span className="destinationName">Hurghada</span>
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.15 }}
-              whileHover={{ y: -6 }}
-              className="destinationCard destinationCardGiza"
-            >
-              <img className="destinationMedia" src={gizaImg} alt="Giza" />
-              <div className="destinationShade" aria-hidden="true"></div>
-              <div className="destinationBookmark" aria-hidden="true">
-                <span>8 Tours</span>
-              </div>
-              <div className="destinationText">
-                <span className="destinationKicker">Travel To</span>
-                <span className="destinationName">Giza</span>
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.2 }}
-              whileHover={{ y: -6 }}
-              className="destinationCard destinationCardLuxor"
-            >
-              <img className="destinationMedia" src={luxorImg} alt="Luxor" />
-              <div className="destinationShade" aria-hidden="true"></div>
-              <div className="destinationBookmark" aria-hidden="true">
-                <span>7 Tours</span>
-              </div>
-              <div className="destinationText">
-                <span className="destinationKicker">Travel To</span>
-                <span className="destinationName">Luxor</span>
-              </div>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: 0.25 }}
-              whileHover={{ y: -6 }}
-              className="destinationCard destinationCardSharm"
-            >
-              <img className="destinationMedia" src={sharmImg} alt="Sharm El Sheikh" />
-              <div className="destinationShade" aria-hidden="true"></div>
-              <div className="destinationBookmark" aria-hidden="true">
-                <span>10 Tours</span>
-              </div>
-              <div className="destinationText">
-                <span className="destinationKicker">Travel To</span>
-                <span className="destinationName">Sharm El Sheikh</span>
-              </div>
-            </motion.article>
+            {loading ? (
+            <div style={{ padding: '40px 0', width: '100%', textAlign: 'center', color: '#64748b' }}>
+              Loading destinations...
+            </div>
+          ) : error ? (
+            <div style={{ padding: '40px 0', width: '100%', textAlign: 'center', color: '#dc2626' }}>
+              {error}
+            </div>
+          ) : destinations.length === 0 ? (
+            <div style={{ padding: '40px 0', width: '100%', textAlign: 'center', color: '#64748b' }}>
+              No destinations found.
+            </div>
+          ) : (
+            destinations.map((destination, index) => (
+              <motion.article
+                key={destination.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: 0.05 + index * 0.05 }}
+                whileHover={{ y: -6 }}
+                className="destinationCard"
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/trips?destination=${encodeURIComponent(destination.name)}`)}
+              >
+                <img className="destinationMedia" src={getDestinationImageUrl(destination.imageUrl)} alt={destination.name} />
+                <div className="destinationShade" aria-hidden="true"></div>
+                <div className="destinationBookmark" aria-hidden="true">
+                  <span>{destination.tripsCount} Tours</span>
+                </div>
+                <div className="destinationText">
+                  <span className="destinationKicker">Travel To</span>
+                  <span className="destinationName">{destination.name}</span>
+                </div>
+              </motion.article>
+            ))
+          )}
           </div>
         </div>
       </section>

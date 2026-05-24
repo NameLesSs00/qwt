@@ -13,6 +13,7 @@ import { logoutAdmin } from '../../api/adminAuthApi'
 const navItems = [
   { icon: BarChart2, label: 'Reports', path: '/admin/reports' },
   { icon: Map, label: 'Trips', path: '/admin/trips' },
+  { icon: Tag, label: 'Destinations', path: '/admin/destinations' },
   { icon: BookOpen, label: 'Blogs', path: '/admin/blogs' },
   { icon: ShoppingBag, label: 'Bookings', path: '/admin/bookings' },
   { icon: Image, label: 'Gallery', path: '/admin/gallery' },

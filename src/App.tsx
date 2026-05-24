@@ -32,6 +32,7 @@ import { AdminPromoCodesPage } from './pages/admin/promo-codes/AdminPromoCodesPa
 import { AdminQuestionsPage }  from './pages/admin/questions/AdminQuestionsPage'
 import { AdminReviewsPage }    from './pages/admin/reviews/AdminReviewsPage'
 import { AdminTripTypesPage }  from './pages/admin/trip-types/AdminTripTypesPage'
+import { AdminDestinationsPage } from './pages/admin/destinations/AdminDestinationsPage'
 import { AdminAdminsPage }     from './pages/admin/admins/AdminAdminsPage'
 import { AdminGuard }          from './guards/AdminGuard'
 
@@ -70,6 +71,7 @@ function App() {
       <Route element={<AdminGuard />}>
         <Route path="/admin/reports"      element={<AdminReportsPage />} />
         <Route path="/admin/trips"        element={<AdminTripsPage />} />
+        <Route path="/admin/destinations" element={<AdminDestinationsPage />} />
         <Route path="/admin/blogs"        element={<AdminBlogsPage />} />
         <Route path="/admin/bookings"     element={<AdminBookingsPage />} />
         <Route path="/admin/gallery"      element={<AdminGalleryPage />} />
