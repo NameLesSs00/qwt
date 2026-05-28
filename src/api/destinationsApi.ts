@@ -1,6 +1,6 @@
 import { axiosClient, adminAxiosClient } from './axiosClient';
 
-const HOST = 'https://travelapi.runasp.net';
+const HOST = 'https://api.hurghadafuntime.com';
 
 export interface DestinationDto {
   id: number;

@@ -224,7 +224,7 @@ export function SingleTripPage() {
 
       {/* ── Hero Gallery ── */}
       <section className="st-gallery">
-        <div className="st-gallery__inner">
+        <div className={`st-gallery__inner ${galleryImgs.length === 1 ? 'st-gallery__inner--single' : ''}`}>
           {/* Main large image */}
           <div
             className="st-gallery__main"
@@ -240,7 +240,7 @@ export function SingleTripPage() {
 
           {/* 2×2 thumbnail grid */}
           {galleryImgs.length > 1 && (
-            <div className="st-gallery__thumbs">
+            <div className={`st-gallery__thumbs st-gallery__thumbs--count-${Math.min(galleryImgs.length - 1, 4)}`}>
               {galleryImgs.slice(1, 5).map((img, idx) => (
                 <div
                   key={idx}
@@ -272,10 +272,10 @@ export function SingleTripPage() {
                 {trip.description && (
                   <p className="st-description">{trip.description}</p>
                 )}
-                {trip.destination && (
+                {(trip.destinationInfo?.name || trip.destination) && (
                   <div className="st-location">
                     <img src={locIcon} alt="" />
-                    <span>{trip.destination}</span>
+                    <span>{trip.destinationInfo?.name || trip.destination}</span>
                   </div>
                 )}
                 <div className="st-divider" />
@@ -327,12 +327,12 @@ export function SingleTripPage() {
 
             {/* Quick info cards */}
             <div className="st-info-cards">
-              {trip.destination && (
+              {(trip.destinationInfo?.name || trip.destination) && (
                 <div className="st-info-card">
                   <img src={locIcon} alt="" />
                   <div>
                     <div className="st-info-card__label">{t('singleTripPage.infoDestination')}</div>
-                    <div className="st-info-card__value">{trip.destination}</div>
+                    <div className="st-info-card__value">{trip.destinationInfo?.name || trip.destination}</div>
                   </div>
                 </div>
               )}
@@ -402,12 +402,12 @@ export function SingleTripPage() {
             <div className="st-trip-info">
               <div className="st-trip-info__badge">{t('singleTripPage.tripInfoBadge')}</div>
               <div className="st-trip-info__grid">
-                {trip.destination && (
+                {(trip.destinationInfo?.name || trip.destination) && (
                   <div className="st-trip-info__item">
                     <img src={locIcon} alt="" />
                     <div>
                       <div className="st-trip-info__label">{t('singleTripPage.infoLocation')}</div>
-                      <div className="st-trip-info__value">{trip.destination}</div>
+                      <div className="st-trip-info__value">{trip.destinationInfo?.name || trip.destination}</div>
                     </div>
                   </div>
                 )}

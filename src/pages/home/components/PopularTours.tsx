@@ -51,7 +51,7 @@ export function PopularTours() {
     setLoading(true)
 
     Promise.all([
-      getTrips({ PageSize: 10 }),
+      getTrips({ PageSize: 100 }),
       getTripTypes(1, 50),
     ])
       .then(([tripsRes, typesRes]) => {
@@ -239,7 +239,7 @@ export function PopularTours() {
                             <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="currentColor" />
                           </svg>
                         </span>
-                        {trip.destination ?? '—'}
+                        {trip.destinationInfo?.name || trip.destination || '—'}
                       </span>
                     </div>
 

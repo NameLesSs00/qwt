@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { fadeUp, fadeLeft, fadeRight, stagger, viewport } from '../../../lib/animations'
 import { getDestinationImageUrl, getDestinations, type DestinationDto } from '../../../api/destinationsApi'
+import { getTrips } from '../../../api/tripsApi'
 import '../styles/destinations.scss'
 
 export function Destinations() {
@@ -19,7 +20,24 @@ export function Destinations() {
         setLoading(true)
         setError('')
         const res = await getDestinations(1, 6, undefined, i18n.language)
-        setDestinations(res.data || [])
+        const dests = res.data || []
+        
+        // Fetch all trips to calculate accurate counts manually
+        try {
+          const tripsRes = await getTrips({ PageSize: 1000 })
+          const allTrips = tripsRes.data || []
+          
+          const updatedDests = dests.map(dest => {
+            const count = allTrips.filter(trip => 
+              (trip.destinationInfo?.name === dest.name) || (trip.destination === dest.name)
+            ).length
+            return { ...dest, tripsCount: count }
+          })
+          setDestinations(updatedDests)
+        } catch (tripErr) {
+          console.error("Failed to fetch trips for counting", tripErr)
+          setDestinations(dests)
+        }
       } catch (err) {
         setError('Unable to load destinations')
       } finally {

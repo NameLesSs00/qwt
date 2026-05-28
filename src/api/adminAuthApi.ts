@@ -18,7 +18,7 @@ export async function loginAdmin(
   email: string,
   password: string
 ): Promise<LoginResponse> {
-  const { data } = await adminAxiosClient.post('/Auth/login', { email, password });
+  const { data } = await adminAxiosClient.post('Auth/login', { email, password });
   // Response shape: { success, message, data: { accessToken, refreshToken, role } }
   return data.data as LoginResponse;
 }

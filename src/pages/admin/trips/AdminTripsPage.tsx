@@ -207,7 +207,7 @@ export function AdminTripsPage() {
                     <div style={{ fontWeight: 600, color: '#0f2f44', fontSize: '14px', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{trip.name}</div>
                     <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>ID #{trip.id} · {trip.markerID}</div>
                   </td>
-                  <td style={{ padding: '12px 16px', color: '#475569', fontSize: '14px' }}>{trip.destination}</td>
+                  <td style={{ padding: '12px 16px', color: '#475569', fontSize: '14px' }}>{trip.destinationInfo?.name || trip.destination || '—'}</td>
                   <td style={{ padding: '12px 16px' }}>
                     <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '3px 8px', borderRadius: '99px', fontSize: '12px', fontWeight: 500 }}>{trip.tripTypeName || '—'}</span>
                   </td>

@@ -87,14 +87,24 @@ export function TripsPage() {
       try {
         const res = await getTrips({
           PageSize: 100,
-          Destination: selectedDestinationName || undefined,
           MinPrice: minPrice !== '' ? Number(minPrice) : undefined,
           MaxPrice: maxPrice !== '' ? Number(maxPrice) : undefined,
           TypeId: selectedTypeId || undefined,
           SearchItem: searchQuery || undefined,
         });
         if (res.success) {
-          setTrips(res.data || []);
+          let fetchedTrips = res.data || [];
+          if (selectedDestinationId != null) {
+            const destObj = destinationOptions.find(d => d.id === selectedDestinationId);
+            if (destObj) {
+              fetchedTrips = fetchedTrips.filter(t => 
+                t.destinationInfo?.id === selectedDestinationId || 
+                t.destinationInfo?.name === destObj.name ||
+                t.destination === destObj.name
+              );
+            }
+          }
+          setTrips(fetchedTrips);
         }
       } catch (err) {
         console.error('Failed to load filtered trips', err);
@@ -335,7 +345,7 @@ export function TripsPage() {
                             </span>
                             <span className="trips-cardMetaSeparator">|</span>
                             <span className="trips-cardMeta">
-                              <MapPin size={16} /> {trip.destination || 'Egypt'}
+                              <MapPin size={16} /> {trip.destinationInfo?.name || trip.destination || 'Egypt'}
                             </span>
                           </div>
 

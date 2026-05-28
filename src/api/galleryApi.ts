@@ -1,4 +1,4 @@
-import { axiosClient, adminAxiosClient, BASE_URL } from './axiosClient';
+import { axiosClient, adminAxiosClient } from './axiosClient';
 
 export interface GalleryImageDto {
   id: number;
@@ -23,7 +23,7 @@ export const getAbsoluteImageUrl = (relativePath: string) => {
   if (!relativePath) return '';
   if (relativePath.startsWith('http')) return relativePath;
   const cleanPath = relativePath.replace(/^\//, '');
-  return `${BASE_URL}/${cleanPath}`;
+  return `https://api.hurghadafuntime.com/${cleanPath}`;
 };
 
 /**

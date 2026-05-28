@@ -44,6 +44,10 @@
   grid-template-columns: 1fr 320px;
   gap: 16px;
 
+  &--single {
+    grid-template-columns: 1fr;
+  }
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
@@ -71,20 +75,73 @@
 
 .st-gallery__thumbs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   gap: 12px;
 
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(4, 1fr);
+  &--count-1 {
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    height: 140px;
+  }
+
+  &--count-2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  &--count-3 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    .st-gallery__thumb:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &--count-4 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  @media (max-width: 900px) {
+    &--count-1 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 140px;
+    }
+    &--count-2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 140px;
+    }
+    &--count-3 {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 140px;
+      .st-gallery__thumb:first-child {
+        grid-column: auto;
+      }
+    }
+    &--count-4 {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 140px;
+    }
   }
 
   @media (max-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    height: auto;
+    &--count-1 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 200px;
+    }
+    &--count-2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 140px;
+    }
+    &--count-3 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 140px 140px;
+      .st-gallery__thumb:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+    &--count-4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 140px 140px;
+    }
   }
 }
 
@@ -93,7 +150,7 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  height: 200px;
+  height: 100%;
 
   img {
     width: 100%;

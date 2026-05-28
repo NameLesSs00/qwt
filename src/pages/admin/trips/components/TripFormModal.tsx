@@ -91,9 +91,13 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
         setName(makeTrans('name'))
         setDescription(makeTrans('description'))
 
-        const destinationName = results[0].destination || ''
-        const matchedDestination = destinationOptions.find(dest => dest.name === destinationName)
-        setDestinationId(matchedDestination?.id ?? destinationOptions[0]?.id ?? 0)
+        if (results[0].destinationInfo?.id) {
+          setDestinationId(results[0].destinationInfo.id)
+        } else {
+          const destinationName = results[0].destination || ''
+          const matchedDestination = destinationOptions.find(dest => dest.name === destinationName)
+          setDestinationId(matchedDestination?.id ?? destinationOptions[0]?.id ?? 0)
+        }
 
         const makeTransArray = (field: 'highlights' | 'includes' | 'excludes' | 'whatToBring'): TranslationInputDto[] => {
           const maxLen = Math.max(...results.map(r => (r[field] || []).length))

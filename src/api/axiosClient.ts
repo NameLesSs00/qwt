@@ -2,7 +2,6 @@ import axios from 'axios';
 import i18n from '../i18n';
 
 // ── Base URL ─────────────────────────────────────────────────────────────────
-// Development: proxied through Vite to /api
 export const BASE_URL =
   import.meta.env.MODE === 'development'
     ? '/api'
@@ -27,7 +26,7 @@ axiosClient.interceptors.request.use((config) => {
     const hasLang = (typeof config.headers.has === 'function')
       ? config.headers.has('Accept-Language')
       : (config.headers['Accept-Language'] || config.headers['accept-language']);
-    
+
     const val = (typeof config.headers.get === 'function')
       ? config.headers.get('Accept-Language')
       : (config.headers['Accept-Language'] || config.headers['accept-language']);

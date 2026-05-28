@@ -24,6 +24,12 @@ export interface DtoTripImageRead {
 export interface DtoTripRead {
   id: number;
   markerID: string | null;
+  destinationInfo?: {
+    id: number;
+    name: string;
+    imageUrl?: string;
+    isFeatured?: boolean;
+  } | null;
   destination: string | null;
   name: string | null;
   description: string | null;
@@ -98,7 +104,7 @@ export interface TripsListParams {
 }
 
 // ── Build absolute URL (same pattern as gallery) ─────────────────────────────
-const HOST = 'https://travelapi.runasp.net';
+const HOST = 'https://api.hurghadafuntime.com';
 export function getTripImageUrl(relativeUrl: string | null): string {
   if (!relativeUrl) return '';
   if (relativeUrl.startsWith('http')) return relativeUrl;

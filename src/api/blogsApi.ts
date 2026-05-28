@@ -1,7 +1,7 @@
 import { axiosClient, adminAxiosClient } from './axiosClient';
 
 // ── Image URL helper (same pattern as trips) ──────────────────────────────────
-const HOST = 'https://travelapi.runasp.net';
+const HOST = 'https://api.hurghadafuntime.com';
 export function getBlogImageUrl(relativeUrl: string | null | undefined): string {
   if (!relativeUrl) return '';
   if (relativeUrl.startsWith('http')) return relativeUrl;

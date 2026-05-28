@@ -81,11 +81,12 @@
     position: absolute;
     bottom: 25px;
     left: 25px;
+    right: calc(var(--cutout-size-w) + 10px);
     margin: 0;
     color: #fff;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.2;
     white-space: pre-line;
     z-index: 2;
   }
