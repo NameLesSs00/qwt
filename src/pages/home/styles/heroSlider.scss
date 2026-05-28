@@ -1,269 +1,125 @@
 .home-hero {
   position: relative;
-  background-color: #ffffff;
-  padding: 40px 0 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
   overflow: hidden;
-  background-image: none;
-  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #000; // Fallback
+}
 
-  @media (max-width: 900px) {
-    padding: 32px 0 0;
-  }
+.home-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.home-hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45); // Dark overlay to make text pop
+  z-index: 2;
 }
 
 .home-hero__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 48px;
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  min-height: 540px;
-  // Ensure content doesn't overflow during animation
-  position: relative; 
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-    padding: 0 24px;
-    gap: 32px;
-    text-align: center;
-    min-height: auto;
-  }
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  padding: 0 24px;
+  width: 100%;
 }
 
 .home-hero__content {
-  flex: 1;
-  max-width: 580px;
-  // Ensure absolute positioned animated children don't break flow
-  position: relative; 
-  min-height: 300px; // Prevent layout shift during animation
-
-  @media (max-width: 900px) {
-    max-width: 100%;
-    order: 1;
-    min-height: auto;
-  }
-}
-
-// Wrapper for Framer Motion to ensure absolute positioning doesn't collapse parent
-.home-hero__contentWrapper {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-hero__title {
-  margin: 0 0 0;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(28px, 3.5vw, 46px);
+  font-size: clamp(36px, 6vw, 64px);
   font-weight: 800;
-  line-height: 1.15;
-  color: #0c2f44;
-  // Reserve space for up to 4 lines, moving the description further down
-  height: 4.6em;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  @media (max-width: 1024px) {
-    font-size: clamp(26px, 4vw, 40px);
-  }
-
-  @media (max-width: 640px) {
-    font-size: clamp(24px, 5vw, 32px);
-  }
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0px 2px 10px rgba(0,0,0,0.6);
 }
 
-.home-hero__titleLast {
-  color: #1e659e;
-}
-
-.home-hero__descWrapper {
-  margin: 24px 0 32px;
-  min-height: 90px;
-  max-width: 440px;
-
-  @media (max-width: 900px) {
-    margin: 16px auto 26px;
-    min-height: 75px;
-  }
+.home-hero__subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 700;
+  color: #93c5fd; // Brand light blue
+  margin: 16px 0;
+  text-shadow: 0px 2px 8px rgba(0,0,0,0.6);
 }
 
 .home-hero__desc {
-  margin: 0;
-  font-size: 18px;
+  font-size: clamp(16px, 2vw, 20px);
+  color: #f8fafc;
+  max-width: 700px;
+  margin: 0 auto 40px;
   line-height: 1.6;
-  color: rgba(39, 39, 39, 0.8);
-
-  @media (max-width: 900px) {
-    font-size: 15px;
-  }
+  text-shadow: 0px 1px 4px rgba(0,0,0,0.6);
 }
 
-// ── Blinking cursor ──────────────────────────────────────────────
-@keyframes hero-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
-
-.home-hero__cursor {
-  display: inline-block;
-  margin-left: 2px;
-  color: #1e659e;
-  font-weight: 300;
-  animation: hero-blink 0.8s step-start infinite;
-  // Sits right after the last character, same baseline
-  vertical-align: baseline;
-
-  &--hidden {
-    opacity: 0;
-    animation: none;
-  }
-}
-
-// ── Single CTA button ─────────────────────────────────────────────
 .home-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 52px;
-  padding: 0 36px;
-  background: #1e659e;
+  background: #1e659e; // Brand accent
+  color: #ffffff;
   border: none;
-  border-radius: 999px;
-  color: #fff;
-  font-size: 15px;
+  border-radius: 6px;
+  padding: 16px 40px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
-  // Box shadow gives a subtle lift; Framer Motion handles scale/translate
-  box-shadow: 0 4px 18px rgba(30, 101, 158, 0.35);
-  // No CSS transform transitions — let Framer Motion own that
-  transition: box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(30, 101, 158, 0.4);
+  transition: background-color 0.3s ease;
 
   &:hover {
-    box-shadow: 0 8px 28px rgba(30, 101, 158, 0.5);
-  }
-
-  @media (max-width: 640px) {
-    height: 46px;
-    padding: 0 28px;
-    font-size: 14px;
-  }
-}
-
-.home-hero__ctaIcon {
-  font-size: 17px;
-  // Slight nudge so arrow feels optically balanced
-  margin-top: 1px;
-}
-
-.home-hero__visual {
-  flex: 1.1;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: -60px;
-
-  @media (max-width: 900px) {
-    margin-bottom: 0px;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    order: 0;
-  }
-}
-
-.hero-visual-frame {
-  position: relative;
-  width: 100%;
-  height: 540px;
-  background: transparent !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  overflow: visible;
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
-  z-index: 5;
-
-  @media (max-width: 900px) {
-    aspect-ratio: 1 / 1;
-  }
-}
-
-// Wrapper for the animated image content
-.hero-visual-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.home-hero__frameImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-}
-
-.home-hero__footer {
-  position: relative;
-  margin-top: -60px;
-  z-index: 5;
-
-  @media (max-width: 900px) {
-    margin-top: 24px;
+    background: #154c79;
   }
 }
 
 .home-hero__dots {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   gap: 12px;
-  z-index: 5;
-  // Ensure dots stay on top during animations
-  position: relative; 
+  z-index: 3;
 }
 
 .home-hero__dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  // Background color is now handled by Framer Motion animate prop
-  background: #cbd5e1; 
-  border: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
   padding: 0;
   cursor: pointer;
-  // Removed CSS transition to prevent conflict with Framer whileHover/Tap
-  // transition: all 0.2s ease; 
-  
-  // CSS fallback for active state if JS fails, but Framer overrides this
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
   &.is-active {
-    background: #1e659e;
+    background: #ffffff;
+    transform: scale(1.3);
   }
-  
-  // Hover state handled by Framer whileHover, but keeping CSS for non-active hover color
+
   &:hover:not(.is-active) {
-    background: #94a3b8;
+    background: rgba(255, 255, 255, 0.8);
   }
-}
-
-.home-hero__bgStrip {
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.home-hero__bgStripImg {
-  width: 100%;
-  max-width: 1920px;
-  min-width: 1280px;
-  height: auto;
-  opacity: 0.6;
-  object-fit: cover; // Ensures it fills the space nicely if the ratio shifts
 }

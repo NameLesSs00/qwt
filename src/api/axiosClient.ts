@@ -2,12 +2,11 @@ import axios from 'axios';
 import i18n from '../i18n';
 
 // ── Base URL ─────────────────────────────────────────────────────────────────
-// Production: https://travelapi.runasp.net/api
 // Development: proxied through Vite to /api
 export const BASE_URL =
   import.meta.env.MODE === 'development'
     ? '/api'
-    : 'https://travelapi.runasp.net/api';
+    : 'https://api.hurghadafuntime.com/api';
 
 // ── Public customer client ────────────────────────────────────────────────────
 export const axiosClient = axios.create({

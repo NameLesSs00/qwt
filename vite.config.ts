@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://travelapi.runasp.net',
+        target: 'https://api.hurghadafuntime.com',
         changeOrigin: true,
         secure: false,
       }
