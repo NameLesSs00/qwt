@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Seo } from '../../components/seo/Seo';
 import imgBg from '../../assets/contactus/bg.png';
 import iconLocation from '../../assets/contactus/Frame 193.svg';
 import iconEmail from '../../assets/contactus/Frame 194.svg';
@@ -17,6 +18,10 @@ export function ContactUsPage() {
 
   return (
     <div className="contact-page">
+      <Seo 
+        title={t('header.contactUs')} 
+        description={t('contactUs.heroSubtitle')}
+      />
       
       {/* ── Hero Section ── */}
       <section className="contact-hero">

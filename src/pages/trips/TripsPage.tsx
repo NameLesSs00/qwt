@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Seo } from '../../components/seo/Seo';
 import { 
   Search, ChevronDown, Check, MapPin, Tag, Clock 
 } from 'lucide-react';
@@ -144,6 +145,10 @@ export function TripsPage() {
 
   return (
     <div className="trips-page">
+      <Seo 
+        title={t('header.trips')} 
+        description={t('tripsPage.heroTitle')}
+      />
       
       {/* ── Hero Banner ── */}
       <section className="trips-hero">

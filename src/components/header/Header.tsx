@@ -81,8 +81,8 @@ export function Header() {
   }
 
   return (
-    <header className="site-header">
-      <div className="site-header__inner" ref={dropdownRef}>
+    <header className="site-header" ref={dropdownRef}>
+      <div className="site-header__inner">
         <Link to="/" className="site-header__logo">
           <img src={logo} alt="Logoipsum" className="site-header__logoImg" />
         </Link>
@@ -260,7 +260,13 @@ export function Header() {
                     <div className="site-header__mobileDropdown">
                       {item.dynamicDropdown ? (
                         <>
-                          <Link to="/destinations" onClick={() => setIsMobileMenuOpen(false)}>
+                          <Link 
+                            to="/destinations" 
+                            onClick={() => {
+                              setIsMobileMenuOpen(false)
+                              setOpenDropdown(null)
+                            }}
+                          >
                             {t('header.destinations')}
                           </Link>
                           {destinationLoading ? (
@@ -270,7 +276,10 @@ export function Header() {
                               <Link
                                 key={dest.id}
                                 to={`/trips?destination=${encodeURIComponent(dest.name ?? '')}`}
-                                onClick={() => setIsMobileMenuOpen(false)}
+                                onClick={() => {
+                                  setIsMobileMenuOpen(false)
+                                  setOpenDropdown(null)
+                                }}
                               >
                                 {dest.name}
                               </Link>
@@ -282,7 +291,10 @@ export function Header() {
                           <Link
                             key={sub.key}
                             to={sub.path}
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false)
+                              setOpenDropdown(null)
+                            }}
                           >
                             {t(`header.${sub.key}`)}
                           </Link>
@@ -295,7 +307,10 @@ export function Header() {
                 <Link
                   to={item.path}
                   className="site-header__mobileNavLink"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    setOpenDropdown(null)
+                  }}
                 >
                   {t(`header.${item.key}`)}
                 </Link>

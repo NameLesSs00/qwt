@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Loader2, Calendar, CreditCard, Users, TrendingUp, AlertCircle } from 'lucide-react'
+import { Loader2, Calendar, CreditCard, TrendingUp, AlertCircle } from 'lucide-react'
 import { getDailyReport, getMonthlyReport, getYearlyReport, type ReportEntity } from '../../../api/reportsApi'
 import '../../../components/admin/admin.scss'
 
@@ -41,7 +41,7 @@ export function AdminReportsPage() {
   }
 
   const ReportSection = ({ title, data }: { title: string, data: ReportEntity | null }) => {
-    const isEmpty = !data || (data.totalBookings === 0 && data.totalRevenue === 0 && data.newCustomers === 0)
+    const isEmpty = !data || (data.totalBookings === 0 && data.totalRevenue === 0)
 
     return (
       <div style={{ marginBottom: '40px' }}>
@@ -77,16 +77,6 @@ export function AdminReportsPage() {
                 </div>
               </div>
 
-              {/* Customers Card */}
-              <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '12px', background: '#fdf4ff', color: '#d946ef', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Users size={28} />
-                </div>
-                <div>
-                  <p style={{ margin: '0 0 6px', color: '#64748b', fontSize: '14px', fontWeight: 500 }}>New Customers</p>
-                  <h4 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#0f2f44' }}>{data.newCustomers}</h4>
-                </div>
-              </div>
             </div>
 
             {/* Top Trips Table */}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Plus, Loader2 } from 'lucide-react';
 import { motion } from "motion/react";
+import { Seo } from '../../components/seo/Seo'
 import { useTranslation } from 'react-i18next';
 import { ImageLightbox } from '../../components/imageLightbox/ImageLightbox'
 import { getGalleryImages, getAbsoluteImageUrl, type GalleryImageDto } from '../../api/galleryApi'
@@ -47,6 +48,10 @@ export function GalleryPage() {
       transition={{ duration: 0.5 }}
       className="gallery-page"
     >
+      <Seo 
+        title={t('header.gallery')} 
+        description={t('galleryPage.heroTitle')}
+      />
       
       {/* ── Hero Section ── */}
       <section className="gallery-hero">

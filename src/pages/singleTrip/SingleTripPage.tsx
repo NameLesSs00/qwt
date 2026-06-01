@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { ImageLightbox } from '../../components/imageLightbox/ImageLightbox'
 import { getTripById, getTripImageUrl, type DtoTripRead } from '../../api/tripsApi'
 import { CheckAvailabilityModal } from '../../components/checkAvailabilityModal/CheckAvailabilityModal'
+import { Seo } from '../../components/seo/Seo'
 import { Loader2, AlertCircle, Star } from 'lucide-react'
 import { getReviews, createReview, getTripAverageRating, type DtoReviewRead } from '../../api/reviewsApi'
 import { useToast } from '../../components/toast/ToastProvider'
@@ -211,6 +212,26 @@ export function SingleTripPage() {
 
   return (
     <div className="st-page">
+      {/* ── Seo & Structured Data ── */}
+      <Seo 
+        title={trip.name || ''} 
+        description={trip.description || undefined}
+        image={galleryImgs[0]}
+        type="product"
+        schema={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": trip.name || '',
+          "image": galleryImgs[0],
+          "description": trip.description || "",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "price": trip.adultPrice
+          }
+        })}
+      />
+
       {/* ── Breadcrumb ── */}
       <div className="st-breadcrumb">
         <div className="st-breadcrumb__inner">

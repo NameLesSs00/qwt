@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 import { motion } from "motion/react";
+import { Seo } from '../../components/seo/Seo';
 import imgBg from '../../assets/aboutUs/bg.png';
 import imgBags from '../../assets/aboutUs/baggs.jpg';
 import imgPhoto1 from '../../assets/aboutUs/photo.png';
@@ -23,6 +24,10 @@ export function AboutUsPage() {
       transition={{ duration: 0.5 }}
       className="about-page"
     >
+      <Seo 
+        title={t('header.aboutUs')} 
+        description={t('aboutPage.introText')}
+      />
       
       {/* ── Hero Section ── */}
       <section className="about-hero">

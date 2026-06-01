@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate, useParams } from 'react-router-dom'
+import { ScrollToTop } from './components/ScrollToTop'
 import { AppLayout } from './layouts/AppLayout'
 
 // ── Public pages ──────────────────────────────────────────────────────────────
 import { HomePage }          from './pages/home/HomePage'
 import { DestinationsPage }  from './pages/destinations/DestinationsPage'
-import { TripDetailsPage }   from './pages/destinations/tripDetails/TripDetailsPage'
 import { ContactUsPage }     from './pages/contactUs/ContactUsPage'
 import { AboutUsPage }       from './pages/aboutUs/AboutUsPage'
 import { GalleryPage }       from './pages/gallery/GalleryPage'
@@ -43,12 +43,13 @@ function DestinationSlugRedirect() {
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
 
       {/* ── Public site pages (rendered inside AppLayout with Header + Footer) ── */}
       <Route path="/" element={<AppLayout><HomePage /></AppLayout>} />
       <Route path="/destinations" element={<AppLayout><DestinationsPage /></AppLayout>} />
-      <Route path="/destinations/trip-details" element={<AppLayout><TripDetailsPage /></AppLayout>} />
       <Route path="/destinations/:slug" element={<DestinationSlugRedirect />} />
       <Route path="/contact-us" element={<AppLayout><ContactUsPage /></AppLayout>} />
       <Route path="/about-us" element={<AppLayout><AboutUsPage /></AppLayout>} />
@@ -91,6 +92,7 @@ function App() {
       <Route path="*" element={<NotFoundPage />} />
 
     </Routes>
+    </>
   )
 }
 

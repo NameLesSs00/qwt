@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import footerLogo from '../../assets/HurghadaFunTime.png'
 
-import applePay from '../../assets/footer/logos_apple-pay.svg'
-import googlePay from '../../assets/footer/logos_google-pay.svg'
-import mastercard from '../../assets/footer/logos_mastercard.svg'
-import paypal from '../../assets/footer/logos_paypal.svg'
-import visa from '../../assets/footer/logos_visaelectron.svg'
+// Payment channels are currently hidden
+// import applePay from '../../assets/footer/logos_apple-pay.svg'
+// import googlePay from '../../assets/footer/logos_google-pay.svg'
+// import mastercard from '../../assets/footer/logos_mastercard.svg'
+// import paypal from '../../assets/footer/logos_paypal.svg'
+// import visa from '../../assets/footer/logos_visaelectron.svg'
 
 import facebook from '../../assets/footer/basil_facebook-outline.svg'
 import instagram from '../../assets/footer/iconoir_instagram.svg'
@@ -83,7 +84,7 @@ export function Footer() {
         </div>
 
         <div className="space-y-8">
-          <div>
+          {/* <div>
             <h3 className="text-sm font-semibold tracking-wide text-white/95">{t('footer.paymentChannels')}</h3>
             <div className="mt-5 flex flex-wrap items-center gap-2.5">
               <img src={paypal} alt="PayPal" className="h-4 w-6" />
@@ -92,7 +93,7 @@ export function Footer() {
               <img src={mastercard} alt="Mastercard" className="h-4 w-8" />
               <img src={googlePay} alt="Google Pay" className="h-4 w-9" />
             </div>
-          </div>
+          </div> */}
 
           <div>
             <h3 className="text-sm font-semibold tracking-wide text-white/95">{t('footer.followUs')}</h3>

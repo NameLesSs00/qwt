@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from "motion/react";
 import { getBlogById, getBlogs, getBlogImageUrl } from '../../../api/blogsApi';
 import type { DtoBlogRead } from '../../../api/blogsApi';
+import { Seo } from '../../../components/seo/Seo';
 import imgHero from '../../../assets/plogs/details/222.png'; // Fallback hero
 
 import './blogDetailsPage.scss';
@@ -67,6 +68,19 @@ export function BlogDetailsPage() {
       transition={{ duration: 0.5 }}
       className="bd-page"
     >
+      <Seo 
+        title={blog.title || ''} 
+        description={blog.description || undefined}
+        image={getBlogImageUrl(blog.imageUrl)}
+        type="article"
+        schema={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": blog.title,
+          "image": getBlogImageUrl(blog.imageUrl),
+          "description": blog.description || "",
+        })}
+      />
       
       {/* ── Hero Banner ── */}
       <section className="bd-hero">

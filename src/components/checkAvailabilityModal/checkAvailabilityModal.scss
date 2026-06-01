@@ -139,8 +139,10 @@
 
   @media (max-width: 500px) {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 16px;
   }
 }
 
@@ -148,6 +150,11 @@
   font-size: 15px;
   color: #1E3A5F;
   flex: 1;
+
+  @media (max-width: 500px) {
+    font-size: 18px;
+    font-weight: 600;
+  }
 }
 
 .ca-quantity-price {
@@ -158,6 +165,7 @@
 
   @media (max-width: 500px) {
     margin-right: 0;
+    font-size: 18px;
   }
 }
 
@@ -183,6 +191,11 @@
   &:hover {
     opacity: 0.9;
   }
+
+  @media (max-width: 500px) {
+    width: 44px;
+    height: 44px;
+  }
 }
 
 .ca-qty-value {
@@ -191,6 +204,11 @@
   color: #1E3A5F;
   min-width: 20px;
   text-align: center;
+
+  @media (max-width: 500px) {
+    font-size: 20px;
+    min-width: 30px;
+  }
 }
 
 .ca-checkout-btn {
