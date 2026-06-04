@@ -144,7 +144,7 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
   const toggleDay = (id: number) =>
     setAvailabilityDayIds(prev => prev.includes(id) ? prev.filter(d => d !== id) : [...prev, id])
 
-  const handleSubmit = async () => {
+  const saveTrip = async () => {
     setLoading(true)
     setError('')
     try {
@@ -174,6 +174,15 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
       setError(err?.response?.data?.message || 'Failed to save trip.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      await saveTrip();
     }
   }
 
@@ -209,7 +218,7 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
             {LANGS.map(lang => (
               <div key={lang}>
                 <label style={labelStyle}>{LANG_LABELS[lang]}</label>
-                <input style={inputStyle} value={item[lang]} onChange={e => updateListItem(setter, idx, lang, e.target.value)} placeholder={LANG_LABELS[lang]} />
+                <input style={inputStyle} value={item[lang]} onChange={e => updateListItem(setter, idx, lang, e.target.value)} placeholder={LANG_LABELS[lang]} required />
               </div>
             ))}
           </div>
@@ -238,8 +247,10 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
           ))}
         </div>
 
-        {/* Body */}
-        <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
+        {/* Form Wrap */}
+        <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+          {/* Body */}
+          <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
           {fetchLoading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}><Loader2 className="animate-spin" size={36} color="#1e659e" /></div>
           ) : (
@@ -271,17 +282,17 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                     <div>
                       <label style={labelStyle}>Trip Type <span style={{ color: '#ef4444' }}>*</span></label>
-                      <select value={tripTypeId} onChange={e => setTripTypeId(Number(e.target.value))} style={{ ...inputStyle }}>
+                      <select value={tripTypeId} onChange={e => setTripTypeId(Number(e.target.value))} style={{ ...inputStyle }} required>
                         {tripTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label style={labelStyle}>Start Time</label>
-                      <input type="time" value={timeFrom} onChange={e => setTimeFrom(e.target.value)} style={inputStyle} />
+                      <label style={labelStyle}>Start Time <span style={{ color: '#ef4444' }}>*</span></label>
+                      <input type="time" value={timeFrom} onChange={e => setTimeFrom(e.target.value)} style={inputStyle} required />
                     </div>
                     <div>
                       <label style={labelStyle}>Duration Value <span style={{ color: '#ef4444' }}>*</span></label>
-                      <input type="number" min={1} value={durationValue} onChange={e => setDurationValue(Number(e.target.value))} style={inputStyle} />
+                      <input type="number" min={1} value={durationValue} onChange={e => setDurationValue(Number(e.target.value))} style={inputStyle} required />
                     </div>
                     <div>
                       <label style={labelStyle}>Duration Type</label>
@@ -292,11 +303,14 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
                     </div>
                     <div>
                       <label style={labelStyle}>Adult Price (€) <span style={{ color: '#ef4444' }}>*</span></label>
-                      <input type="number" min={0} step={0.01} value={adultPrice} onChange={e => setAdultPrice(Number(e.target.value))} style={inputStyle} />
+                      <input type="number" min={1} step={0.01} value={adultPrice} onChange={e => setAdultPrice(Number(e.target.value))} style={inputStyle} required />
                     </div>
                     <div>
-                      <label style={labelStyle}>Child Price (€) <span style={{ color: '#ef4444' }}>*</span></label>
-                      <input type="number" min={0} step={0.01} value={childPrice} onChange={e => setChildPrice(Number(e.target.value))} style={inputStyle} />
+                      <label style={labelStyle}>
+                        Child Price (€) <span style={{ color: '#ef4444' }}>*</span>
+                        <span style={{ textTransform: 'none', marginLeft: '6px', fontWeight: 400, color: '#94a3b8' }}>(If 0, hidden)</span>
+                      </label>
+                      <input type="number" min={0} step={0.01} value={childPrice} onChange={e => setChildPrice(Number(e.target.value))} style={inputStyle} required />
                     </div>
                   </div>
                 </div>
@@ -347,24 +361,25 @@ export function TripFormModal({ tripId, tripTypes, onClose, onSaved }: Props) {
               )}
             </>
           )}
-        </div>
+          </div>
 
-        {/* Footer */}
-        <div style={{ padding: '16px 24px', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', flexShrink: 0 }}>
-          <button onClick={() => step > 1 ? setStep(step - 1) : onClose()} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 18px', background: '#f1f5f9', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 500, color: '#475569' }}>
-            <ChevronLeft size={16} /> {step === 1 ? 'Cancel' : 'Back'}
-          </button>
-          {step < 3 ? (
-            <button onClick={() => setStep(step + 1)} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 18px', background: '#1e659e', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 500 }}>
-              Next <ChevronRight size={16} />
+          {/* Footer */}
+          <div style={{ padding: '16px 24px', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', flexShrink: 0 }}>
+            <button type="button" onClick={() => step > 1 ? setStep(step - 1) : onClose()} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 18px', background: '#f1f5f9', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 500, color: '#475569' }}>
+              <ChevronLeft size={16} /> {step === 1 ? 'Cancel' : 'Back'}
             </button>
-          ) : (
-            <button onClick={handleSubmit} disabled={loading} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 20px', background: '#1e659e', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, opacity: loading ? 0.7 : 1 }}>
-              {loading && <Loader2 size={16} className="animate-spin" />}
-              {tripId ? 'Save Changes' : 'Create Trip'}
-            </button>
-          )}
-        </div>
+            {step < 3 ? (
+              <button type="submit" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 18px', background: '#1e659e', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 500 }}>
+                Next <ChevronRight size={16} />
+              </button>
+            ) : (
+              <button type="submit" disabled={loading} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 20px', background: '#1e659e', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, opacity: loading ? 0.7 : 1 }}>
+                {loading && <Loader2 size={16} className="animate-spin" />}
+                {tripId ? 'Save Changes' : 'Create Trip'}
+              </button>
+            )}
+          </div>
+        </form>
       </div>
     </div>
   )

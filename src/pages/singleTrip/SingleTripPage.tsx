@@ -327,16 +327,18 @@ export function SingleTripPage() {
                   </div>
                 </div>
 
-                <div className="st-sidebar__priceRow">
-                  <div className="st-sidebar__priceBlock">
-                    <img src={childrenIcon} alt="" />
-                    <span className="st-sidebar__priceLabel">{t('singleTripPage.children')}</span>
+                {trip.childPrice > 0 && (
+                  <div className="st-sidebar__priceRow">
+                    <div className="st-sidebar__priceBlock">
+                      <img src={childrenIcon} alt="" />
+                      <span className="st-sidebar__priceLabel">{t('singleTripPage.children')}</span>
+                    </div>
+                    <div className="st-sidebar__priceRight">
+                      <div className="st-sidebar__priceFrom">{t('singleTripPage.fromPrice')}</div>
+                      <div className="st-sidebar__price">€{trip.childPrice}/{t('singleTripPage.perPerson')}</div>
+                    </div>
                   </div>
-                  <div className="st-sidebar__priceRight">
-                    <div className="st-sidebar__priceFrom">{t('singleTripPage.fromPrice')}</div>
-                    <div className="st-sidebar__price">€{trip.childPrice}/{t('singleTripPage.perPerson')}</div>
-                  </div>
-                </div>
+                )}
 
                 <div className="st-sidebar__divider" />
 

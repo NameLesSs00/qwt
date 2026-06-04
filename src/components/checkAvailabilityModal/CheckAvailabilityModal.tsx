@@ -156,19 +156,21 @@ export function CheckAvailabilityModal({ isOpen, onClose, trip }: CheckAvailabil
                     </div>
                   </div>
 
-                  <div className="ca-quantity-row">
-                    <span className="ca-quantity-name">{t('bookingModal.children')}</span>
-                    <span className="ca-quantity-price">€{childPrice.toFixed(2)}</span>
-                    <div className="ca-quantity-controls">
-                      <button onClick={() => setChildCount(prev => Math.max(0, prev - 1))} className="ca-qty-btn">
-                        <Minus size={16} />
-                      </button>
-                      <span className="ca-qty-value">{childCount}</span>
-                      <button onClick={() => setChildCount(prev => prev + 1)} className="ca-qty-btn">
-                        <Plus size={16} />
-                      </button>
+                  {childPrice > 0 && (
+                    <div className="ca-quantity-row">
+                      <span className="ca-quantity-name">{t('bookingModal.children')}</span>
+                      <span className="ca-quantity-price">€{childPrice.toFixed(2)}</span>
+                      <div className="ca-quantity-controls">
+                        <button onClick={() => setChildCount(prev => Math.max(0, prev - 1))} className="ca-qty-btn">
+                          <Minus size={16} />
+                        </button>
+                        <span className="ca-qty-value">{childCount}</span>
+                        <button onClick={() => setChildCount(prev => prev + 1)} className="ca-qty-btn">
+                          <Plus size={16} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
