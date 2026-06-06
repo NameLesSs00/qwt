@@ -6,10 +6,8 @@ import imgBg from '../../assets/contactus/bg.png';
 import iconLocation from '../../assets/contactus/Frame 193.svg';
 import iconEmail from '../../assets/contactus/Frame 194.svg';
 import iconPhone from '../../assets/contactus/dashicons_phone.svg'; // Or whichever phone icon exists.
-import iconFb from '../../assets/contactus/basil_facebook-outline.svg';
 import iconIg from '../../assets/contactus/iconoir_instagram.svg';
 import iconTikTok from '../../assets/contactus/proicons_tiktok.svg';
-import iconTwitter from '../../assets/contactus/prime_twitter.svg';
 // I will just use the phone icon from lucide-react if the svg isn't right, but I'll try the svg first.
 
 import './contactUsPage.scss';

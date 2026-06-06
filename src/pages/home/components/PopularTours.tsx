@@ -36,6 +36,9 @@ function getTripPrimaryImage(trip: DtoTripRead, index: number): string {
   return url ? getTripImageUrl(url) : fallbackImages[index % fallbackImages.length]
 }
 
+// Pinned tab IDs in the desired display order (others are hidden)
+const PINNED_TYPE_IDS = [2, 3, 4] // Snorkeling Trips, Safari Trips, Over Day Trip
+
 export function PopularTours() {
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
@@ -43,7 +46,7 @@ export function PopularTours() {
   const [trips,     setTrips]     = useState<DtoTripRead[]>([])
   const [tripTypes, setTripTypes] = useState<TripTypeDto[]>([])
   const [loading,   setLoading]   = useState(true)
-  const [activeTypeId, setActiveTypeId] = useState<number | null>(null) // null = "All"
+  const [activeTypeId, setActiveTypeId] = useState<number | null>(2) // default: Snorkeling Trips
 
   // Fetch trips & trip types in parallel on mount and on language change
   useEffect(() => {
@@ -64,6 +67,14 @@ export function PopularTours() {
 
     return () => { active = false }
   }, [i18n.language])
+
+  // Only show pinned tabs, sorted in the defined order
+  const pinnedTypes = useMemo(
+    () => PINNED_TYPE_IDS
+      .map(id => tripTypes.find(t => t.id === id))
+      .filter((t): t is TripTypeDto => t !== undefined),
+    [tripTypes],
+  )
 
   // Client-side filter: compare trip.tripTypeName case-insensitively to selected type name
   const activeTypeName = useMemo(
@@ -113,8 +124,8 @@ export function PopularTours() {
             {t('homePage.popularTours.subtitle')}
           </motion.p>
 
-          {/* Category tabs — loaded from backend, case-insensitive */}
-          {!loading && tripTypes.length > 0 && (
+          {/* Category tabs — pinned order: All, Snorkeling Trips, Safari Trips, Over Day Trip */}
+          {!loading && pinnedTypes.length > 0 && (
             <motion.div
               className="popular-tours__tabs"
               variants={stagger(0.08, 0.2)}
@@ -138,8 +149,8 @@ export function PopularTours() {
                 {t('homePage.popularTours.all')}
               </motion.button>
 
-              {/* Dynamic type tabs */}
-              {tripTypes.map(type => (
+              {/* Pinned type tabs in defined order */}
+              {pinnedTypes.map(type => (
                 <motion.button
                   key={type.id}
                   type="button"

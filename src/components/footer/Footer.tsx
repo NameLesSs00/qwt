@@ -9,10 +9,8 @@ import footerLogo from '../../assets/HurghadaFunTime.png'
 // import paypal from '../../assets/footer/logos_paypal.svg'
 // import visa from '../../assets/footer/logos_visaelectron.svg'
 
-import facebook from '../../assets/footer/basil_facebook-outline.svg'
 import instagram from '../../assets/footer/iconoir_instagram.svg'
 import tiktok from '../../assets/footer/proicons_tiktok.svg'
-import twitterX from '../../assets/footer/prime_twitter.svg'
 
 import phoneIcon from '../../assets/footer/solar_phone-outline.svg'
 import emailIcon from '../../assets/footer/streamline-plump_web.svg'
