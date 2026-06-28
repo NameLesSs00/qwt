@@ -74,10 +74,7 @@ export function SingleTripPage() {
   const [averageReview, setAverageReview] = useState<{ averageRate: number; totalReviews: number } | null>(null)
 
   // Add Review Form state
-  const [arFirstName, setArFirstName] = useState('')
-  const [arLastName, setArLastName] = useState('')
-  const [arEmail, setArEmail] = useState('')
-  const [arPhone, setArPhone] = useState('')
+  const [arFullName, setArFullName] = useState('')
   const [arComment, setArComment] = useState('')
   const [arRate, setArRate] = useState(5)
   const [isSubmittingReview, setIsSubmittingReview] = useState(false)
@@ -110,18 +107,22 @@ export function SingleTripPage() {
     e.preventDefault()
     if (!id) return
 
-    if (!arFirstName.trim() || !arLastName.trim() || !arEmail.trim() || !arPhone.trim() || !arComment.trim()) {
+    if (!arFullName.trim() || !arComment.trim()) {
       toast.error(t('singleTripPage.toastFillFields'))
       return
     }
 
+    const nameParts = arFullName.trim().split(' ')
+    const firstName = nameParts[0] || 'Anonymous'
+    const lastName = nameParts.slice(1).join(' ') || 'User'
+
     setIsSubmittingReview(true)
     try {
       const res = await createReview({
-        firstName: arFirstName,
-        lastName: arLastName,
-        email: arEmail,
-        phone: arPhone,
+        firstName,
+        lastName,
+        email: 'dummy@example.com',
+        phone: '0000000000',
         tripId: Number(id),
         comment: arComment,
         rate: arRate
@@ -129,10 +130,7 @@ export function SingleTripPage() {
 
       if (res.success) {
         toast.success(t('singleTripPage.toastSuccess'))
-        setArFirstName('')
-        setArLastName('')
-        setArEmail('')
-        setArPhone('')
+        setArFullName('')
         setArComment('')
         setArRate(5)
         loadReviews()
@@ -569,48 +567,15 @@ export function SingleTripPage() {
               
               <form onSubmit={handleReviewSubmit}>
                 <div className="st-add-review__grid">
-                  <div className="st-add-review__field">
-                    <label className="st-add-review__label">{t('singleTripPage.firstName')} <span>*</span></label>
+                  <div className="st-add-review__field" style={{ gridColumn: '1 / -1' }}>
+                    <label className="st-add-review__label">{t('singleTripPage.fullName', { defaultValue: 'Full Name' })} <span>*</span></label>
                     <input
                       type="text"
                       className="st-add-review__input"
-                      value={arFirstName}
-                      onChange={e => setArFirstName(e.target.value)}
+                      value={arFullName}
+                      onChange={e => setArFullName(e.target.value)}
                       required
-                      placeholder="e.g. John"
-                    />
-                  </div>
-                  <div className="st-add-review__field">
-                    <label className="st-add-review__label">{t('singleTripPage.lastName')} <span>*</span></label>
-                    <input
-                      type="text"
-                      className="st-add-review__input"
-                      value={arLastName}
-                      onChange={e => setArLastName(e.target.value)}
-                      required
-                      placeholder="e.g. Doe"
-                    />
-                  </div>
-                  <div className="st-add-review__field">
-                    <label className="st-add-review__label">{t('singleTripPage.email')} <span>*</span></label>
-                    <input
-                      type="email"
-                      className="st-add-review__input"
-                      value={arEmail}
-                      onChange={e => setArEmail(e.target.value)}
-                      required
-                      placeholder="e.g. john@example.com"
-                    />
-                  </div>
-                  <div className="st-add-review__field">
-                    <label className="st-add-review__label">{t('singleTripPage.phone')} <span>*</span></label>
-                    <input
-                      type="tel"
-                      className="st-add-review__input"
-                      value={arPhone}
-                      onChange={e => setArPhone(e.target.value)}
-                      required
-                      placeholder="e.g. +123456789"
+                      placeholder="e.g. John Doe"
                     />
                   </div>
                 </div>

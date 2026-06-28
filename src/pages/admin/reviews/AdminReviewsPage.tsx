@@ -181,14 +181,6 @@ export function AdminReviewsPage() {
                       <div style={{ fontWeight: 600, color: '#0f2f44', fontSize: '14px' }}>
                         {[review.firstName, review.lastName].filter(Boolean).join(' ') || '—'}
                       </div>
-                      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
-                        {review.email || '—'}
-                      </div>
-                      {review.phone && (
-                        <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '2px' }}>
-                          {review.phone}
-                        </div>
-                      )}
                     </td>
 
                     {/* Trip */}
@@ -266,16 +258,43 @@ export function AdminReviewsPage() {
 
               {filteredReviews.length === 0 && (
                 <tr>
-                  <td colSpan={6} style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>
-                    <MessageSquare size={32} color="#cbd5e1" style={{ marginBottom: '12px' }} />
-                    <div style={{ fontWeight: 600, color: '#94a3b8', fontSize: '15px' }}>
-                      {search ? 'No reviews match your search.' : 'No reviews yet.'}
+                  <td
+                    colSpan={6}
+                    style={{
+                      padding: '80px 0',
+                      width: '100%',
+                      minWidth: '100%',
+                    }}
+                  >
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%'
+                    }}>
+                      <MessageSquare size={32} color="#cbd5e1" style={{ marginBottom: '12px' }} />
+                      <div style={{ fontWeight: 600, color: '#94a3b8', fontSize: '15px' }}>
+                        {search ? 'No reviews match your search.' : 'No reviews yet.'}
+                      </div>
+                      {search && (
+                        <button
+                          onClick={() => setSearch('')}
+                          style={{
+                            marginTop: '12px',
+                            background: 'none',
+                            border: '1px solid #cbd5e1',
+                            padding: '6px 16px',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            cursor: 'pointer',
+                            color: '#475569'
+                          }}
+                        >
+                          Clear Search
+                        </button>
+                      )}
                     </div>
-                    {search && (
-                      <button onClick={() => setSearch('')} style={{ marginTop: '12px', background: 'none', border: '1px solid #cbd5e1', padding: '6px 16px', borderRadius: '8px', fontSize: '13px', cursor: 'pointer', color: '#475569' }}>
-                        Clear Search
-                      </button>
-                    )}
                   </td>
                 </tr>
               )}
@@ -295,29 +314,19 @@ export function AdminReviewsPage() {
                 <X size={20} />
               </button>
             </div>
-            
+
             {/* Body */}
             <div style={{ padding: '24px', maxHeight: '70vh', overflowY: 'auto' }}>
               {/* Customer Info */}
               <div style={{ marginBottom: '20px' }}>
                 <h4 style={{ margin: '0 0 10px', fontSize: '14px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Customer Info</h4>
                 <div style={{ background: '#f8fafc', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: '#475569', fontSize: '13px', fontWeight: 500 }}>Name:</span>
                     <span style={{ color: '#0f2f44', fontSize: '13px', fontWeight: 600 }}>
                       {[selectedReview.firstName, selectedReview.lastName].filter(Boolean).join(' ') || '—'}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ color: '#475569', fontSize: '13px', fontWeight: 500 }}>Email:</span>
-                    <span style={{ color: '#0f2f44', fontSize: '13px', fontWeight: 600 }}>{selectedReview.email || '—'}</span>
-                  </div>
-                  {selectedReview.phone && (
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#475569', fontSize: '13px', fontWeight: 500 }}>Phone:</span>
-                      <span style={{ color: '#0f2f44', fontSize: '13px', fontWeight: 600 }}>{selectedReview.phone}</span>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -372,7 +381,7 @@ export function AdminReviewsPage() {
                     <span style={{ color: '#475569', fontSize: '13px', fontWeight: 500 }}>Submitted On:</span>
                     <span style={{ color: '#0f2f44', fontSize: '13px', fontWeight: 600 }}>{formatDate(selectedReview.createdAt)}</span>
                   </div>
-                  
+
                   {/* Comment */}
                   <div style={{ marginTop: '12px', borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
                     <div style={{ color: '#475569', fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Comment:</div>

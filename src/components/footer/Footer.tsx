@@ -116,8 +116,14 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-4 py-4 text-xs text-white/70 sm:px-6 lg:px-8">
-          {t('footer.copyright')}
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-2 px-4 py-4 text-xs text-white/70 sm:px-6 lg:px-8">
+          <span>{t('footer.copyright')}</span>
+          <span className="flex items-center gap-1">
+            Developed by{' '}
+            <a href="https://tech-gear.net/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-medium">
+              TechGear Solutions
+            </a>
+          </span>
         </div>
       </div>
     </footer>
