@@ -304,18 +304,27 @@
   "homePage": {
     "hero": {
       "slide1": {
-        "title": "Simte adrenalina deșertului egiptean",
-        "description": "Condu ATV-uri, explorează dunele de aur și trăiește o viață autentică de beduin sub cerul deșertului.",
+        "title": "Hurghada Fun Trips",
+        "subtitle": "Găsește excursia ta perfectă",
+        "description": "Descoperă destinații uimitoare și rezervă-ți călătoria cu ușurință — totul íntr-un singur loc.",
         "cta": "Explorează excursii în deșert"
       },
       "slide2": {
-        "title": "Mers prin mii de ani de istorie",
-        "description": "Descoperă temple antice, piramide maiestuoase și poveștile atemporale ale civilizației Egiptului.",
+        "title": "Descoperă minunile antice",
+        "subtitle": "Excursii istorice de neuitat",
+        "description": "Călătorește în timp cu tururile noastre ghidate la Luxor, Cairo și temple antice de necrezut.",
         "cta": "Explorează excursii istorice"
       },
       "slide3": {
-        "title": "Evadează pe cele mai uimitoare insule ale Egiptului",
-        "description": "Ape de cristal, recife de corali colorate și aventuri insulare de neuitat în Marea Roșie.",
+        "title": "Explorează Marea Roșie",
+        "subtitle": "Scufundă-te în ape de cristal",
+        "description": "Alătură-te excursiilor noastre de snorkeling și scufundări pentru a vedea recifele de corali și viața marină.",
+        "cta": "Explorează excursii pe mare"
+      },
+      "slide4": {
+        "title": "Scufundă-te în altă lume",
+        "subtitle": "Aventuri subacvatice te așteaptă",
+        "description": "Explorează recifele de corali superbe, înoată între pești colorati și descoperă magia de sub suprafață.",
         "cta": "Explorează excursii pe mare"
       }
     },

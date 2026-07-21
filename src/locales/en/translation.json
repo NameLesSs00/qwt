@@ -304,18 +304,27 @@
   "homePage": {
     "hero": {
       "slide1": {
-        "title": "Feel the Thrill of the Egyptian Desert",
-        "description": "Ride quad bikes, explore golden dunes, and experience authentic Bedouin life under the desert sky.",
+        "title": "Hurghada Fun Trips",
+        "subtitle": "Find Your Perfect Excursion",
+        "description": "Discover breathtaking destinations, and book your trip with ease — all in one place.",
         "cta": "Explore Desert Trips"
       },
       "slide2": {
-        "title": "Walk Through Thousands of Years of History",
-        "description": "Discover ancient temples, majestic pyramids, and the timeless stories of Egypt's civilization.",
+        "title": "Discover Ancient Wonders",
+        "subtitle": "Unforgettable Historical Excursions",
+        "description": "Journey through time with our guided tours to Luxor, Cairo, and breathtaking ancient temples.",
         "cta": "Explore Historical Trips"
       },
       "slide3": {
-        "title": "Escape to Egypt's Most Stunning Islands",
-        "description": "Crystal-clear waters, colorful coral reefs, and unforgettable island adventures in the Red Sea.",
+        "title": "Explore the Red Sea",
+        "subtitle": "Dive into Crystal Clear Waters",
+        "description": "Join our snorkeling and diving excursions to see vibrant coral reefs and marine life.",
+        "cta": "Explore Sea Trips"
+      },
+      "slide4": {
+        "title": "Dive into Another World",
+        "subtitle": "Underwater Adventures Await",
+        "description": "Explore stunning coral reefs, swim alongside colorful fish and discover the magic beneath the surface.",
         "cta": "Explore Sea Trips"
       }
     },

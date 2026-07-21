@@ -304,18 +304,27 @@
   "homePage": {
     "hero": {
       "slide1": {
-        "title": "Ressentez le frisson du désert égyptien",
-        "description": "Montez à quad, explorez les dunes dorées et vivez une vie de bédouin authentique sous le ciel du désert.",
+        "title": "Hurghada Fun Trips",
+        "subtitle": "Trouvez votre excursion parfaite",
+        "description": "Découvrez des destinations à couper le souffle et réservez votre voyage facilement — tout en un seul endroit.",
         "cta": "Explorer les voyages dans le désert"
       },
       "slide2": {
-        "title": "Traversez des milliers d'années d'histoire",
-        "description": "Découvrez des temples anciens, des pyramides majestueuses et les histoires intemporelles de la civilisation égyptienne.",
+        "title": "Découvrez les merveilles antiques",
+        "subtitle": "Excursions historiques inoubliables",
+        "description": "Voyagez dans le temps avec nos visites guidées à Louxor, Le Caire et de magnifiques temples anciens.",
         "cta": "Explorer les voyages historiques"
       },
       "slide3": {
-        "title": "Évadez-vous vers les plus belles îles d'Égypte",
-        "description": "Des eaux cristallines, des récifs coralliens colorés et des aventures insulaires inoubliables dans la mer Rouge.",
+        "title": "Explorez la mer Rouge",
+        "subtitle": "Plongez dans des eaux cristallines",
+        "description": "Rejoignez nos excursions de snorkeling et de plongée pour découvrir des récifs coralliens et la vie marine.",
+        "cta": "Explorer les voyages en mer"
+      },
+      "slide4": {
+        "title": "Plongez dans un autre monde",
+        "subtitle": "Des aventures sous-marines vous attendent",
+        "description": "Explorez de magnifiques récifs coralliens, nagez avec des poissons colorés et découvrez la magie sous la surface.",
         "cta": "Explorer les voyages en mer"
       }
     },
