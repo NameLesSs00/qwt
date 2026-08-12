@@ -170,6 +170,10 @@
     "selectNationality": "Sélectionnez votre nationalité",
     "emailAddress": "Adresse e-mail",
     "phoneNumber": "Numéro de téléphone",
+    "hotelName": "Nom de l'hôtel",
+    "hotelNamePlaceholder": "ex. Marina Resort",
+    "roomNo": "Numéro de chambre",
+    "roomNoPlaceholder": "ex. 204",
     "haveCoupon": "Avez-vous un coupon ?",
     "promoCodePlaceholder": "Saisissez votre code promo",
     "orderSummary": "Résumé de la commande",
@@ -206,6 +210,8 @@
     "email": "E-mail",
     "phone": "Téléphone",
     "nationality": "Nationalité",
+    "hotelName": "Nom de l'hôtel",
+    "roomNo": "Numéro de chambre",
     "orderSummary": "Résumé de la commande",
     "trip": "Voyage",
     "date": "Date",
@@ -424,21 +430,23 @@
       "title": "Ce que disent nos",
       "accent": "voyageurs ?",
       "sub": "Retours d'expérience réels de voyageurs qui ont exploré l'Égypte avec nous",
-      "steve": {
-        "quote": "Une expérience absolument incroyable ! Eau cristalline, personnel amical et organisation parfaite. Fortement recommandé.",
-        "country": "Royaume-Uni",
-        "tourName": "Excursion à l'île d'Orange Bay"
-      },
-      "marta": {
-        "quote": "L'excursion en safari était palpitante et bien organisée. Rouler dans le désert au coucher du soleil était inoubliable.",
-        "country": "Allemagne",
-        "tourName": "Aventure en quad dans le désert"
-      },
-      "eric": {
-        "quote": "Un merveilleux voyage à travers l'histoire. Le guide était très compétent, tout était fluide et confortable.",
-        "country": "France",
-        "tourName": "Visite d'une journée à Louxor"
-      }
+      "loading": "Chargement des avis...",
+      "empty": "Aucun avis de voyageur pour le moment. Soyez le premier à partager votre expérience.",
+      "loadError": "Impossible de charger les avis. Veuillez réessayer plus tard.",
+      "showMore": "Afficher plus de commentaires",
+      "traveller": "Voyageur",
+      "formTitle": "Comment s'est passée votre expérience ?",
+      "formSubtitle": "Partagez votre avis avec les futurs voyageurs.",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "rating": "Note",
+      "comment": "Commentaire",
+      "commentPlaceholder": "Parlez-nous de votre expérience...",
+      "submit": "Envoyer le commentaire",
+      "submitting": "Envoi...",
+      "success": "Merci. Votre avis a été envoyé avec succès.",
+      "error": "Veuillez compléter le formulaire et réessayer."
     }
   }
 }

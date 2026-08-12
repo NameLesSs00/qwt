@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -22,30 +22,30 @@ export function BookingConfirmationPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const [booking, setBooking] = useState<DtoBookRead | null>(null);
 
-  useEffect(() => {
-    // 1. Try to read booking from navigation state
+  const booking = useMemo(() => {
     const stateBooking = (location.state as { booking?: DtoBookRead })?.booking;
     if (stateBooking) {
-      setBooking(stateBooking);
-      return;
+      return stateBooking;
     }
 
-    // 2. Fallback: try to read booking from sessionStorage
     try {
       const stored = sessionStorage.getItem('latestBooking');
       if (stored) {
-        setBooking(JSON.parse(stored));
-        return;
+        return JSON.parse(stored) as DtoBookRead;
       }
     } catch (e) {
       console.error('Failed to read booking from sessionStorage:', e);
     }
 
-    // 3. If no booking data is found, redirect to trips page
-    navigate('/trips', { replace: true });
-  }, [location, navigate]);
+    return null;
+  }, [location.state]);
+
+  useEffect(() => {
+    if (!booking) {
+      navigate('/trips', { replace: true });
+    }
+  }, [booking, navigate]);
 
   if (!booking) {
     return (
@@ -189,6 +189,20 @@ export function BookingConfirmationPage() {
                     <Globe size={16} /> {t('bookingConfirmationPage.nationality')}
                   </span>
                   <span className="detail-value">{booking.nationality}</span>
+                </div>
+
+                <div className="detail-item">
+                  <span className="detail-label">
+                    <Home size={16} /> {t('bookingConfirmationPage.hotelName')}
+                  </span>
+                  <span className="detail-value">{booking.hotelName || '-'}</span>
+                </div>
+
+                <div className="detail-item">
+                  <span className="detail-label">
+                    <Hash size={16} /> {t('bookingConfirmationPage.roomNo')}
+                  </span>
+                  <span className="detail-value">{booking.roomNo || '-'}</span>
                 </div>
               </div>
             </motion.div>

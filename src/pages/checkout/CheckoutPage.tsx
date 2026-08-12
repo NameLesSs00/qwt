@@ -7,6 +7,22 @@ import { useToast } from '../../components/toast/ToastProvider';
 import { createBooking } from '../../api/bookingsApi';
 import './checkoutPage.scss';
 
+function getBookingErrorDetails(error: unknown) {
+  if (typeof error === 'object' && error && 'response' in error) {
+    return (error as {
+      response?: {
+        data?: {
+          Message?: string;
+          message?: string;
+          errors?: Record<string, string[] | string>;
+        };
+      };
+    }).response?.data;
+  }
+
+  return undefined;
+}
+
 export function CheckoutPage() {
   const { t } = useTranslation();
   const { items, packageTotal, clearCart } = useCart();
@@ -19,6 +35,8 @@ export function CheckoutPage() {
     email: '',
     phone: '',
     nationality: '',
+    hotelName: '',
+    roomNo: '',
     code: ''
   });
 
@@ -29,7 +47,7 @@ export function CheckoutPage() {
   };
 
   const handleSubmit = async () => {
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.nationality) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.nationality || !formData.hotelName || !formData.roomNo) {
       toast.warning(t('checkoutPage.toastFillFields'));
       return;
     }
@@ -49,6 +67,8 @@ export function CheckoutPage() {
         phone: formData.phone,
         code: formData.code ? parseInt(formData.code) : 0,
         nationality: formData.nationality,
+        hotelName: formData.hotelName,
+        roomNo: formData.roomNo,
         tripsBookings: items.map(item => ({
           tripId: item.tripId,
           noAdult: item.adultCount,
@@ -70,10 +90,11 @@ export function CheckoutPage() {
       } else {
         toast.error(res.message || t('checkoutPage.toastFail'));
       }
-    } catch (err: any) {
-      console.error('Submit booking error details:', err.response?.data || err);
-      const serverMsg = err.response?.data?.Message || err.response?.data?.message;
-      const validationErrors = err.response?.data?.errors;
+    } catch (err: unknown) {
+      const errorDetails = getBookingErrorDetails(err);
+      console.error('Submit booking error details:', errorDetails || err);
+      const serverMsg = errorDetails?.Message || errorDetails?.message;
+      const validationErrors = errorDetails?.errors;
       let errorString = t('checkoutPage.toastError');
       if (serverMsg) {
         errorString = serverMsg;
@@ -248,6 +269,29 @@ export function CheckoutPage() {
                 <div className="form-group">
                   <label>{t('checkoutPage.phoneNumber')} <span>*</span></label>
                   <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>{t('checkoutPage.hotelName')} <span>*</span></label>
+                  <input
+                    type="text"
+                    name="hotelName"
+                    value={formData.hotelName}
+                    onChange={handleChange}
+                    placeholder={t('checkoutPage.hotelNamePlaceholder')}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>{t('checkoutPage.roomNo')} <span>*</span></label>
+                  <input
+                    type="text"
+                    name="roomNo"
+                    value={formData.roomNo}
+                    onChange={handleChange}
+                    placeholder={t('checkoutPage.roomNoPlaceholder')}
+                  />
                 </div>
               </div>
             </div>

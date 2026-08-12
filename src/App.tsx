@@ -30,6 +30,7 @@ import { AdminGalleryPage }    from './pages/admin/gallery/AdminGalleryPage'
 import { AdminPromoCodesPage } from './pages/admin/promo-codes/AdminPromoCodesPage'
 import { AdminQuestionsPage }  from './pages/admin/questions/AdminQuestionsPage'
 import { AdminReviewsPage }    from './pages/admin/reviews/AdminReviewsPage'
+import { AdminProjectReviewsPage } from './pages/admin/project-reviews/AdminProjectReviewsPage'
 import { AdminTripTypesPage }  from './pages/admin/trip-types/AdminTripTypesPage'
 import { AdminDestinationsPage } from './pages/admin/destinations/AdminDestinationsPage'
 import { AdminAdminsPage }     from './pages/admin/admins/AdminAdminsPage'
@@ -84,6 +85,7 @@ function App() {
         <Route path="/admin/promo-codes"  element={<AdminPromoCodesPage />} />
         <Route path="/admin/questions"    element={<AdminQuestionsPage />} />
         <Route path="/admin/reviews"      element={<AdminReviewsPage />} />
+        <Route path="/admin/project-reviews" element={<AdminProjectReviewsPage />} />
         <Route path="/admin/trip-types"   element={<AdminTripTypesPage />} />
         <Route path="/admin/admins"       element={<AdminAdminsPage />} />
       </Route>

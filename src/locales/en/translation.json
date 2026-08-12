@@ -170,6 +170,10 @@
     "selectNationality": "Select your nationality",
     "emailAddress": "Email Address",
     "phoneNumber": "Phone Number",
+    "hotelName": "Hotel Name",
+    "hotelNamePlaceholder": "e.g. Marina Resort",
+    "roomNo": "Room Number",
+    "roomNoPlaceholder": "e.g. 204",
     "haveCoupon": "Have a Coupon?",
     "promoCodePlaceholder": "Enter your promo code",
     "orderSummary": "Order Summary",
@@ -206,6 +210,8 @@
     "email": "Email",
     "phone": "Phone",
     "nationality": "Nationality",
+    "hotelName": "Hotel Name",
+    "roomNo": "Room Number",
     "orderSummary": "Order Summary",
     "trip": "Trip",
     "date": "Date",
@@ -424,21 +430,23 @@
       "title": "What Our",
       "accent": "Travellers Say?",
       "sub": "Real experiences from travelers who explored Egypt with us",
-      "steve": {
-        "quote": "An absolutely amazing experience! Crystal-clear water, friendly staff, and perfect organization. Highly recommended.",
-        "country": "United Kingdom",
-        "tourName": "Orange Bay Island Trip"
-      },
-      "marta": {
-        "quote": "The safari trip was thrilling and well-organized. Riding through the desert at sunset was unforgettable.",
-        "country": "Germany",
-        "tourName": "Desert Safari Quad Adventure"
-      },
-      "eric": {
-        "quote": "A wonderful journey through history. The guide was knowledgeable, and everything was smooth and comfortable.",
-        "country": "France",
-        "tourName": "Luxor Day Tour"
-      }
+      "loading": "Loading reviews...",
+      "empty": "No traveller reviews yet. Be the first to share your experience.",
+      "loadError": "Failed to load reviews. Please try again later.",
+      "showMore": "Show more comments",
+      "traveller": "Traveller",
+      "formTitle": "How was your experience?",
+      "formSubtitle": "Share your thoughts with future travellers.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "rating": "Rating",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your experience...",
+      "submit": "Submit comment",
+      "submitting": "Submitting...",
+      "success": "Thank you. Your review was submitted successfully.",
+      "error": "Please complete the form and try again."
     }
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Loader2, Trash2, CheckCircle, Flag, XCircle, Search, Phone, Globe, ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import {
   getBookings,
@@ -11,6 +11,15 @@ import {
 import '../../../components/admin/admin.scss';
 import { useToast } from '../../../components/toast/ToastProvider';
 
+function getErrorMessage(error: unknown, fallback: string) {
+  if (typeof error === 'object' && error && 'response' in error) {
+    const response = (error as { response?: { data?: { Message?: string; message?: string } } }).response;
+    return response?.data?.Message || response?.data?.message || fallback;
+  }
+
+  return fallback;
+}
+
 export function AdminBookingsPage() {
   const [bookings, setBookings] = useState<DtoBookRead[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,13 +31,14 @@ export function AdminBookingsPage() {
   const [search, setSearch] = useState('');
   const [phone, setPhone] = useState('');
   const [nationality, setNationality] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState<BookingStatus | ''>('');
   
   // Pagination
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       setLoading(true);
       setActionError('');
@@ -38,6 +48,7 @@ export function AdminBookingsPage() {
         SearchItem: search || undefined,
         Phone: phone || undefined,
         Nationality: nationality || undefined,
+        Date: dateFilter || undefined,
         Status: statusFilter === '' ? undefined : statusFilter,
       });
       setBookings(res.data || []);
@@ -46,15 +57,20 @@ export function AdminBookingsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pageNumber, pageSize, search, phone, nationality, dateFilter, statusFilter]);
 
   useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      fetchBookings();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [fetchBookings]);
+
+  const updateFilter = (setter: (value: string) => void, value: string) => {
+    setter(value);
     setPageNumber(1);
-  }, [search, phone, nationality, statusFilter, pageSize]);
-
-  useEffect(() => {
-    fetchBookings();
-  }, [pageNumber, pageSize, search, phone, nationality, statusFilter]);
+  };
 
   const handleDelete = async (id: number) => {
     const ok = await confirm({
@@ -69,8 +85,8 @@ export function AdminBookingsPage() {
       await deleteBooking(id);
       fetchBookings();
       toast.success('Booking cancelled successfully');
-    } catch (err: any) {
-      const msg = err?.response?.data?.Message || 'Failed to cancel booking.';
+    } catch (err: unknown) {
+      const msg = getErrorMessage(err, 'Failed to cancel booking.');
       setActionError(msg);
       toast.error(msg);
     }
@@ -82,8 +98,8 @@ export function AdminBookingsPage() {
       await confirmBooking(id);
       fetchBookings();
       toast.success('Booking confirmed!');
-    } catch (err: any) {
-      const msg = err?.response?.data?.Message || 'Failed to confirm booking.';
+    } catch (err: unknown) {
+      const msg = getErrorMessage(err, 'Failed to confirm booking.');
       setActionError(msg);
       toast.error(msg);
     }
@@ -95,8 +111,8 @@ export function AdminBookingsPage() {
       await finishBooking(id);
       fetchBookings();
       toast.success('Booking marked as finished!');
-    } catch (err: any) {
-      const msg = err?.response?.data?.Message || 'Failed to finish booking.';
+    } catch (err: unknown) {
+      const msg = getErrorMessage(err, 'Failed to finish booking.');
       setActionError(msg);
       toast.error(msg);
     }
@@ -117,7 +133,7 @@ export function AdminBookingsPage() {
     }
   };
 
-  const TABS = [
+  const TABS: Array<{ label: string; value: BookingStatus | '' }> = [
     { label: 'All Bookings', value: '' },
     { label: 'Pending', value: BookingStatus.Pending },
     { label: 'Confirmed', value: BookingStatus.Confirmed },
@@ -149,7 +165,10 @@ export function AdminBookingsPage() {
               return (
                 <button
                   key={tab.label}
-                  onClick={() => setStatusFilter(tab.value as any)}
+                  onClick={() => {
+                    setStatusFilter(tab.value);
+                    setPageNumber(1);
+                  }}
                   style={{
                     padding: '8px 16px',
                     background: isActive ? '#f1f5f9' : 'transparent',
@@ -177,7 +196,7 @@ export function AdminBookingsPage() {
                 type="text"
                 placeholder="Search name or email..."
                 value={search}
-                onChange={e => setSearch(e.target.value)}
+                onChange={e => updateFilter(setSearch, e.target.value)}
                 style={{ width: '100%', padding: '10px 14px 10px 38px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', outline: 'none', transition: 'border-color 0.2s', background: '#f8fafc' }}
                 onFocus={(e) => { e.target.style.background = '#fff'; e.target.style.borderColor = '#1e659e'; }}
                 onBlur={(e) => { e.target.style.background = '#f8fafc'; e.target.style.borderColor = '#cbd5e1'; }}
@@ -190,7 +209,7 @@ export function AdminBookingsPage() {
                 type="text"
                 placeholder="Phone Number..."
                 value={phone}
-                onChange={e => setPhone(e.target.value)}
+                onChange={e => updateFilter(setPhone, e.target.value)}
                 style={{ width: '100%', padding: '10px 14px 10px 38px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', outline: 'none', transition: 'border-color 0.2s', background: '#f8fafc' }}
                 onFocus={(e) => { e.target.style.background = '#fff'; e.target.style.borderColor = '#1e659e'; }}
                 onBlur={(e) => { e.target.style.background = '#f8fafc'; e.target.style.borderColor = '#cbd5e1'; }}
@@ -203,7 +222,19 @@ export function AdminBookingsPage() {
                 type="text"
                 placeholder="Nationality..."
                 value={nationality}
-                onChange={e => setNationality(e.target.value)}
+                onChange={e => updateFilter(setNationality, e.target.value)}
+                style={{ width: '100%', padding: '10px 14px 10px 38px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', outline: 'none', transition: 'border-color 0.2s', background: '#f8fafc' }}
+                onFocus={(e) => { e.target.style.background = '#fff'; e.target.style.borderColor = '#1e659e'; }}
+                onBlur={(e) => { e.target.style.background = '#f8fafc'; e.target.style.borderColor = '#cbd5e1'; }}
+              />
+            </div>
+
+            <div style={{ position: 'relative', flex: '1 1 180px' }}>
+              <Calendar size={18} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <input
+                type="date"
+                value={dateFilter}
+                onChange={e => updateFilter(setDateFilter, e.target.value)}
                 style={{ width: '100%', padding: '10px 14px 10px 38px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '14px', outline: 'none', transition: 'border-color 0.2s', background: '#f8fafc' }}
                 onFocus={(e) => { e.target.style.background = '#fff'; e.target.style.borderColor = '#1e659e'; }}
                 onBlur={(e) => { e.target.style.background = '#f8fafc'; e.target.style.borderColor = '#cbd5e1'; }}
@@ -251,7 +282,7 @@ export function AdminBookingsPage() {
               </thead>
               <tbody>
                 {bookings.map(b => (
-                  <tr key={b.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background 0.2s', ':hover': { background: '#f8fafc' } } as any}>
+                  <tr key={b.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background 0.2s' }}>
                     <td style={{ padding: '20px 24px', fontSize: '14px', color: '#64748b', fontWeight: 500 }}>
                       #{b.id}
                       <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
@@ -269,6 +300,10 @@ export function AdminBookingsPage() {
                         <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#cbd5e1' }} />
                         <span>{b.nationality}</span>
                       </div>
+                      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                        <span><strong style={{ color: '#475569' }}>Hotel:</strong> {b.hotelName || '-'}</span>
+                        <span><strong style={{ color: '#475569' }}>Room:</strong> {b.roomNo || '-'}</span>
+                      </div>
                     </td>
 
                     <td style={{ padding: '20px 24px' }}>
@@ -284,6 +319,10 @@ export function AdminBookingsPage() {
                                 {tb.noAdult + tb.noChild} Guests
                               </span>
                             </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px', fontSize: '12px', color: '#64748b' }}>
+                              <span>{tb.noAdult} adults / {tb.noChild} children</span>
+                              <span style={{ fontWeight: 700, color: '#0f172a' }}>€{tb.subTotal}</span>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -291,7 +330,6 @@ export function AdminBookingsPage() {
 
                     <td style={{ padding: '20px 24px' }}>
                       <div style={{ fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>€{b.totalPrice}</div>
-                      {b.code && <div style={{ fontSize: '12px', color: '#10b981', marginTop: '4px', fontWeight: 500 }}>Promo applied</div>}
                     </td>
 
                     <td style={{ padding: '20px 24px' }}>

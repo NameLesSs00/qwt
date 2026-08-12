@@ -27,6 +27,8 @@ export interface DtoBookCreate {
   phone: string;
   code: number;
   nationality: string;
+  hotelName: string;
+  roomNo: string;
   tripsBookings: DtoTripBookingCreate[];
 }
 
@@ -51,6 +53,8 @@ export interface DtoBookRead {
   code?: number;
   nationality: string;
   bookingDate: string;
+  hotelName: string;
+  roomNo: string;
   totalPrice: number;
   status: BookingStatusString;
   createdAt: string;

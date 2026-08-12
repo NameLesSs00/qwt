@@ -170,6 +170,10 @@
     "selectNationality": "Selectați naționalitatea dumneavoastră",
     "emailAddress": "Adresă de e-mail",
     "phoneNumber": "Număr de telefon",
+    "hotelName": "Numele hotelului",
+    "hotelNamePlaceholder": "ex. Marina Resort",
+    "roomNo": "Numărul camerei",
+    "roomNoPlaceholder": "ex. 204",
     "haveCoupon": "Aveți un cupon?",
     "promoCodePlaceholder": "Introduceți codul promoțional",
     "orderSummary": "Rezumatul comenzii",
@@ -206,6 +210,8 @@
     "email": "E-mail",
     "phone": "Telefon",
     "nationality": "Naționalitate",
+    "hotelName": "Numele hotelului",
+    "roomNo": "Numărul camerei",
     "orderSummary": "Rezumatul Comenzii",
     "trip": "Excursie",
     "date": "Dată",
@@ -424,21 +430,23 @@
       "title": "Ce spun",
       "accent": "călătorii noștri?",
       "sub": "Experiențe reale de la călători care au explorat Egiptul cu noi",
-      "steve": {
-        "quote": "O experiență absolut uimitoare! Apă de cristal, personal prietenos și organizare perfectă. Recomand cu drag.",
-        "country": "Marea Britanie",
-        "tourName": "Excursion pe insula Orange Bay"
-      },
-      "marta": {
-        "quote": "Excursia de safari a fost palpitantă și bine organizată. Plimbarea cu ATV-ul prin deșert la apus a fost de neuitat.",
-        "country": "Germania",
-        "tourName": "Aventură cu ATV în deșert"
-      },
-      "eric": {
-        "quote": "O călătorie minunată prin istorie. Ghidul a fost foarte bine informat și totul a fost lin și confortabil.",
-        "country": "Franța",
-        "tourName": "Tur de o zi în Luxor"
-      }
+      "loading": "Se încarcă recenziile...",
+      "empty": "Nu există încă recenzii de la călători. Fii primul care își împărtășește experiența.",
+      "loadError": "Nu s-au putut încărca recenziile. Te rugăm să încerci mai târziu.",
+      "showMore": "Afișează mai multe comentarii",
+      "traveller": "Călător",
+      "formTitle": "Cum a fost experiența ta?",
+      "formSubtitle": "Împărtășește impresiile tale cu viitorii călători.",
+      "firstName": "Prenume",
+      "lastName": "Nume",
+      "email": "E-mail",
+      "rating": "Evaluare",
+      "comment": "Comentariu",
+      "commentPlaceholder": "Spune-ne despre experiența ta...",
+      "submit": "Trimite comentariul",
+      "submitting": "Se trimite...",
+      "success": "Mulțumim. Recenzia ta a fost trimisă cu succes.",
+      "error": "Te rugăm să completezi formularul și să încerci din nou."
     }
   }
 }

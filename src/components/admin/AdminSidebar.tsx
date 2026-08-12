@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
   BarChart2, Map, BookOpen, ShoppingBag, Image,
-  Tag, HelpCircle, Star, List, Users, LogOut,
+  Tag, HelpCircle, Star, MessageSquare, List, Users, LogOut,
 } from 'lucide-react'
 import logo from '../../assets/HurghadaFunTime.png'
 import type { RootState } from '../../store/store'
@@ -20,6 +20,7 @@ const navItems = [
   { icon: Tag, label: 'Promo Codes', path: '/admin/promo-codes' },
   { icon: HelpCircle, label: 'Questions', path: '/admin/questions' },
   { icon: Star, label: 'Reviews', path: '/admin/reviews' },
+  { icon: MessageSquare, label: 'Project Reviews', path: '/admin/project-reviews' },
   { icon: List, label: 'Trip Types', path: '/admin/trip-types' },
   { icon: Users, label: 'Admins', path: '/admin/admins' },
 ]
