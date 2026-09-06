@@ -66,9 +66,28 @@ export function Footer() {
         <div>
           <h3 className="text-sm font-semibold tracking-wide text-white/95">{t('footer.contactUs')}</h3>
           <div className="mt-5 space-y-4 text-sm text-white/80">
-            <div className="flex items-center gap-3">
-              <img src={phoneIcon} alt="" className="h-5 w-5" />
-              <span>+201146098826</span>
+            <div className="flex items-start gap-3">
+              <img src={phoneIcon} alt="" className="h-5 w-5 mt-0.5 shrink-0" />
+              <div className="flex flex-col gap-1.5">
+                <a
+                  href="https://wa.me/201146098826"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                  title="WhatsApp: +201146098826"
+                >
+                  +201146098826
+                </a>
+                <a
+                  href="https://wa.me/201029566523"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                  title="WhatsApp: +20 10 29566523"
+                >
+                  +20 10 29566523
+                </a>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <img src={emailIcon} alt="" className="h-5 w-5" />

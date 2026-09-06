@@ -157,6 +157,13 @@
   color: #64748b;
   line-height: 1.6;
   margin: 0;
+
+  a {
+    transition: color 0.15s ease;
+    &:hover {
+      color: #1e659e !important;
+    }
+  }
 }
 
 /* Bottom Split */

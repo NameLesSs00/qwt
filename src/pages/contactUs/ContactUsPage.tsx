@@ -88,11 +88,24 @@ export function ContactUsPage() {
                 <img src={iconPhone} alt="Hotline" style={{ width: 80 }} /> 
               </div>
               <h3 className="contact-cardTitle">{t('contactUs.hotline')}</h3>
-              <p className="contact-cardText">
-                <a href="https://wa.me/201146098826" style={{color: 'inherit', textDecoration: 'none'}}>
+              <div className="contact-cardText" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <a
+                  href="https://wa.me/201146098826"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
                   +201146098826
                 </a>
-              </p>
+                <a
+                  href="https://wa.me/201029566523"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  +20 10 29566523
+                </a>
+              </div>
             </div>
           </div>
 
